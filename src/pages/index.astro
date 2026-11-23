@@ -1,0 +1,14 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OpenHub from '../components/OpenHub.svelte';
+import type { CatalogIndex } from '../lib/types';
+
+const indexPath = path.resolve(process.cwd(), 'public', 'index.json');
+const catalog: CatalogIndex = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+---
+
+<BaseLayout title="AlsoBuilt — AI Idea Collision Hub" activeNav="hub">
+  <OpenHub client:load {catalog} />
+</BaseLayout>

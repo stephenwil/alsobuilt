@@ -1,0 +1,21 @@
+slug: graphiti
+category: ai-memory
+name: Graphiti
+repo: https://github.com/getzep/graphiti
+tagline: Bi-temporal knowledge graph engine built for real-time agent memory updates without batch rebuilds
+arch: SDK
+model: Hybrid
+license: Apache-2
+stage: Beta
+stack: Python + Neo4j
+region: US
+stars: 6400
+spark: [4, 7, 11, 15, 21, 26, 32, 41]
+traits:
+  - multi-agent
+  - python
+  - rag
+  - realtime
+  - self-hosted
+x: 0.78
+y: 0.68

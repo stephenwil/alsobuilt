@@ -1,0 +1,21 @@
+slug: cline
+category: coding-agents
+name: Cline
+repo: https://github.com/cline/cline
+tagline: Autonomous IDE coding agent with human-in-the-loop terminal, browser, and MCP tool execution
+arch: Desktop
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: TypeScript + VS Code + MCP
+region: US
+stars: 39000
+spark: [15, 22, 31, 39, 46, 54, 62, 70]
+traits:
+  - mcp
+  - browser
+  - typescript
+  - multi-agent
+  - local-first
+x: 0.36
+y: 0.62

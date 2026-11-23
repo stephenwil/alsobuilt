@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AlsoBuilt Variant Entry",
+  "type": "object",
+  "required": [
+    "slug",
+    "category",
+    "name",
+    "repo",
+    "tagline",
+    "arch",
+    "model",
+    "license",
+    "stage",
+    "stack",
+    "traits"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["ai-memory", "coding-agents", "local-voice", "mcp-tooling"]
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 64
+    },
+    "repo": {
+      "type": "string",
+      "format": "uri"
+    },
+    "tagline": {
+      "type": "string",
+      "minLength": 12,
+      "maxLength": 180
+    },
+    "arch": {
+      "type": "string",
+      "enum": ["Desktop", "CLI", "Web", "Browser", "SDK", "Mobile"]
+    },
+    "model": {
+      "type": "string",
+      "enum": ["Local LLM", "Hybrid", "Cloud API"]
+    },
+    "license": {
+      "type": "string",
+      "enum": ["MIT", "Apache-2", "AGPL", "BSD-3", "Source"]
+    },
+    "stage": {
+      "type": "string",
+      "enum": ["Prod", "Beta", "Proto", "Lesson"]
+    },
+    "lesson": {
+      "type": "string",
+      "maxLength": 280
+    },
+    "stack": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 80
+    },
+    "region": {
+      "type": "string",
+      "maxLength": 16
+    },
+    "stars": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "spark": {
+      "type": "array",
+      "items": { "type": "number", "minimum": 0 },
+      "minItems": 4,
+      "maxItems": 16
+    },
+    "traits": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "enum": [
+          "local-first",
+          "mcp",
+          "voice",
+          "markdown",
+          "multi-agent",
+          "browser",
+          "cli",
+          "rust",
+          "python",
+          "typescript",
+          "open-weights",
+          "self-hosted",
+          "mobile",
+          "rag",
+          "realtime"
+        ]
+      }
+    },
+    "x": { "type": "number", "minimum": 0.05, "maximum": 0.95 },
+    "y": { "type": "number", "minimum": 0.05, "maximum": 0.95 }
+  }
+}

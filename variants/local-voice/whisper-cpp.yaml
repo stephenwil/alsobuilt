@@ -1,0 +1,21 @@
+slug: whisper-cpp
+category: local-voice
+name: whisper.cpp
+repo: https://github.com/ggml-org/whisper.cpp
+tagline: High-performance C/C++ inference engine for offline Whisper speech recognition on CPU, Metal, and mobile
+arch: CLI
+model: Local LLM
+license: MIT
+stage: Prod
+stack: C++ + Metal + CoreML
+region: BG
+stars: 39500
+spark: [25, 27, 29, 31, 34, 36, 39, 41]
+traits:
+  - local-first
+  - voice
+  - open-weights
+  - cli
+  - mobile
+x: 0.16
+y: 0.22

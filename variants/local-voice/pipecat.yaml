@@ -1,0 +1,21 @@
+slug: pipecat
+category: local-voice
+name: Pipecat
+repo: https://github.com/pipecat-ai/pipecat
+tagline: Open-source frame-based framework for building low-latency realtime voice and multimodal AI agents
+arch: SDK
+model: Hybrid
+license: BSD-3
+stage: Prod
+stack: Python + WebRTC + Daily
+region: US
+stars: 5900
+spark: [8, 12, 17, 23, 29, 35, 42, 50]
+traits:
+  - voice
+  - realtime
+  - multi-agent
+  - python
+  - self-hosted
+x: 0.60
+y: 0.66

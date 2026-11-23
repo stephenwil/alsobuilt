@@ -1,0 +1,22 @@
+slug: khoj
+category: ai-memory
+name: Khoj
+repo: https://github.com/khoj-ai/khoj
+tagline: Self-hostable AI second brain indexing Markdown, Obsidian, Notion, and PDFs locally
+arch: Web
+model: Hybrid
+license: AGPL
+stage: Prod
+stack: Python + Django + Postgres
+region: Global
+stars: 24500
+spark: [12, 15, 19, 24, 28, 33, 37, 42]
+traits:
+  - local-first
+  - markdown
+  - self-hosted
+  - python
+  - rag
+  - open-weights
+x: 0.28
+y: 0.34

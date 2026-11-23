@@ -1,0 +1,20 @@
+slug: fastmcp
+category: mcp-tooling
+name: FastMCP
+repo: https://github.com/jlowin/fastmcp
+tagline: Pythonic decorator-first framework for building, testing, and composing MCP servers and clients
+arch: SDK
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: Python + Pydantic + MCP
+region: US
+stars: 9200
+spark: [5, 11, 18, 26, 35, 44, 52, 63]
+traits:
+  - mcp
+  - python
+  - local-first
+  - self-hosted
+x: 0.34
+y: 0.54

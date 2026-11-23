@@ -1,0 +1,21 @@
+slug: mcp-servers
+category: mcp-tooling
+name: MCP Reference Servers
+repo: https://github.com/modelcontextprotocol/servers
+tagline: Official reference Model Context Protocol servers for filesystems, git, memory, Postgres, and fetch
+arch: CLI
+model: Hybrid
+license: MIT
+stage: Prod
+stack: TypeScript + Python + MCP
+region: US
+stars: 38000
+spark: [10, 18, 28, 38, 49, 60, 71, 82]
+traits:
+  - mcp
+  - cli
+  - typescript
+  - python
+  - local-first
+x: 0.26
+y: 0.52

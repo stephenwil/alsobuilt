@@ -1,0 +1,14 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PersonalVault from '../components/PersonalVault.svelte';
+import type { CatalogIndex } from '../lib/types';
+
+const indexPath = path.resolve(process.cwd(), 'public', 'index.json');
+const catalog: CatalogIndex = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+---
+
+<BaseLayout title="AlsoBuilt — Personal Ideas Vault" activeNav="vault">
+  <PersonalVault client:load {catalog} />
+</BaseLayout>

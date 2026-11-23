@@ -1,0 +1,21 @@
+slug: mem0
+category: ai-memory
+name: mem0
+repo: https://github.com/mem0ai/mem0
+tagline: Universal memory layer for AI agents with hybrid vector, graph, and key-value recall
+arch: SDK
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: Python + TypeScript + Qdrant
+region: US
+stars: 28000
+spark: [18, 22, 26, 30, 34, 39, 44, 51]
+traits:
+  - multi-agent
+  - python
+  - typescript
+  - self-hosted
+  - rag
+x: 0.72
+y: 0.76

@@ -1,0 +1,21 @@
+slug: letta
+category: ai-memory
+name: Letta (MemGPT)
+repo: https://github.com/letta-ai/letta
+tagline: Stateful agent runtime that manages its own tiered context window and long-term memory
+arch: Web
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: Python + Postgres + pgvector
+region: US
+stars: 15800
+spark: [14, 16, 19, 21, 24, 27, 30, 33]
+traits:
+  - multi-agent
+  - python
+  - self-hosted
+  - open-weights
+  - rag
+x: 0.66
+y: 0.84

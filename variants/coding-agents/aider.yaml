@@ -1,0 +1,20 @@
+slug: aider
+category: coding-agents
+name: Aider
+repo: https://github.com/Aider-AI/aider
+tagline: Git-native terminal pair programmer using repository maps and direct diff edits across files
+arch: CLI
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: Python + Tree-sitter + Git
+region: US
+stars: 31000
+spark: [20, 24, 28, 33, 38, 42, 47, 52]
+traits:
+  - cli
+  - local-first
+  - python
+  - open-weights
+x: 0.20
+y: 0.44

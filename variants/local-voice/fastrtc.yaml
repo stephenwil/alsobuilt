@@ -1,0 +1,21 @@
+slug: fastrtc
+category: local-voice
+name: FastRTC
+repo: https://github.com/gradio-app/fastrtc
+tagline: Drop-in Python library turning any speech or video handler into a real-time WebRTC stream
+arch: SDK
+model: Hybrid
+license: MIT
+stage: Beta
+stack: Python + FastAPI + WebRTC
+region: Global
+stars: 3600
+spark: [2, 6, 12, 19, 27, 34, 41, 49]
+traits:
+  - voice
+  - realtime
+  - python
+  - browser
+  - open-weights
+x: 0.48
+y: 0.36

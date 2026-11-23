@@ -1,0 +1,32 @@
+{
+  "name": "alsobuilt",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build-index.mjs && astro dev --host 0.0.0.0",
+    "build": "node scripts/build-index.mjs && astro build",
+    "preview": "npm run build && wrangler pages dev dist --ip 0.0.0.0 --port 8788",
+    "validate:variants": "node scripts/build-index.mjs --check",
+    "sync:stars": "node scripts/sync-github-stats.mjs",
+    "db:migrate:local": "wrangler d1 migrations apply alsobuilt-public --local && wrangler d1 migrations apply alsobuilt-vault --local",
+    "db:migrate:remote": "wrangler d1 migrations apply alsobuilt-public --remote && wrangler d1 migrations apply alsobuilt-vault --remote",
+    "typecheck": "node scripts/build-index.mjs && astro check && tsc --noEmit -p functions/tsconfig.json"
+  },
+  "dependencies": {
+    "@astrojs/svelte": "^7.0.5",
+    "@tailwindcss/vite": "^4.1.4",
+    "astro": "^5.7.10",
+    "svelte": "^5.28.2",
+    "tailwindcss": "^4.1.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@cloudflare/workers-types": "^5.20261123.1",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^4.1.0",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.14.1"
+  }
+}

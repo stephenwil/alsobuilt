@@ -1,0 +1,32 @@
+name: Nightly GitHub Stats Sync
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Refresh GitHub star counts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run sync:stars
+      - run: npm run build
+      - name: Commit updated stats
+        run: |
+          git config user.name "alsobuilt-bot"
+          git config user.email "bot@alsobuilt.dev"
+          git add variants public/index.json
+          git diff --cached --quiet || git commit -m "chore: nightly GitHub star sync"
+          git push

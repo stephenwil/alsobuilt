@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cloudflare D1 — Architecture, Capacity &amp; Roadmap for AlsoBuilt</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+    color: var(--foreground);
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 8px);
+    padding: 16px;
+  }
+
+  .head-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .kicker {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--primary);
+    font-family: var(--font-mono, monospace);
+  }
+  .title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 2px 0 0;
+  }
+  .sub {
+    font-size: 11.5px;
+    color: var(--muted-foreground);
+  }
+
+  /* Quick Stat Ribbon */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+  @media (max-width: 580px) {
+    .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 8px);
+    padding: 11px 13px;
+  }
+  .stat-val {
+    font-family: var(--font-mono, monospace);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .stat-lbl {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    margin-top: 3px;
+  }
+  .stat-note {
+    font-size: 10px;
+    color: var(--muted-foreground);
+    opacity: 0.8;
+    margin-top: 1px;
+  }
+
+  /* SVG diagrams */
+  .svg-frame {
+    width: 100%;
+    background: var(--code-background, var(--secondary));
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius, 8px) - 2px);
+    overflow: hidden;
+  }
+  .svg-frame svg {
+    width: 100%;
+    display: block;
+  }
+
+  /* Replication + Gotcha 2-col */
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Interactive Capacity Estimator */
+  .slider-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 540px) { .slider-row { grid-template-columns: 1fr; } }
+  .slider-group {
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 9px 11px;
+  }
+  .slider-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    margin-bottom: 5px;
+  }
+  .slider-val {
+    font-family: var(--font-mono, monospace);
+    font-weight: 700;
+    color: var(--primary);
+  }
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary);
+    cursor: pointer;
+  }
+
+  .meter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .meter-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    margin-bottom: 3px;
+  }
+  .meter-mono {
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    color: var(--muted-foreground);
+  }
+  .meter-track {
+    height: 9px;
+    border-radius: 999px;
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.2s ease;
+  }
+
+  .gotcha-box {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--chart-3) 10%, var(--secondary));
+    border-left: 3px solid var(--chart-3);
+    font-size: 11.5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* Interactive Roadmap */
+  .phase-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 580px) {
+    .phase-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .phase-tab {
+    text-align: left;
+    background: var(--secondary);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius, 8px);
+    padding: 9px 10px;
+    cursor: pointer;
+    color: var(--foreground);
+    font-family: inherit;
+    transition: border-color 0.14s, background 0.14s;
+  }
+  .phase-tab:hover { border-color: var(--primary); }
+  .phase-tab.active {
+    background: var(--accent-surface, color-mix(in srgb, var(--primary) 13%, transparent));
+    border-color: var(--primary);
+  }
+  .phase-num {
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+  }
+  .phase-name {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+    line-height: 1.25;
+  }
+  .phase-time {
+    font-size: 10px;
+    color: var(--muted-foreground);
+    margin-top: 2px;
+  }
+
+  .phase-detail {
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius, 8px) - 1px);
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 580px) { .phase-detail { grid-template-columns: 1fr; } }
+  .phase-detail > div { min-width: 0; }
+  .checklist {
+    margin: 6px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+  }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+  }
+  .chk-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--chart-2) 20%, transparent);
+    color: var(--chart-2);
+    font-size: 10px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .cmd-block {
+    margin: 6px 0 0;
+    padding: 9px 10px;
+    border-radius: 6px;
+    background: var(--code-background, var(--card));
+    border: 1px solid var(--border);
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .pill-tag {
+    display: inline-block;
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--chart-1) 18%, transparent);
+    color: var(--chart-1);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Top KPI Strip: D1 Free Tier at a Glance -->
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-val" style="color:var(--chart-1);">5M / day</div>
+      <div class="stat-lbl">Free Rows Read</div>
+      <div class="stat-note">25B/mo on $5 Paid</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" style="color:var(--chart-2);">100K / day</div>
+      <div class="stat-lbl">Free Rows Written</div>
+      <div class="stat-note">50M/mo on $5 Paid</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" style="color:var(--chart-4);">10 DBs</div>
+      <div class="stat-lbl">Isolated SQLite DBs</div>
+      <div class="stat-note">500 MB/DB · 5 GB total</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" style="color:var(--chart-3);">7 Days</div>
+      <div class="stat-lbl">Time Travel Restore</div>
+      <div class="stat-note">30 days on Paid · $0 idle</div>
+    </div>
+  </div>
+
+  <!-- INFOGRAPHIC 1: Dual-Database Architecture -->
+  <div class="card">
+    <div class="head-row">
+      <div>
+        <div class="kicker">Infographic 01 · System Architecture</div>
+        <div class="title">AlsoBuilt Dual-Database Design on Cloudflare Pages + D1</div>
+      </div>
+      <span class="sub">Physical DB isolation: Public Open Hub vs. Personal Ideas Vault</span>
+    </div>
+
+    <div class="svg-frame">
+      <svg viewBox="0 0 690 322" height="322" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr-b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--chart-1)"/>
+          </marker>
+          <marker id="arr-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--chart-2)"/>
+          </marker>
+          <marker id="arr-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--chart-4)"/>
+          </marker>
+          <marker id="arr-m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--muted-foreground)"/>
+          </marker>
+        </defs>
+
+        <!-- Lane backgrounds -->
+        <rect x="12" y="14" width="666" height="122" rx="8" fill="var(--chart-1)" fill-opacity="0.06" stroke="var(--chart-1)" stroke-opacity="0.28" stroke-dasharray="4 3"/>
+        <text x="24" y="31" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--chart-1)">PUBLIC LANE — OPEN HUB (alsobuilt.dev)</text>
+
+        <rect x="12" y="182" width="666" height="126" rx="8" fill="var(--chart-4)" fill-opacity="0.06" stroke="var(--chart-4)" stroke-opacity="0.32" stroke-dasharray="4 3"/>
+        <text x="24" y="199" font-family="monospace" font-size="9.5" font-weight="700" fill="var(--chart-4)">PRIVATE LANE — PERSONAL VAULT (vault.alsobuilt.dev)</text>
+        <text x="664" y="199" text-anchor="end" font-family="monospace" font-size="9" font-weight="700" fill="var(--chart-4)">ZERO PUBLIC LEAKAGE</text>
+
+        <!-- PUBLIC LANE NODES -->
+        <rect x="26" y="42" width="136" height="80" rx="7" fill="var(--card)" stroke="var(--border)"/>
+        <text x="94" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="var(--foreground)">Public Builders</text>
+        <text x="94" y="78" text-anchor="middle" font-size="9.5" fill="var(--muted-foreground)">Test ideas &amp; stealth</text>
+        <text x="94" y="92" text-anchor="middle" font-size="9.5" fill="var(--muted-foreground)">PRs → variants/*.yaml</text>
+        <rect x="44" y="101" width="100" height="14" rx="3" fill="var(--secondary)"/>
+        <text x="94" y="111" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--chart-1)">Nightly GH Action</text>
+
+        <rect x="206" y="42" width="166" height="80" rx="7" fill="var(--card)" stroke="var(--chart-1)" stroke-width="1.4"/>
+        <text x="289" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="var(--foreground)">Cloudflare Pages</text>
+        <text x="289" y="78" text-anchor="middle" font-size="9.5" fill="var(--muted-foreground)">Static UI + index.json (CDN)</text>
+        <text x="289" y="92" text-anchor="middle" font-size="9.5" fill="var(--muted-foreground)">/api/pulse · /api/variants</text>
+        <rect x="226" y="101" width="126" height="14" rx="3" fill="var(--chart-1)" fill-opacity="0.16"/>
+        <text x="289" y="111" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--chart-1)">env.PUBLIC_DB binding</text>
+
+        <rect x="424" y="42" width="238" height="80" rx="7" fill="var(--card)" stroke="var(--chart-2)" stroke-width="1.5"/>
+        <text x="543" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="var(--foreground)">D1: alsobuilt-public</text>
+        <text x="543" y="76" text-anchor="middle" font-family="monospace" font-size="9" fill="var(--muted-foreground)">categories · variants · stealth_pulses</text>
+        <rect x="438" y="88" width="66" height="24" rx="4" fill="var(--chart-2)" fill-opacity="0.16" stroke="var(--chart-2)" stroke-opacity="0.5"/>
+        <text x="471" y="103" text-anchor="middle" font-family="monospace" font-size="8.5" font-weight="700" fill="var(--chart-2)">Primary</text>
+        <rect x="512" y="88" width="66" height="24" rx="4" fill="var(--secondary)" stroke="var(--border)"/>
+        <text x="545" y="103" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--foreground)">Replica EU</text>
+        <rect x="586" y="88" width="64" height="24" rx="4" fill="var(--secondary)" stroke="var(--border)"/>
+        <text x="618" y="103" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--foreground)">Replica AP</text>
+
+        <line x1="162" y1="82" x2="202" y2="82" stroke="var(--chart-1)" stroke-width="1.8" marker-end="url(#arr-b)"/>
+        <line x1="372" y1="82" x2="420" y2="82" stroke="var(--chart-2)" stroke-width="1.8" marker-end="url(#arr-g)"/>
+        <text x="396" y="75" text-anchor="middle" font-family="monospace" font-size="8" fill="var(--muted-foreground)">SQL</text>
+
+        <!-- PRIVATE LANE NODES -->
+        <rect x="26" y="214" width="136" height="80" rx="7" fill="var(--card)" stroke="var(--chart-4)" stroke-width="1.4"/>
+        <text x="94" y="234" text-anchor="middle" font-size="11" font-weight="700" fill="var(--foreground)">Only You</text>
+        <text x="94" y="250" text-anchor="middle" font-size="9.5" fill="var(--muted-foreground)">Cloudflare Access</text>
+        <text x="94" y="264" text-anchor="middle" font-size="9.5" fill="var(--muted-foreground)">Email OTP / GitHub SSO</text>
+        <rect x="44" y="273" width="100" height="14" rx="3" fill="var(--chart-4)" fill-opacity="0.18"/>
+        <text x="94" y="283" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--chart-4)">Zero Trust Gate</text>
+
+        <rect x="206" y="214" width="166" height="80" rx="7" fill="var(--card)" stroke="var(--chart-4)" stroke-width="1.4"/>
+        <text x="289" y="234" text-anchor="middle" font-size="11" font-weight="700" fill="var(--foreground)">Vault API Functions</text>
+        <text x="289" y="250" text-anchor="middle" font-size="9.5" fill="var(--muted-foreground)">Verifies Access JWT</text>
+        <text x="289" y="264" text-anchor="middle" font-size="9.5" fill="var(--muted-foreground)">Private notes + snapshots</text>
+        <rect x="226" y="273" width="126" height="14" rx="3" fill="var(--chart-4)" fill-opacity="0.16"/>
+        <text x="289" y="283" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--chart-4)">env.VAULT_DB binding</text>
+
+        <rect x="424" y="214" width="238" height="80" rx="7" fill="var(--card)" stroke="var(--chart-4)" stroke-width="1.5"/>
+        <text x="543" y="234" text-anchor="middle" font-size="11" font-weight="700" fill="var(--foreground)">D1: alsobuilt-vault</text>
+        <text x="543" y="250" text-anchor="middle" font-family="monospace" font-size="9" fill="var(--muted-foreground)">personal_ideas · collision_snapshots</text>
+        <rect x="444" y="262" width="198" height="22" rx="4" fill="var(--chart-4)" fill-opacity="0.14"/>
+        <text x="543" y="276" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--chart-4)">Physically separate SQLite DB · 7d backup</text>
+
+        <line x1="162" y1="254" x2="202" y2="254" stroke="var(--chart-4)" stroke-width="1.8" marker-end="url(#arr-p)"/>
+        <line x1="372" y1="254" x2="420" y2="254" stroke="var(--chart-4)" stroke-width="1.8" marker-end="url(#arr-p)"/>
+
+        <!-- Cross-comparison read-only arrow sitting cleanly in middle channel (y=136..182) -->
+        <path d="M 332 214 L 332 159 L 471 159 L 471 126" fill="none" stroke="var(--muted-foreground)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-m)"/>
+        <rect x="336" y="149" width="144" height="19" rx="4" fill="var(--card)" stroke="var(--border)"/>
+        <text x="408" y="161.5" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--foreground)">Read-only collision check</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- INFOGRAPHIC 2: Replication Consistency + Interactive Capacity Simulator -->
+  <div class="two-col">
+    <!-- Left: Global Read Replication Flow -->
+    <div class="card">
+      <div class="head-row">
+        <div>
+          <div class="kicker">Infographic 02 · Consistency</div>
+          <div class="title">How D1 Read Replicas Work</div>
+        </div>
+      </div>
+      <div class="svg-frame" style="margin-bottom:10px;">
+        <svg viewBox="0 0 360 198" height="198" xmlns="http://www.w3.org/2000/svg">
+          <!-- Step 1 -->
+          <rect x="12" y="14" width="144" height="44" rx="6" fill="var(--card)" stroke="var(--chart-1)"/>
+          <text x="84" y="32" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--foreground)">1. Public Read</text>
+          <text x="84" y="47" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--chart-1)">first-unconstrained</text>
+
+          <rect x="196" y="14" width="152" height="44" rx="6" fill="var(--card)" stroke="var(--chart-2)"/>
+          <text x="272" y="32" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--foreground)">Nearest Edge Replica</text>
+          <text x="272" y="47" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--chart-2)">Low-latency local SQL</text>
+          <line x1="156" y1="36" x2="192" y2="36" stroke="var(--chart-1)" stroke-width="1.6"/>
+          <polygon points="195,36 189,32 189,40" fill="var(--chart-1)"/>
+
+          <!-- Step 2 -->
+          <rect x="12" y="76" width="144" height="44" rx="6" fill="var(--card)" stroke="var(--chart-3)"/>
+          <text x="84" y="94" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--foreground)">2. Stealth Click (Write)</text>
+          <text x="84" y="109" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--chart-3)">INSERT stealth_pulses</text>
+
+          <rect x="196" y="76" width="152" height="44" rx="6" fill="var(--card)" stroke="var(--chart-3)"/>
+          <text x="272" y="94" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--foreground)">Primary D1 Instance</text>
+          <text x="272" y="109" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--muted-foreground)">Returns x-d1-bookmark</text>
+          <line x1="156" y1="98" x2="192" y2="98" stroke="var(--chart-3)" stroke-width="1.6"/>
+          <polygon points="195,98 189,94 189,102" fill="var(--chart-3)"/>
+
+          <!-- Step 3 -->
+          <rect x="12" y="138" width="336" height="46" rx="6" fill="var(--chart-2)" fill-opacity="0.1" stroke="var(--chart-2)" stroke-opacity="0.5"/>
+          <text x="180" y="156" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--foreground)">3. Next Request Sends Bookmark → Read-Your-Writes</text>
+          <text x="180" y="172" text-anchor="middle" font-family="monospace" font-size="8.5" fill="var(--muted-foreground)">env.DB.withSession(bookmark) waits only for replica sync</text>
+        </svg>
+      </div>
+      <div style="font-size:11.5px;color:var(--muted-foreground);">
+        <strong style="color:var(--foreground);">Why this matters for AlsoBuilt:</strong> Global visitors read counts from nearby replicas in milliseconds, while anyone who logs a stealth idea or edits their Private Vault always sees their own update immediately.
+      </div>
+    </div>
+
+    <!-- Right: Interactive Free-Tier Capacity Calculator -->
+    <div class="card">
+      <div class="head-row">
+        <div>
+          <div class="kicker">Infographic 03 · Capacity Meter</div>
+          <div class="title">Free Tier Headroom Simulator</div>
+        </div>
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-group">
+          <div class="slider-head">
+            <span>Daily Visitors</span>
+            <span id="visVal" class="slider-val">5,000</span>
+          </div>
+          <input id="visSlider" type="range" min="100" max="50000" step="100" value="5000" />
+        </div>
+        <div class="slider-group">
+          <div class="slider-head">
+            <span>Daily Writes</span>
+            <span id="wrtVal" class="slider-val">1,200</span>
+          </div>
+          <input id="wrtSlider" type="range" min="50" max="25000" step="50" value="1200" />
+        </div>
+      </div>
+
+      <div id="meters" class="meter-list"></div>
+
+      <div class="gotcha-box">
+        <div><strong style="color:var(--chart-3);">Key D1 Rule — Rows Scanned ≠ Rows Returned</strong></div>
+        <div style="color:var(--muted-foreground);">With proper indexes + static <code>index.json</code> on CDN, 5,000 daily visitors use <strong id="gotchaPct" style="color:var(--foreground);">~1.5%</strong> of the Free tier. Without an index, one full scan multiplies reads by total table size!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFOGRAPHIC 4: Interactive 4-Phase Roadmap -->
+  <div class="card">
+    <div class="head-row">
+      <div>
+        <div class="kicker">Infographic 04 · Implementation Roadmap</div>
+        <div class="title">From Zero to Dual-Mode AlsoBuilt on Cloudflare D1</div>
+      </div>
+      <span class="sub">Click any phase to inspect deliverables &amp; Wrangler commands</span>
+    </div>
+
+    <div id="phaseTabs" class="phase-tabs"></div>
+    <div id="phaseDetail" class="phase-detail"></div>
+  </div>
+
+</div>
+
+<script>
+const PHASES = [
+  {
+    num: "Phase 1",
+    name: "Foundation & Dual D1",
+    time: "Day 1",
+    badge: "Setup",
+    summary: "Bootstrap the Astro + Svelte 5 workspace, create both isolated D1 databases, and verify local Wrangler migrations.",
+    items: [
+      "Scaffold Astro + Svelte 5 + Tailwind + Echo Frames SVG assets",
+      "Create physically isolated alsobuilt-public and alsobuilt-vault DBs",
+      "Write initial SQL schemas with covering indexes (avoid full table scans)",
+      "Verify end-to-end local dev using wrangler pages dev"
+    ],
+    cmd: `npx wrangler d1 create alsobuilt-public
+npx wrangler d1 create alsobuilt-vault
+npx wrangler d1 migrations apply alsobuilt-public --local
+npx wrangler d1 migrations apply alsobuilt-vault --local`
+  },
+  {
+    num: "Phase 2",
+    name: "Open Hub & Sandbox",
+    time: "Days 2–3",
+    badge: "Public Core",
+    summary: "Ship the multi-category public hub where developers test ideas, view live stealth pulses, and submit PRs.",
+    items: [
+      "Seed 25–40 real AI variants across 4 categories in variants/*.yaml",
+      "Build the Test My Idea Collision Sandbox, Constellation Map & Wedge Diff",
+      "Wire /api/pulse to PUBLIC_DB with hashed daily deduplication",
+      "Add nightly GitHub Action to refresh repo stars & sync index.json + D1"
+    ],
+    cmd: `# Validate YAML + deploy production migrations
+npm run validate:variants
+npx wrangler d1 migrations apply alsobuilt-public --remote
+npm run build && npx wrangler pages deploy dist`
+  },
+  {
+    num: "Phase 3",
+    name: "Personal Ideas Vault",
+    time: "Days 4–5",
+    badge: "Private Mode",
+    summary: "Launch your private idea notebook locked behind Cloudflare Access, with automated public collision tracking.",
+    items: [
+      "Build /vault UI backed exclusively by VAULT_DB (notes, status, conviction)",
+      "Protect /vault/* and /api/vault/* with Cloudflare Access (Email OTP / GitHub)",
+      "Verify Cf-Access-Jwt-Assertion header in Worker middleware",
+      "Add collision snapshots & 1-click 'Promote to Public PR' button"
+    ],
+    cmd: `# Apply private vault schema to production
+npx wrangler d1 migrations apply alsobuilt-vault --remote
+# Verify index plan (0 full scans)
+npx wrangler d1 execute alsobuilt-vault --remote \\
+  --command "EXPLAIN QUERY PLAN SELECT * FROM personal_ideas WHERE status='building';"`
+  },
+  {
+    num: "Phase 4",
+    name: "Replicas & Launch",
+    time: "Week 2",
+    badge: "Scale",
+    summary: "Turn on global read replication, add shareable collision receipts, and open AlsoBuilt to HN / Reddit / X.",
+    items: [
+      "Enable D1 Read Replication (auto) and switch queries to withSession()",
+      "Generate dynamic OG Collision Receipt cards for social sharing",
+      "Optional: add client-side or edge embeddings for richer pitch matching",
+      "Launch on Show HN / r/LocalLLaMA / X with live stealth builder pulse"
+    ],
+    cmd: `# Check Time Travel restore window before launch
+npx wrangler d1 time-travel info alsobuilt-public
+npx wrangler d1 time-travel info alsobuilt-vault
+# Enable Read Replication in CF Dashboard → D1 → Settings`
+  }
+];
+
+let activePhase = 0;
+
+function renderCapacity() {
+  const vis = Number(document.getElementById("visSlider").value);
+  const wrt = Number(document.getElementById("wrtSlider").value);
+  document.getElementById("visVal").textContent = vis.toLocaleString();
+  document.getElementById("wrtVal").textContent = wrt.toLocaleString();
+
+  // Assume indexed queries: ~15 indexed rows scanned per visitor (CDN handles catalog, D1 serves live pulse/vault)
+  // Assume ~3 row writes per write action (1 row + 2 index updates)
+  const reads = vis * 15;
+  const writes = wrt * 3;
+  const readPct = Math.min(100, (reads / 5000000) * 100);
+  const writePct = Math.min(100, (writes / 100000) * 100);
+  const storagePct = 3.2; // ~16 MB of 500 MB free per DB for 5,000 variants + snapshots
+
+  document.getElementById("gotchaPct").textContent = `${readPct.toFixed(1)}%`;
+
+  const meters = [
+    {
+      label: "Rows Read / day",
+      used: `${reads.toLocaleString()} / 5M`,
+      pct: readPct,
+      color: readPct > 80 ? "var(--destructive, var(--chart-3))" : "var(--chart-1)"
+    },
+    {
+      label: "Rows Written / day (2× idx)",
+      used: `${writes.toLocaleString()} / 100k`,
+      pct: writePct,
+      color: writePct > 80 ? "var(--destructive, var(--chart-3))" : "var(--chart-2)"
+    },
+    {
+      label: "Storage / DB (~5k items)",
+      used: `~16 MB / 500 MB`,
+      pct: storagePct,
+      color: "var(--chart-4)"
+    }
+  ];
+
+  document.getElementById("meters").innerHTML = meters.map(m => `
+    <div>
+      <div class="meter-head">
+        <span>${m.label}</span>
+        <span class="meter-mono">${m.used} (${m.pct < 1 ? "<1" : m.pct.toFixed(0)}%)</span>
+      </div>
+      <div class="meter-track">
+        <div class="meter-fill" style="width:${Math.max(2, m.pct)}%;background:${m.color};"></div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderRoadmap() {
+  const tabs = document.getElementById("phaseTabs");
+  tabs.innerHTML = PHASES.map((p, i) => `
+    <button class="phase-tab ${i === activePhase ? "active" : ""}" data-idx="${i}">
+      <div class="phase-num">${p.num}</div>
+      <div class="phase-name">${p.name}</div>
+      <div class="phase-time">${p.time}</div>
+    </button>
+  `).join("");
+
+  tabs.querySelectorAll("[data-idx]").forEach(b => {
+    b.addEventListener("click", () => {
+      activePhase = Number(b.dataset.idx);
+      renderRoadmap();
+    });
+  });
+
+  const p = PHASES[activePhase];
+  document.getElementById("phaseDetail").innerHTML = `
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <strong style="font-size:13.5px;">${p.num}: ${p.name}</strong>
+        <span class="pill-tag">${p.badge} · ${p.time}</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--muted-foreground);">${p.summary}</div>
+      <ul class="checklist">
+        ${p.items.map(it => `<li><span class="chk-dot">✓</span><span>${it}</span></li>`).join("")}
+      </ul>
+    </div>
+    <div>
+      <div class="kicker" style="color:var(--muted-foreground);">Wrangler &amp; Build Commands</div>
+      <pre class="cmd-block">${p.cmd}</pre>
+    </div>
+  `;
+}
+
+document.getElementById("visSlider").addEventListener("input", renderCapacity);
+document.getElementById("wrtSlider").addEventListener("input", renderCapacity);
+
+renderCapacity();
+renderRoadmap();
+</script>
+</body>
+</html>
