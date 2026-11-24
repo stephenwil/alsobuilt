@@ -9,11 +9,14 @@ const ALLOWED_CATEGORIES = new Set([
   'mcp-tooling',
   'local-llm-runners',
   'browser-computer-use',
-  'agent-workflows'
+  'agent-workflows',
+  'hardware-embedded',
+  'gamedev-retro',
+  'devtools-infra'
 ]);
 
 const ALLOWED_ARCH = new Set(['Desktop', 'CLI', 'Web', 'Browser', 'SDK', 'Mobile']);
-const ALLOWED_MODEL = new Set(['Local LLM', 'Hybrid', 'Cloud API']);
+const ALLOWED_MODEL = new Set(['Standalone', 'Local LLM', 'Hybrid', 'Cloud API']);
 const ALLOWED_STAGE = new Set(['Prod', 'Beta', 'Proto', 'Lesson']);
 const ALLOWED_TRAITS = new Set([
   'local-first',
@@ -30,7 +33,11 @@ const ALLOWED_TRAITS = new Set([
   'self-hosted',
   'mobile',
   'rag',
-  'realtime'
+  'realtime',
+  'hardware',
+  'gamedev',
+  '3d-webgl',
+  'audio-synth'
 ]);
 
 const TRAIT_KEYWORDS = {
@@ -48,7 +55,11 @@ const TRAIT_KEYWORDS = {
   'self-hosted': /\b(self-hosted|selfhost|docker|gateway|server)\b/i,
   mobile: /\b(mobile|ios|android|iphone|swiftui|react native)\b/i,
   rag: /\b(rag|vector|embedding|retriev|knowledge graph|graphrag|semantic search)\b/i,
-  realtime: /\b(realtime|real-time|webrtc|streaming|live|low-latency)\b/i
+  realtime: /\b(realtime|real-time|webrtc|streaming|live|low-latency)\b/i,
+  hardware: /\b(hardware|can\s?bus|obd|automotive|esp32|embedded|firmware|serial|robotics|iot|pcb)\b/i,
+  gamedev: /\b(game|gamedev|fantasy console|cartridge|retro|pixel|sprite|tilemap|godot|bevy)\b/i,
+  '3d-webgl': /\b(3d|webgl|webgpu|three\.?js|shader|blender|cad|stl|3mf)\b/i,
+  'audio-synth': /\b(synth|synthesizer|midi|dsp|webaudio|audioworklet|wavetable|daw)\b/i
 };
 
 function parseIssueForm(body) {
@@ -79,6 +90,7 @@ function mapLicense(spdx) {
   if (s.startsWith('AGPL')) return 'AGPL';
   if (s.startsWith('GPL')) return 'GPL-3';
   if (s.startsWith('BSD')) return 'BSD-3';
+  if (s.startsWith('ISC')) return 'ISC';
   return 'Source';
 }
 

@@ -1,0 +1,18 @@
+slug: savvycan
+category: hardware-embedded
+name: SavvyCAN
+repo: https://github.com/collin80/SavvyCAN
+tagline: Cross-platform Qt desktop CAN bus reverse-engineering tool for capturing, graphing, and replaying automotive frames
+arch: Desktop
+model: Standalone
+license: MIT
+stage: Prod
+stack: C++ + Qt + CAN
+region: Global
+stars: 1941
+traits:
+  - hardware
+  - local-first
+  - realtime
+x: 0.19
+'y': 0.34

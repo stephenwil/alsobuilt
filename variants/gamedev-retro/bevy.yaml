@@ -1,0 +1,19 @@
+slug: bevy
+category: gamedev-retro
+name: Bevy
+repo: https://github.com/bevyengine/bevy
+tagline: Data-driven 2D and 3D game engine written in Rust with ECS architecture and WebGPU/WebGL support
+arch: SDK
+model: Standalone
+license: Apache-2
+stage: Beta
+stack: Rust + ECS + wgpu
+region: Global
+stars: 49981
+traits:
+  - gamedev
+  - rust
+  - 3d-webgl
+  - local-first
+x: 0.36
+'y': 0.68

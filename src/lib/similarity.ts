@@ -15,7 +15,11 @@ export const TRAIT_KEYWORDS: Record<string, string[]> = {
   'self-hosted': ['self-host', 'docker', 'tailscale', 'team', 'org', 'postgres', 'neo4j'],
   mobile: ['mobile', 'ios', 'android', 'phone', 'watch'],
   rag: ['rag', 'vector', 'embedding', 'retrieval', 'memory', 'knowledge graph', 'search'],
-  realtime: ['realtime', 'real-time', 'webrtc', 'streaming', 'low-latency', 'live']
+  realtime: ['realtime', 'real-time', 'webrtc', 'streaming', 'low-latency', 'live'],
+  hardware: ['hardware', 'can bus', 'canbus', 'obd', 'automotive', 'esp32', 'embedded', 'firmware', 'serial', 'robotics', 'iot', 'pcb'],
+  gamedev: ['game', 'gamedev', 'fantasy console', 'cartridge', 'retro', 'pixel', 'sprite', 'tilemap', 'engine', 'godot', 'bevy', 'pico'],
+  '3d-webgl': ['3d', 'webgl', 'webgpu', 'three.js', 'threejs', 'shader', 'blender', 'cad', 'stl', '3mf', 'mesh'],
+  'audio-synth': ['synth', 'synthesizer', 'midi', 'dsp', 'webaudio', 'audioworklet', 'wavetable', 'daw', 'tracker']
 };
 
 export const ALL_TRAITS = Object.keys(TRAIT_KEYWORDS);

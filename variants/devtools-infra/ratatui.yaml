@@ -1,0 +1,18 @@
+slug: ratatui
+category: devtools-infra
+name: Ratatui
+repo: https://github.com/ratatui/ratatui
+tagline: Immediate-mode Rust library for building rich, responsive terminal user interfaces and dashboards
+arch: SDK
+model: Standalone
+license: MIT
+stage: Prod
+stack: Rust + TUI
+region: Global
+stars: 23420
+traits:
+  - rust
+  - cli
+  - local-first
+x: 0.28
+'y': 0.39

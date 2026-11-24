@@ -22,12 +22,12 @@
       text: 'Local-first ambient voice note agent that indexes Markdown over MCP with zero cloud dependencies'
     },
     {
-      label: 'Terminal coding agent',
-      text: 'Open-weights CLI coding agent using local models and MCP tools to refactor multi-file git repos'
+      label: '3D CAN bus viewer',
+      text: 'Interactive 3D WebGL automotive CAN bus explorer and DBC signal decoder running locally in the browser'
     },
     {
-      label: 'Offline mobile voice',
-      text: 'Offline mobile realtime voice multi-agent companion syncing encrypted memory peer-to-peer'
+      label: 'Fantasy console SDK',
+      text: 'Local-first retro fantasy console cartridge SDK and pixel editor built in Rust and WebAssembly'
     }
   ];
 
@@ -119,6 +119,8 @@
     selectedSlug ? (catalog.variants.find((v) => v.slug === selectedSlug) ?? null) : null
   );
 
+  const NON_AI_CATEGORIES = new Set(['hardware-embedded', 'gamedev-retro', 'devtools-infra']);
+
   let prGenerated = $derived(
     buildVariantYaml({
       name: prName || 'my-variant',
@@ -126,7 +128,11 @@
       repo: prRepo || 'https://github.com/you/my-variant',
       tagline: ideaText.trim() || 'Describe what makes this project distinct',
       arch: prArch,
-      model: activeTraits.has('local-first') ? 'Local LLM' : 'Hybrid',
+      model: NON_AI_CATEGORIES.has(prCategory)
+        ? 'Standalone'
+        : activeTraits.has('local-first')
+          ? 'Local LLM'
+          : 'Hybrid',
       license: prLicense,
       stage: 'Proto',
       stack: prStack || 'TypeScript',
@@ -326,7 +332,7 @@
   });
 
   const ARCH_OPTIONS = ['Desktop', 'CLI', 'Web', 'SDK', 'Browser', 'Mobile'];
-  const LICENSE_OPTIONS = ['MIT', 'Apache-2', 'AGPL', 'GPL-3', 'BSD-3', 'Source'];
+  const LICENSE_OPTIONS = ['MIT', 'Apache-2', 'AGPL', 'GPL-3', 'BSD-3', 'ISC', 'Source'];
   const STAGE_OPTIONS = ['Prod', 'Beta', 'Proto', 'Lesson'];
   const SIZE_OPTIONS: Array<{ id: 'indie' | 'mid' | 'major'; label: string }> = [
     { id: 'indie', label: 'Indie (<5k ★)' },
@@ -343,15 +349,15 @@
     <div class="flex flex-col gap-2.5 max-w-3xl">
       <div class="inline-flex items-center gap-2 self-start px-3 py-1 rounded-full bg-[var(--secondary)]/90 border border-[var(--border)] font-mono text-[11px] text-[var(--muted)]">
         <span class="w-2 h-2 rounded-full bg-[var(--emerald)]"></span>
-        <span>Open-source AI build radar · {catalog.variants.length} repos · {pulse.total} building privately</span>
+        <span>Open-source build radar · {catalog.variants.length} repos · {catalog.categories.length} categories · {pulse.total} building privately</span>
       </div>
 
       <h1 class="m-0 text-2xl sm:text-4xl font-bold tracking-tight leading-[1.15] text-[var(--fg)]">
-        See who's already building your AI idea.
+        See who's already building your idea.
       </h1>
 
       <p class="m-0 text-sm sm:text-[15px] text-[var(--muted)] leading-relaxed max-w-2xl">
-        AI developers keep building the same tools in parallel. Paste a one-sentence pitch to find similar open-source repos, spot what they're missing, and decide whether to contribute, differentiate, or build privately.
+        Developers and AI-assisted builders keep shipping the same tools in parallel — from local LLMs and MCP servers to CAN bus explorers and retro engines. Paste a one-sentence pitch to check overlap, spot missing angles, or signal stealth work.
       </p>
     </div>
 
@@ -361,7 +367,7 @@
         <input
           type="text"
           bind:value={ideaText}
-          placeholder="What are you thinking of building? e.g. Local-first voice notes app that connects to Obsidian via MCP..."
+          placeholder="What are you thinking of building? e.g. 3D CAN bus explorer, fantasy console SDK, or local voice + MCP notes..."
           class="flex-1 h-12 px-4 rounded-xl bg-[var(--bg)] border border-[var(--border)] text-sm sm:text-[15px] text-[var(--fg)] focus:outline-none focus:border-[var(--primary)] shadow-inner"
         />
         {#if hasIdea}
@@ -565,7 +571,7 @@
           ? 'bg-[var(--primary)] text-white border-[var(--primary)]'
           : 'bg-[var(--card)] text-[var(--muted)] border-[var(--border)] hover:text-[var(--fg)]'}"
       >
-        All AI ({catalog.variants.length})
+        All Projects ({catalog.variants.length})
       </button>
       {#each catalog.categories as cat}
         <button

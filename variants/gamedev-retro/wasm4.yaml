@@ -1,0 +1,20 @@
+slug: wasm4
+category: gamedev-retro
+name: WASM-4
+repo: https://github.com/aduros/wasm4
+tagline: Low-level WebAssembly fantasy console for building tiny 64KB retro game cartridges in Rust, C, Zig, or Go
+arch: SDK
+model: Standalone
+license: ISC
+stage: Prod
+stack: WebAssembly + TypeScript + CLI
+region: Global
+stars: 1548
+traits:
+  - gamedev
+  - local-first
+  - cli
+  - browser
+  - typescript
+x: 0.22
+'y': 0.31

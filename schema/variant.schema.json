@@ -30,7 +30,10 @@
         "mcp-tooling",
         "local-llm-runners",
         "browser-computer-use",
-        "agent-workflows"
+        "agent-workflows",
+        "hardware-embedded",
+        "gamedev-retro",
+        "devtools-infra"
       ]
     },
     "name": {
@@ -53,11 +56,11 @@
     },
     "model": {
       "type": "string",
-      "enum": ["Local LLM", "Hybrid", "Cloud API"]
+      "enum": ["Standalone", "Local LLM", "Hybrid", "Cloud API"]
     },
     "license": {
       "type": "string",
-      "enum": ["MIT", "Apache-2", "AGPL", "GPL-3", "BSD-3", "Source"]
+      "enum": ["MIT", "Apache-2", "AGPL", "GPL-3", "BSD-3", "ISC", "Source"]
     },
     "stage": {
       "type": "string",
@@ -108,7 +111,11 @@
           "self-hosted",
           "mobile",
           "rag",
-          "realtime"
+          "realtime",
+          "hardware",
+          "gamedev",
+          "3d-webgl",
+          "audio-synth"
         ]
       }
     },

@@ -1,0 +1,19 @@
+slug: cantools
+category: hardware-embedded
+name: cantools
+repo: https://github.com/cantools/cantools
+tagline: Python CLI and library for parsing DBC/KCD/SYM files, encoding/decoding CAN signals, and monitoring live buses
+arch: CLI
+model: Standalone
+license: MIT
+stage: Prod
+stack: Python + CAN + DBC
+region: Global
+stars: 2325
+traits:
+  - hardware
+  - cli
+  - python
+  - local-first
+x: 0.24
+'y': 0.28

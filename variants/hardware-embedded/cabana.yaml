@@ -1,0 +1,21 @@
+slug: cabana
+category: hardware-embedded
+name: Cabana (Web)
+repo: https://github.com/commaai/cabana
+tagline: Browser-based CAN bus signal visualizer and interactive DBC editor originally built by comma.ai
+arch: Web
+model: Standalone
+license: MIT
+stage: Lesson
+lesson: >-
+  Archived browser edition — proved huge demand for visual DBC/CAN inspection, though comma.ai moved Cabana to native
+  C++/Qt inside openpilot for high-rate frame streaming.
+stack: JavaScript + React + CAN
+region: Global
+stars: 206
+traits:
+  - hardware
+  - browser
+  - typescript
+x: 0.52
+'y': 0.38

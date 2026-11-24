@@ -1,0 +1,19 @@
+slug: probe-rs
+category: hardware-embedded
+name: probe-rs
+repo: https://github.com/probe-rs/probe-rs
+tagline: Modern Rust embedded debugging and flashing toolset for ARM Cortex-M, RISC-V, and ESP32 microcontrollers
+arch: CLI
+model: Standalone
+license: Apache-2
+stage: Prod
+stack: Rust + Embedded + SWD/JTAG
+region: Global
+stars: 3024
+traits:
+  - hardware
+  - rust
+  - cli
+  - local-first
+x: 0.21
+'y': 0.44

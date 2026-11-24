@@ -1,0 +1,17 @@
+slug: pixelorama
+category: gamedev-retro
+name: Pixelorama
+repo: https://github.com/Orama-Interactive/Pixelorama
+tagline: Cross-platform open-source 2D sprite editor and pixel art animation studio built on Godot Engine
+arch: Desktop
+model: Standalone
+license: MIT
+stage: Prod
+stack: GDScript + Godot
+region: Global
+stars: 11193
+traits:
+  - gamedev
+  - local-first
+x: 0.24
+'y': 0.22

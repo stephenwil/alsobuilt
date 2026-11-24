@@ -1,0 +1,17 @@
+slug: ldtk
+category: gamedev-retro
+name: LDtk
+repo: https://github.com/deepnight/ldtk
+tagline: Modern, fast 2D tilemap and level editor with auto-layer rules and clean JSON export for indie game engines
+arch: Desktop
+model: Standalone
+license: MIT
+stage: Prod
+stack: Haxe + Electron + JSON
+region: Global
+stars: 5012
+traits:
+  - gamedev
+  - local-first
+x: 0.26
+'y': 0.24

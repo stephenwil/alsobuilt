@@ -1,0 +1,19 @@
+slug: bandwhich
+category: devtools-infra
+name: bandwhich
+repo: https://github.com/imsnif/bandwhich
+tagline: Rust terminal bandwidth monitor showing real-time network traffic grouped by process, connection, and remote host
+arch: CLI
+model: Standalone
+license: MIT
+stage: Prod
+stack: Rust + TUI
+region: Global
+stars: 12111
+traits:
+  - cli
+  - rust
+  - local-first
+  - realtime
+x: 0.22
+'y': 0.26

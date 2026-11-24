@@ -1,0 +1,18 @@
+slug: actual-budget
+category: devtools-infra
+name: Actual Budget
+repo: https://github.com/actualbudget/actual
+tagline: Local-first, self-hosted personal finance and envelope budgeting app with CRDT sync and SQLite storage
+arch: Web
+model: Standalone
+license: MIT
+stage: Prod
+stack: TypeScript + React + SQLite
+region: Global
+stars: 30442
+traits:
+  - local-first
+  - self-hosted
+  - typescript
+x: 0.34
+'y': 0.42

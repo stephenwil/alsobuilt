@@ -1,0 +1,18 @@
+slug: sniffnet
+category: devtools-infra
+name: Sniffnet
+repo: https://github.com/GyulyVGC/sniffnet
+tagline: Cross-platform Rust desktop network traffic analyzer with live protocol charts, PCAP export, and alerts
+arch: Desktop
+model: Standalone
+license: Apache-2
+stage: Prod
+stack: Rust + Iced + libpcap
+region: Global
+stars: 43293
+traits:
+  - rust
+  - local-first
+  - realtime
+x: 0.25
+'y': 0.33

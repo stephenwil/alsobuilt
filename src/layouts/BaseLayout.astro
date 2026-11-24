@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title,
-  description = "Open-source AI idea collision radar. Paste a one-sentence pitch to check overlap across 76+ repos (including indie builds), spot missing angles, or signal stealth work anonymously."
+  description = "Open-source idea collision radar for developers. Paste a one-sentence pitch to check overlap across 94+ repos (AI, hardware, gamedev, devtools & indie builds), spot missing angles, or signal stealth work anonymously."
 } = Astro.props;
 
 const siteUrl = 'https://alsobuilt.pages.dev';
@@ -34,7 +34,7 @@ const ogImage = `${siteUrl}/og-card.png`;
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="AlsoBuilt — See who's already building your AI idea" />
+    <meta property="og:image:alt" content="AlsoBuilt — See who's already building your idea" />
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -54,7 +54,7 @@ const ogImage = `${siteUrl}/og-card.png`;
               also<span class="font-medium text-[var(--muted)]">built</span>
             </div>
             <div class="text-[11px] text-[var(--muted)] mt-0.5">
-              Parallel AI builds &amp; idea collision radar
+              Parallel open-source builds &amp; idea collision radar
             </div>
           </div>
         </a>
@@ -96,7 +96,7 @@ const ogImage = `${siteUrl}/og-card.png`;
     </main>
 
     <footer class="max-w-5xl mx-auto px-4 py-6 text-xs text-[var(--muted)] flex items-center justify-between flex-wrap gap-2 border-t border-[var(--border)] mt-8">
-      <span>AlsoBuilt · Open-Source AI Idea Collision Radar</span>
+      <span>AlsoBuilt · Open-Source Build &amp; Idea Collision Radar</span>
       <span class="font-mono">Git-First Catalog · Cloudflare Pages + D1</span>
     </footer>
   </body>

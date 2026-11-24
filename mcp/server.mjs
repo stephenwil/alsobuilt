@@ -30,7 +30,11 @@ const TRAIT_PATTERNS = {
   'self-hosted': /\b(self-hosted|selfhost|docker|gateway|server)\b/i,
   mobile: /\b(mobile|ios|android|iphone|apple watch|react native)\b/i,
   rag: /\b(rag|vector|embedding|retriev|knowledge graph|graphrag|semantic search)\b/i,
-  realtime: /\b(realtime|real-time|webrtc|streaming|live|low-latency)\b/i
+  realtime: /\b(realtime|real-time|webrtc|streaming|live|low-latency)\b/i,
+  hardware: /\b(hardware|can\s?bus|obd|automotive|esp32|embedded|firmware|serial|robotics|iot|pcb)\b/i,
+  gamedev: /\b(game|gamedev|fantasy console|cartridge|retro|pixel|sprite|tilemap|godot|bevy)\b/i,
+  '3d-webgl': /\b(3d|webgl|webgpu|three\.?js|shader|blender|cad|stl|3mf)\b/i,
+  'audio-synth': /\b(synth|synthesizer|midi|dsp|webaudio|audioworklet|wavetable|daw)\b/i
 };
 
 const STOPWORDS = new Set([
@@ -142,13 +146,13 @@ const TOOLS = [
         category: {
           type: 'string',
           description:
-            'Optional category slug filter: ai-memory, coding-agents, local-voice, mcp-tooling, local-llm-runners, browser-computer-use, agent-workflows.'
+            'Optional category slug filter: ai-memory, coding-agents, local-voice, mcp-tooling, local-llm-runners, browser-computer-use, agent-workflows, hardware-embedded, gamedev-retro, devtools-infra.'
         },
         traits: {
           type: 'array',
           items: { type: 'string' },
           description:
-            'Optional explicit traits to include (e.g. local-first, mcp, voice, rust, mobile, cli, rag).'
+            'Optional explicit traits to include (e.g. local-first, mcp, voice, rust, mobile, cli, rag, hardware, gamedev, 3d-webgl, audio-synth).'
         },
         maxStars: {
           type: 'integer',

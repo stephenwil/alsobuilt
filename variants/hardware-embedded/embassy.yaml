@@ -1,0 +1,19 @@
+slug: embassy
+category: hardware-embedded
+name: Embassy
+repo: https://github.com/embassy-rs/embassy
+tagline: Async/await Rust embedded framework with zero-alloc HALs, networking, USB, and Bluetooth for microcontrollers
+arch: SDK
+model: Standalone
+license: Apache-2
+stage: Prod
+stack: Rust + Async Embedded
+region: Global
+stars: 10145
+traits:
+  - hardware
+  - rust
+  - local-first
+  - realtime
+x: 0.28
+'y': 0.58

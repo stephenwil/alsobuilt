@@ -2,7 +2,7 @@
 
 **Live:** [alsobuilt.pages.dev](https://alsobuilt.pages.dev/) · **Feed:** [`/index.json`](https://alsobuilt.pages.dev/index.json) · **MCP Server:** [`mcp/`](./mcp/README.md)
 
-**See who's already building your AI idea.** An open-source, Git-first catalog and collision radar (76 verified open-source AI projects — including 29 indie `<5k ★` builds — across 7 categories) built on **Astro 5 + Svelte 5 + Cloudflare Pages + Cloudflare D1**.
+**See who's already building your idea.** An open-source, Git-first catalog and collision radar (94 verified open-source repos — including 36 indie `<5k ★` builds — across 10 categories spanning AI, Hardware & Embedded, Game Dev & Retro, and DevTools) built on **Astro 5 + Svelte 5 + Cloudflare Pages + Cloudflare D1**.
 
 - **Collision Radar (`/`)** — Paste a one-sentence pitch to rank similar open-source repos by trait & keyword overlap, spot missing wedge traits, compare projects side-by-side, explore the 2D Constellation Map, or filter specifically to **Indie (`<5k ★`)** and **Lesson** builds.
 - **Anonymous Stealth Pulse (`/api/pulse`)** — Building privately and don't want to expose your repo? Toggle *"+ I'm Building Privately"* to anonymously increment the live monthly-deduplicated counter for your category (Cloudflare D1).

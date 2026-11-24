@@ -1,0 +1,18 @@
+slug: tic-80
+category: gamedev-retro
+name: TIC-80
+repo: https://github.com/nesbox/TIC-80
+tagline: Open-source fantasy computer with built-in code, sprite, map, and chiptune editors for tiny cartridge games
+arch: Desktop
+model: Standalone
+license: MIT
+stage: Prod
+stack: C + Lua/JS/Wasm
+region: Global
+stars: 6199
+traits:
+  - gamedev
+  - local-first
+  - audio-synth
+x: 0.18
+'y': 0.38

@@ -1,0 +1,19 @@
+slug: gb-studio
+category: gamedev-retro
+name: GB Studio
+repo: https://github.com/chrismaltby/gb-studio
+tagline: Visual retro game creator that compiles directly to real Game Boy ROM cartridges and browser builds
+arch: Desktop
+model: Standalone
+license: MIT
+stage: Prod
+stack: TypeScript + React + GBDK
+region: Global
+stars: 9472
+traits:
+  - gamedev
+  - local-first
+  - typescript
+  - hardware
+x: 0.31
+'y': 0.46

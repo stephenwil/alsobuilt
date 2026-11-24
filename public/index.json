@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T23:34:48.288Z",
+  "generatedAt": "2026-11-24T23:54:02.725Z",
   "categories": [
     {
       "slug": "ai-memory",
@@ -35,6 +35,21 @@
       "slug": "agent-workflows",
       "name": "Agent Frameworks",
       "description": "Multi-agent orchestration graphs, workflow builders, and typed agent SDKs"
+    },
+    {
+      "slug": "hardware-embedded",
+      "name": "Hardware & Embedded",
+      "description": "CAN bus, automotive, ESP32, firmware, robotics, and electronics tools"
+    },
+    {
+      "slug": "gamedev-retro",
+      "name": "Game Dev & Retro",
+      "description": "Fantasy consoles, cartridge SDKs, retro game engines, pixel art, and level editors"
+    },
+    {
+      "slug": "devtools-infra",
+      "name": "DevTools & Self-Hosted",
+      "description": "Local-first apps, TUIs, network monitors, audio synths, and developer utilities"
     }
   ],
   "variants": [
@@ -690,6 +705,38 @@
       "y": 0.44
     },
     {
+      "slug": "bevy",
+      "category": "gamedev-retro",
+      "name": "Bevy",
+      "repo": "https://github.com/bevyengine/bevy",
+      "tagline": "Data-driven 2D and 3D game engine written in Rust with ECS architecture and WebGPU/WebGL support",
+      "arch": "SDK",
+      "model": "Standalone",
+      "license": "Apache-2",
+      "stage": "Beta",
+      "stack": "Rust + ECS + wgpu",
+      "region": "Global",
+      "stars": 49981,
+      "traits": [
+        "gamedev",
+        "rust",
+        "3d-webgl",
+        "local-first"
+      ],
+      "x": 0.36,
+      "y": 0.68,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
       "slug": "jan",
       "category": "local-llm-runners",
       "name": "Jan",
@@ -744,6 +791,37 @@
       ],
       "x": 0.68,
       "y": 0.84,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "sniffnet",
+      "category": "devtools-infra",
+      "name": "Sniffnet",
+      "repo": "https://github.com/GyulyVGC/sniffnet",
+      "tagline": "Cross-platform Rust desktop network traffic analyzer with live protocol charts, PCAP export, and alerts",
+      "arch": "Desktop",
+      "model": "Standalone",
+      "license": "Apache-2",
+      "stage": "Prod",
+      "stack": "Rust + Iced + libpcap",
+      "region": "Global",
+      "stars": 43293,
+      "traits": [
+        "rust",
+        "local-first",
+        "realtime"
+      ],
+      "x": 0.25,
+      "y": 0.33,
       "spark": [
         4,
         7,
@@ -1018,6 +1096,37 @@
       "y": 0.68
     },
     {
+      "slug": "actual-budget",
+      "category": "devtools-infra",
+      "name": "Actual Budget",
+      "repo": "https://github.com/actualbudget/actual",
+      "tagline": "Local-first, self-hosted personal finance and envelope budgeting app with CRDT sync and SQLite storage",
+      "arch": "Web",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Prod",
+      "stack": "TypeScript + React + SQLite",
+      "region": "Global",
+      "stars": 30442,
+      "traits": [
+        "local-first",
+        "self-hosted",
+        "typescript"
+      ],
+      "x": 0.34,
+      "y": 0.42,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
       "slug": "mastra",
       "category": "agent-workflows",
       "name": "Mastra",
@@ -1244,6 +1353,37 @@
       ]
     },
     {
+      "slug": "ratatui",
+      "category": "devtools-infra",
+      "name": "Ratatui",
+      "repo": "https://github.com/ratatui/ratatui",
+      "tagline": "Immediate-mode Rust library for building rich, responsive terminal user interfaces and dashboards",
+      "arch": "SDK",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Prod",
+      "stack": "Rust + TUI",
+      "region": "Global",
+      "stars": 23420,
+      "traits": [
+        "rust",
+        "cli",
+        "local-first"
+      ],
+      "x": 0.28,
+      "y": 0.39,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
       "slug": "babyagi",
       "category": "agent-workflows",
       "name": "BabyAGI",
@@ -1441,6 +1581,71 @@
       ]
     },
     {
+      "slug": "esphome",
+      "category": "hardware-embedded",
+      "name": "ESPHome",
+      "repo": "https://github.com/esphome/esphome",
+      "tagline": "Declarative YAML firmware generator for controlling ESP32, ESP8266, and RP2040 sensors and home hardware",
+      "arch": "CLI",
+      "model": "Standalone",
+      "license": "GPL-3",
+      "stage": "Prod",
+      "stack": "C++ + Python + ESP32",
+      "region": "Global",
+      "stars": 12167,
+      "traits": [
+        "hardware",
+        "self-hosted",
+        "local-first",
+        "python",
+        "cli"
+      ],
+      "x": 0.35,
+      "y": 0.64,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "bandwhich",
+      "category": "devtools-infra",
+      "name": "bandwhich",
+      "repo": "https://github.com/imsnif/bandwhich",
+      "tagline": "Rust terminal bandwidth monitor showing real-time network traffic grouped by process, connection, and remote host",
+      "arch": "CLI",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Prod",
+      "stack": "Rust + TUI",
+      "region": "Global",
+      "stars": 12111,
+      "traits": [
+        "cli",
+        "rust",
+        "local-first",
+        "realtime"
+      ],
+      "x": 0.22,
+      "y": 0.26,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
       "slug": "mcp-inspector",
       "category": "mcp-tooling",
       "name": "MCP Inspector",
@@ -1461,6 +1666,68 @@
       ],
       "x": 0.3,
       "y": 0.46,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "pixelorama",
+      "category": "gamedev-retro",
+      "name": "Pixelorama",
+      "repo": "https://github.com/Orama-Interactive/Pixelorama",
+      "tagline": "Cross-platform open-source 2D sprite editor and pixel art animation studio built on Godot Engine",
+      "arch": "Desktop",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Prod",
+      "stack": "GDScript + Godot",
+      "region": "Global",
+      "stars": 11193,
+      "traits": [
+        "gamedev",
+        "local-first"
+      ],
+      "x": 0.24,
+      "y": 0.22,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "embassy",
+      "category": "hardware-embedded",
+      "name": "Embassy",
+      "repo": "https://github.com/embassy-rs/embassy",
+      "tagline": "Async/await Rust embedded framework with zero-alloc HALs, networking, USB, and Bluetooth for microcontrollers",
+      "arch": "SDK",
+      "model": "Standalone",
+      "license": "Apache-2",
+      "stage": "Prod",
+      "stack": "Rust + Async Embedded",
+      "region": "Global",
+      "stars": 10145,
+      "traits": [
+        "hardware",
+        "rust",
+        "local-first",
+        "realtime"
+      ],
+      "x": 0.28,
+      "y": 0.58,
       "spark": [
         4,
         7,
@@ -1505,6 +1772,38 @@
       ]
     },
     {
+      "slug": "gb-studio",
+      "category": "gamedev-retro",
+      "name": "GB Studio",
+      "repo": "https://github.com/chrismaltby/gb-studio",
+      "tagline": "Visual retro game creator that compiles directly to real Game Boy ROM cartridges and browser builds",
+      "arch": "Desktop",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Prod",
+      "stack": "TypeScript + React + GBDK",
+      "region": "Global",
+      "stars": 9472,
+      "traits": [
+        "gamedev",
+        "local-first",
+        "typescript",
+        "hardware"
+      ],
+      "x": 0.31,
+      "y": 0.46,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
       "slug": "vibe",
       "category": "local-voice",
       "name": "Vibe",
@@ -1525,6 +1824,37 @@
       ],
       "x": 0.16,
       "y": 0.22,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "tic-80",
+      "category": "gamedev-retro",
+      "name": "TIC-80",
+      "repo": "https://github.com/nesbox/TIC-80",
+      "tagline": "Open-source fantasy computer with built-in code, sprite, map, and chiptune editors for tiny cartridge games",
+      "arch": "Desktop",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Prod",
+      "stack": "C + Lua/JS/Wasm",
+      "region": "Global",
+      "stars": 6199,
+      "traits": [
+        "gamedev",
+        "local-first",
+        "audio-synth"
+      ],
+      "x": 0.18,
+      "y": 0.38,
       "spark": [
         4,
         7,
@@ -1559,6 +1889,36 @@
       ],
       "x": 0.32,
       "y": 0.34,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "ldtk",
+      "category": "gamedev-retro",
+      "name": "LDtk",
+      "repo": "https://github.com/deepnight/ldtk",
+      "tagline": "Modern, fast 2D tilemap and level editor with auto-layer rules and clean JSON export for indie game engines",
+      "arch": "Desktop",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Prod",
+      "stack": "Haxe + Electron + JSON",
+      "region": "Global",
+      "stars": 5012,
+      "traits": [
+        "gamedev",
+        "local-first"
+      ],
+      "x": 0.26,
+      "y": 0.24,
       "spark": [
         4,
         7,
@@ -1795,6 +2155,37 @@
       ]
     },
     {
+      "slug": "tio",
+      "category": "devtools-infra",
+      "name": "tio",
+      "repo": "https://github.com/tio/tio",
+      "tagline": "Simple, fast serial device terminal CLI with auto-reconnect, Lua scripting, and timestamps for hardware debugging",
+      "arch": "CLI",
+      "model": "Standalone",
+      "license": "GPL-3",
+      "stage": "Prod",
+      "stack": "C + Lua + POSIX",
+      "region": "Global",
+      "stars": 3229,
+      "traits": [
+        "cli",
+        "hardware",
+        "local-first"
+      ],
+      "x": 0.16,
+      "y": 0.21,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
       "slug": "willow",
       "category": "local-voice",
       "name": "Willow",
@@ -1815,6 +2206,102 @@
       ],
       "x": 0.14,
       "y": 0.52,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "probe-rs",
+      "category": "hardware-embedded",
+      "name": "probe-rs",
+      "repo": "https://github.com/probe-rs/probe-rs",
+      "tagline": "Modern Rust embedded debugging and flashing toolset for ARM Cortex-M, RISC-V, and ESP32 microcontrollers",
+      "arch": "CLI",
+      "model": "Standalone",
+      "license": "Apache-2",
+      "stage": "Prod",
+      "stack": "Rust + Embedded + SWD/JTAG",
+      "region": "Global",
+      "stars": 3024,
+      "traits": [
+        "hardware",
+        "rust",
+        "cli",
+        "local-first"
+      ],
+      "x": 0.21,
+      "y": 0.44,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "cantools",
+      "category": "hardware-embedded",
+      "name": "cantools",
+      "repo": "https://github.com/cantools/cantools",
+      "tagline": "Python CLI and library for parsing DBC/KCD/SYM files, encoding/decoding CAN signals, and monitoring live buses",
+      "arch": "CLI",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Prod",
+      "stack": "Python + CAN + DBC",
+      "region": "Global",
+      "stars": 2325,
+      "traits": [
+        "hardware",
+        "cli",
+        "python",
+        "local-first"
+      ],
+      "x": 0.24,
+      "y": 0.28,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "vital",
+      "category": "devtools-infra",
+      "name": "Vital",
+      "repo": "https://github.com/mtytel/vital",
+      "tagline": "Open-source spectral warping wavetable synthesizer with real-time animated modulation and DSP engine",
+      "arch": "Desktop",
+      "model": "Standalone",
+      "license": "GPL-3",
+      "stage": "Prod",
+      "stack": "C++ + JUCE + OpenGL",
+      "region": "Global",
+      "stars": 2222,
+      "traits": [
+        "audio-synth",
+        "local-first",
+        "realtime",
+        "3d-webgl"
+      ],
+      "x": 0.17,
+      "y": 0.35,
       "spark": [
         4,
         7,
@@ -1859,6 +2346,37 @@
       ]
     },
     {
+      "slug": "savvycan",
+      "category": "hardware-embedded",
+      "name": "SavvyCAN",
+      "repo": "https://github.com/collin80/SavvyCAN",
+      "tagline": "Cross-platform Qt desktop CAN bus reverse-engineering tool for capturing, graphing, and replaying automotive frames",
+      "arch": "Desktop",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Prod",
+      "stack": "C++ + Qt + CAN",
+      "region": "Global",
+      "stars": 1941,
+      "traits": [
+        "hardware",
+        "local-first",
+        "realtime"
+      ],
+      "x": 0.19,
+      "y": 0.34,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
       "slug": "poki",
       "category": "browser-computer-use",
       "name": "Poki",
@@ -1877,6 +2395,39 @@
       ],
       "x": 0.56,
       "y": 0.54,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "wasm4",
+      "category": "gamedev-retro",
+      "name": "WASM-4",
+      "repo": "https://github.com/aduros/wasm4",
+      "tagline": "Low-level WebAssembly fantasy console for building tiny 64KB retro game cartridges in Rust, C, Zig, or Go",
+      "arch": "SDK",
+      "model": "Standalone",
+      "license": "ISC",
+      "stage": "Prod",
+      "stack": "WebAssembly + TypeScript + CLI",
+      "region": "Global",
+      "stars": 1548,
+      "traits": [
+        "gamedev",
+        "local-first",
+        "cli",
+        "browser",
+        "typescript"
+      ],
+      "x": 0.22,
+      "y": 0.31,
       "spark": [
         4,
         7,
@@ -2352,6 +2903,38 @@
         "cli"
       ],
       "x": 0.18,
+      "y": 0.38,
+      "spark": [
+        4,
+        7,
+        10,
+        12,
+        15,
+        19,
+        22,
+        26
+      ]
+    },
+    {
+      "slug": "cabana",
+      "category": "hardware-embedded",
+      "name": "Cabana (Web)",
+      "repo": "https://github.com/commaai/cabana",
+      "tagline": "Browser-based CAN bus signal visualizer and interactive DBC editor originally built by comma.ai",
+      "arch": "Web",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Lesson",
+      "lesson": "Archived browser edition — proved huge demand for visual DBC/CAN inspection, though comma.ai moved Cabana to native C++/Qt inside openpilot for high-rate frame streaming.",
+      "stack": "JavaScript + React + CAN",
+      "region": "Global",
+      "stars": 206,
+      "traits": [
+        "hardware",
+        "browser",
+        "typescript"
+      ],
+      "x": 0.52,
       "y": 0.38,
       "spark": [
         4,

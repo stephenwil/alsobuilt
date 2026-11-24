@@ -1,0 +1,19 @@
+slug: vital
+category: devtools-infra
+name: Vital
+repo: https://github.com/mtytel/vital
+tagline: Open-source spectral warping wavetable synthesizer with real-time animated modulation and DSP engine
+arch: Desktop
+model: Standalone
+license: GPL-3
+stage: Prod
+stack: C++ + JUCE + OpenGL
+region: Global
+stars: 2222
+traits:
+  - audio-synth
+  - local-first
+  - realtime
+  - 3d-webgl
+x: 0.17
+'y': 0.35

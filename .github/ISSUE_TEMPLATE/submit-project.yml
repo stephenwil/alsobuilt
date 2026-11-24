@@ -1,4 +1,4 @@
-name: Submit an Open-Source AI Project
+name: Submit an Open-Source Project
 description: Paste a GitHub repo URL and we'll automatically fetch live stars/license and open a catalog PR for you.
 title: "[Submit]: "
 labels: ["project-submission"]
@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Want to add your indie build or an open-source AI project to **AlsoBuilt** without hand-editing YAML?
+        Want to add your indie build or an open-source project to **AlsoBuilt** without hand-editing YAML?
         Fill in the fields below — our GitHub Action will fetch live stars & metadata from GitHub and open a ready-to-merge PR automatically.
 
   - type: input
@@ -14,7 +14,7 @@ body:
     attributes:
       label: GitHub Repository URL
       description: Public GitHub repository URL (`https://github.com/owner/repo`).
-      placeholder: https://github.com/owner/my-ai-tool
+      placeholder: https://github.com/owner/my-open-source-tool
     validations:
       required: true
 
@@ -30,6 +30,9 @@ body:
         - local-llm-runners
         - browser-computer-use
         - agent-workflows
+        - hardware-embedded
+        - gamedev-retro
+        - devtools-infra
     validations:
       required: true
 
@@ -52,6 +55,7 @@ body:
     attributes:
       label: Model Runtime
       options:
+        - Standalone
         - Local LLM
         - Hybrid
         - Cloud API
@@ -75,21 +79,21 @@ body:
     attributes:
       label: One-line Tagline (optional)
       description: Leave blank to auto-use the GitHub repository description (12–180 chars).
-      placeholder: Local-first voice notes daemon with Obsidian Markdown and MCP support
+      placeholder: Interactive 3D CAN bus explorer or local-first fantasy console dev kit
 
   - type: input
     id: stack
     attributes:
       label: Primary Stack (optional)
       description: Leave blank to infer from the GitHub primary language.
-      placeholder: Rust + SQLite + Whisper
+      placeholder: TypeScript + Three.js + WebGL
 
   - type: input
     id: traits
     attributes:
       label: Extra Traits (optional, comma-separated)
-      description: "Allowed: local-first, mcp, voice, markdown, multi-agent, browser, cli, rust, python, typescript, open-weights, self-hosted, mobile, rag, realtime"
-      placeholder: local-first, mcp, cli, rust
+      description: "Allowed: local-first, mcp, voice, markdown, multi-agent, browser, cli, rust, python, typescript, open-weights, self-hosted, mobile, rag, realtime, hardware, gamedev, 3d-webgl, audio-synth"
+      placeholder: hardware, 3d-webgl, typescript, local-first
 
   - type: textarea
     id: lesson

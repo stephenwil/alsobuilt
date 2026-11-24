@@ -45,6 +45,21 @@ const CATEGORIES = [
     slug: 'agent-workflows',
     name: 'Agent Frameworks',
     description: 'Multi-agent orchestration graphs, workflow builders, and typed agent SDKs'
+  },
+  {
+    slug: 'hardware-embedded',
+    name: 'Hardware & Embedded',
+    description: 'CAN bus, automotive, ESP32, firmware, robotics, and electronics tools'
+  },
+  {
+    slug: 'gamedev-retro',
+    name: 'Game Dev & Retro',
+    description: 'Fantasy consoles, cartridge SDKs, retro game engines, pixel art, and level editors'
+  },
+  {
+    slug: 'devtools-infra',
+    name: 'DevTools & Self-Hosted',
+    description: 'Local-first apps, TUIs, network monitors, audio synths, and developer utilities'
   }
 ];
 

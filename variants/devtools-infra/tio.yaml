@@ -1,0 +1,18 @@
+slug: tio
+category: devtools-infra
+name: tio
+repo: https://github.com/tio/tio
+tagline: Simple, fast serial device terminal CLI with auto-reconnect, Lua scripting, and timestamps for hardware debugging
+arch: CLI
+model: Standalone
+license: GPL-3
+stage: Prod
+stack: C + Lua + POSIX
+region: Global
+stars: 3229
+traits:
+  - cli
+  - hardware
+  - local-first
+x: 0.16
+'y': 0.21
