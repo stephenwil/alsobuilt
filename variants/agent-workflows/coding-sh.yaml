@@ -1,0 +1,18 @@
+slug: coding-sh
+category: agent-workflows
+name: coding.sh
+repo: https://github.com/jackulau/coding.sh
+tagline: Local-first observability, trace viewer, and evaluation harness for Claude Code, Codex, and Cursor agent runs
+arch: Web
+model: Hybrid
+license: MIT
+stage: Proto
+stack: TypeScript + SQLite
+region: Global
+stars: 154
+traits:
+  - local-first
+  - typescript
+  - self-hosted
+x: 0.31
+'y': 0.33

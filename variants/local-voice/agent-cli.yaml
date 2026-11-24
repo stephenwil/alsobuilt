@@ -1,0 +1,20 @@
+slug: agent-cli
+category: local-voice
+name: agent-cli
+repo: https://github.com/basnijholt/agent-cli
+tagline: Indie local transcription, TTS/STT voice proxy, RAG memory helper, and coding worktree CLI toolkit
+arch: CLI
+model: Hybrid
+license: MIT
+stage: Proto
+stack: Python + Whisper + Piper
+region: Global
+stars: 239
+traits:
+  - voice
+  - cli
+  - local-first
+  - python
+  - rag
+x: 0.35
+'y': 0.45

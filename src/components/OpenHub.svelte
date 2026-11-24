@@ -41,6 +41,7 @@
   let facetArch = $state<string | null>(null);
   let facetLicense = $state<string | null>(null);
   let facetStage = $state<string | null>(null);
+  let facetSize = $state<'indie' | 'mid' | 'major' | null>(null);
   let pinnedSlugs = $state<string[]>([]);
   let selectedSlug = $state<string | null>(null);
   let showPrDrawer = $state<boolean>(false);
@@ -83,6 +84,7 @@
       if (facetArch && v.arch !== facetArch) return false;
       if (facetLicense && v.license !== facetLicense) return false;
       if (facetStage && v.stage !== facetStage) return false;
+      if (facetSize && !matchesSize(v.stars, facetSize)) return false;
       if (q) {
         const hay = `${v.name} ${v.tagline} ${v.stack} ${v.arch} ${v.license} ${v.traits.join(' ')}`.toLowerCase();
         if (!hay.includes(q)) return false;
@@ -283,6 +285,16 @@
     return categoryVariants.filter((v) => v[field] === val).length;
   }
 
+  function matchesSize(stars: number, tier: 'indie' | 'mid' | 'major'): boolean {
+    if (tier === 'indie') return stars < 5000;
+    if (tier === 'mid') return stars >= 5000 && stars < 20000;
+    return stars >= 20000;
+  }
+
+  function countSize(tier: 'indie' | 'mid' | 'major'): number {
+    return categoryVariants.filter((v) => matchesSize(v.stars, tier)).length;
+  }
+
   onMount(() => {
     const params = new URLSearchParams(window.location.search);
     const urlIdea = params.get('idea');
@@ -314,8 +326,13 @@
   });
 
   const ARCH_OPTIONS = ['Desktop', 'CLI', 'Web', 'SDK', 'Browser', 'Mobile'];
-  const LICENSE_OPTIONS = ['MIT', 'Apache-2', 'AGPL', 'BSD-3', 'Source'];
+  const LICENSE_OPTIONS = ['MIT', 'Apache-2', 'AGPL', 'GPL-3', 'BSD-3', 'Source'];
   const STAGE_OPTIONS = ['Prod', 'Beta', 'Proto', 'Lesson'];
+  const SIZE_OPTIONS: Array<{ id: 'indie' | 'mid' | 'major'; label: string }> = [
+    { id: 'indie', label: 'Indie (<5k ★)' },
+    { id: 'mid', label: 'Mid (5k–20k ★)' },
+    { id: 'major', label: 'Major (20k+ ★)' }
+  ];
 </script>
 
 <div class="flex flex-col gap-5">
@@ -687,15 +704,33 @@
         {/each}
       </select>
 
+      <select
+        aria-label="Filter by project size"
+        value={facetSize ?? ''}
+        onchange={(e) => {
+          const val = (e.target as HTMLSelectElement).value;
+          facetSize = val === 'indie' || val === 'mid' || val === 'major' ? val : null;
+        }}
+        class="h-8 px-2.5 rounded-lg border text-xs cursor-pointer {facetSize
+          ? 'bg-[var(--primary)]/15 border-[var(--primary)] text-[var(--fg)]'
+          : 'bg-[var(--card)] border-[var(--border)] text-[var(--muted)]'}"
+      >
+        <option value="">Size: All</option>
+        {#each SIZE_OPTIONS as opt}
+          <option value={opt.id}>{opt.label} ({countSize(opt.id)})</option>
+        {/each}
+      </select>
+
       <span class="text-xs text-[var(--muted)]">{filteredRanked.length} / {categoryVariants.length} shown</span>
 
-      {#if facetArch || facetLicense || facetStage || query}
+      {#if facetArch || facetLicense || facetStage || facetSize || query}
         <button
           type="button"
           onclick={() => {
             facetArch = null;
             facetLicense = null;
             facetStage = null;
+            facetSize = null;
             query = '';
           }}
           class="text-xs text-[var(--primary)] underline cursor-pointer bg-transparent border-0"

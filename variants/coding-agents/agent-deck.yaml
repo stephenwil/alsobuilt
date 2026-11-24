@@ -1,0 +1,18 @@
+slug: agent-deck
+category: coding-agents
+name: Agent Deck
+repo: https://github.com/asheshgoplani/agent-deck
+tagline: Single terminal TUI session manager for orchestrating Claude, Gemini, OpenCode, and Codex coding sessions
+arch: CLI
+model: Hybrid
+license: MIT
+stage: Beta
+stack: Go + Bubble Tea
+region: Global
+stars: 1300
+traits:
+  - cli
+  - multi-agent
+  - local-first
+x: 0.42
+'y': 0.62

@@ -1,0 +1,19 @@
+slug: mlxtop
+category: local-llm-runners
+name: mlxtop
+repo: https://github.com/maximpri/mlxtop
+tagline: Terminal top-style monitor for local LLMs showing GPU memory, paging, and tokens/s across MLX, Ollama, and llama.cpp
+arch: CLI
+model: Local LLM
+license: MIT
+stage: Proto
+stack: Rust + TUI
+region: Global
+stars: 154
+traits:
+  - cli
+  - rust
+  - local-first
+  - realtime
+x: 0.25
+'y': 0.29

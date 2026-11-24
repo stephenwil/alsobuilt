@@ -1,0 +1,19 @@
+slug: anomaly-browse
+category: browser-computer-use
+name: Browse
+repo: https://github.com/anomalyco/browse
+tagline: Let AI agents drive your real logged-in Chromium browser through a lightweight MCP server and extension
+arch: Browser
+model: Hybrid
+license: MIT
+stage: Beta
+stack: TypeScript + Chromium Extension + MCP
+region: Global
+stars: 1076
+traits:
+  - browser
+  - mcp
+  - typescript
+  - local-first
+x: 0.34
+'y': 0.44

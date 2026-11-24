@@ -1,0 +1,19 @@
+slug: typewhisper-mac
+category: local-voice
+name: TypeWhisper
+repo: https://github.com/TypeWhisper/typewhisper-mac
+tagline: Native macOS on-device speech-to-text dictation app powered by private local Whisper models
+arch: Desktop
+model: Local LLM
+license: GPL-3
+stage: Beta
+stack: Swift + macOS + Whisper
+region: Global
+stars: 1942
+traits:
+  - voice
+  - local-first
+  - open-weights
+  - realtime
+x: 0.16
+'y': 0.26

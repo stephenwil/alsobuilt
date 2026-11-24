@@ -1,0 +1,19 @@
+slug: lean-ctx
+category: mcp-tooling
+name: LeanCTX
+repo: https://github.com/yvgude/lean-ctx
+tagline: Rust MCP context gateway that filters and compresses task-relevant files and tool outputs to cut token burn
+arch: CLI
+model: Hybrid
+license: Apache-2
+stage: Beta
+stack: Rust + MCP
+region: Global
+stars: 3961
+traits:
+  - mcp
+  - rust
+  - cli
+  - local-first
+x: 0.27
+'y': 0.61

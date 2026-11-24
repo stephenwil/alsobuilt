@@ -1,0 +1,18 @@
+slug: etos-llm-studio
+category: local-llm-runners
+name: ETOS LLM Studio
+repo: https://github.com/Eric-Terminal/ETOS-LLM-Studio
+tagline: Native iOS and Apple Watch LLM client running offline GGUF models via llama.cpp or remote endpoints
+arch: Mobile
+model: Hybrid
+license: GPL-3
+stage: Proto
+stack: Swift + SwiftUI + llama.cpp
+region: Global
+stars: 225
+traits:
+  - mobile
+  - local-first
+  - open-weights
+x: 0.15
+'y': 0.22

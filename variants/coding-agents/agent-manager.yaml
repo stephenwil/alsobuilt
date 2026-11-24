@@ -1,0 +1,18 @@
+slug: agent-manager
+category: coding-agents
+name: Agent Manager
+repo: https://github.com/wainmann/agent-manager
+tagline: Lightweight Go terminal multiplexer for running parallel AI coding agents across git worktrees
+arch: CLI
+model: Hybrid
+license: Apache-2
+stage: Proto
+stack: Go + Terminal
+region: Global
+stars: 707
+traits:
+  - cli
+  - multi-agent
+  - local-first
+x: 0.36
+'y': 0.54

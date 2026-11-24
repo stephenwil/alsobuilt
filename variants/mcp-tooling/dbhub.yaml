@@ -1,0 +1,19 @@
+slug: dbhub
+category: mcp-tooling
+name: DBHub
+repo: https://github.com/bytebase/dbhub
+tagline: Token-conscious universal database MCP server connecting agents to Postgres, MySQL, SQLite, and SQL Server
+arch: CLI
+model: Hybrid
+license: MIT
+stage: Prod
+stack: TypeScript + Node.js
+region: Global
+stars: 3974
+traits:
+  - mcp
+  - cli
+  - typescript
+  - self-hosted
+x: 0.44
+'y': 0.46

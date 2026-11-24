@@ -1,0 +1,19 @@
+slug: abtop
+category: coding-agents
+name: abtop
+repo: https://github.com/graykode/abtop
+tagline: htop-style terminal monitor for AI coding agents tracking live sessions, tokens, and context budgets
+arch: CLI
+model: Hybrid
+license: MIT
+stage: Beta
+stack: Rust + Ratatui
+region: Global
+stars: 3880
+traits:
+  - cli
+  - rust
+  - local-first
+  - realtime
+x: 0.24
+'y': 0.28

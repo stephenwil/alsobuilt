@@ -1,0 +1,17 @@
+slug: poki
+category: browser-computer-use
+name: Poki
+repo: https://github.com/JosssphZhou/poki
+tagline: Open-source Swift mobile agent app that reads your iPhone screen and automates taps like a human user
+arch: Mobile
+model: Hybrid
+license: AGPL
+stage: Beta
+stack: Swift + iOS
+region: Global
+stars: 1915
+traits:
+  - mobile
+  - realtime
+x: 0.56
+'y': 0.54

@@ -1,0 +1,18 @@
+slug: herdr-reviewr
+category: coding-agents
+name: Herdr Reviewr
+repo: https://github.com/persiyanov/herdr-reviewr
+tagline: Terminal diff reviewer that lets you annotate agent edits in a split pane and send feedback straight back
+arch: CLI
+model: Hybrid
+license: MIT
+stage: Beta
+stack: Rust + TUI
+region: Global
+stars: 1019
+traits:
+  - cli
+  - rust
+  - local-first
+x: 0.28
+'y': 0.41

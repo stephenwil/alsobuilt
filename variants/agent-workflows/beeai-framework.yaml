@@ -1,0 +1,19 @@
+slug: beeai-framework
+category: agent-workflows
+name: BeeAI Framework
+repo: https://github.com/i-am-bee/beeai-framework
+tagline: Modular open-source framework for building structured multi-agent workflows in both Python and TypeScript
+arch: SDK
+model: Hybrid
+license: Apache-2
+stage: Beta
+stack: Python + TypeScript
+region: Global
+stars: 3459
+traits:
+  - multi-agent
+  - python
+  - typescript
+  - mcp
+x: 0.54
+'y': 0.74

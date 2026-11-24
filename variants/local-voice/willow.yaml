@@ -1,0 +1,19 @@
+slug: willow
+category: local-voice
+name: Willow
+repo: https://github.com/HeyWillow/willow
+tagline: Open-source, local, self-hosted Echo and Google Home voice assistant alternative for ESP32 hardware
+arch: CLI
+model: Local LLM
+license: Apache-2
+stage: Prod
+stack: C + ESP-IDF + Local ASR
+region: Global
+stars: 3145
+traits:
+  - voice
+  - local-first
+  - self-hosted
+  - realtime
+x: 0.14
+'y': 0.52

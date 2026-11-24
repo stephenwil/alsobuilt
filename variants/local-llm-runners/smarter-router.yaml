@@ -1,0 +1,19 @@
+slug: smarter-router
+category: local-llm-runners
+name: SmarterRouter
+repo: https://github.com/peva3/SmarterRouter
+tagline: VRAM-aware local LLM gateway that dynamically routes prompts across Ollama, llama.cpp, and OpenAI endpoints
+arch: Web
+model: Hybrid
+license: MIT
+stage: Proto
+stack: Python + FastAPI
+region: Global
+stars: 165
+traits:
+  - local-first
+  - self-hosted
+  - python
+  - open-weights
+x: 0.46
+'y': 0.58

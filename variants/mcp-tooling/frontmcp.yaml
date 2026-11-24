@@ -1,0 +1,17 @@
+slug: frontmcp
+category: mcp-tooling
+name: FrontMCP
+repo: https://github.com/agentfront/frontmcp
+tagline: TypeScript framework for building strongly typed MCP servers with dependency injection and input validation
+arch: SDK
+model: Hybrid
+license: Apache-2
+stage: Proto
+stack: TypeScript + MCP SDK
+region: Global
+stars: 153
+traits:
+  - mcp
+  - typescript
+x: 0.52
+'y': 0.35

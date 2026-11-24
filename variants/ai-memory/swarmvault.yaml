@@ -1,0 +1,20 @@
+slug: swarmvault
+category: ai-memory
+name: SwarmVault
+repo: https://github.com/swarmclawai/swarmvault
+tagline: Local-first LLM wiki, knowledge graph builder, RAG store, and shared agent memory vault
+arch: Desktop
+model: Hybrid
+license: MIT
+stage: Proto
+stack: TypeScript + SQLite
+region: Global
+stars: 739
+traits:
+  - local-first
+  - markdown
+  - rag
+  - mcp
+  - typescript
+x: 0.31
+'y': 0.56

@@ -1,0 +1,19 @@
+slug: embed-anything
+category: ai-memory
+name: EmbedAnything
+repo: https://github.com/StarlightSearch/EmbedAnything
+tagline: Local-first Rust multimodal ingestion, embedding, and vector indexing pipeline for text, PDFs, audio, and images
+arch: SDK
+model: Local LLM
+license: Apache-2
+stage: Beta
+stack: Rust + Candle + Python
+region: Global
+stars: 1341
+traits:
+  - rust
+  - local-first
+  - rag
+  - open-weights
+x: 0.26
+'y': 0.48

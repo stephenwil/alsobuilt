@@ -1,0 +1,19 @@
+slug: fast-agent
+category: agent-workflows
+name: fast-agent
+repo: https://github.com/evalstate/fast-agent
+tagline: Declarative Python framework to build, chain, and evaluate multi-agent workflows with native MCP and A2A support
+arch: CLI
+model: Hybrid
+license: Apache-2
+stage: Beta
+stack: Python + MCP + A2A
+region: Global
+stars: 3977
+traits:
+  - multi-agent
+  - mcp
+  - python
+  - cli
+x: 0.43
+'y': 0.66

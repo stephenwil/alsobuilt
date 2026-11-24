@@ -57,7 +57,7 @@
     },
     "license": {
       "type": "string",
-      "enum": ["MIT", "Apache-2", "AGPL", "BSD-3", "Source"]
+      "enum": ["MIT", "Apache-2", "AGPL", "GPL-3", "BSD-3", "Source"]
     },
     "stage": {
       "type": "string",

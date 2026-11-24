@@ -1,0 +1,18 @@
+slug: gram
+category: mcp-tooling
+name: Gram
+repo: https://github.com/speakeasy-api/gram
+tagline: Go-based MCP gateway and control plane for governing toolsets, auth, and audit trails across AI agents
+arch: Web
+model: Hybrid
+license: AGPL
+stage: Proto
+stack: Go + MCP
+region: Global
+stars: 278
+traits:
+  - mcp
+  - self-hosted
+  - multi-agent
+x: 0.64
+'y': 0.72

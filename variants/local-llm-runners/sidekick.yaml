@@ -1,0 +1,18 @@
+slug: sidekick
+category: local-llm-runners
+name: Sidekick
+repo: https://github.com/johnbean393/Sidekick
+tagline: Native macOS local LLM chat app with offline file indexing, RAG document Q&A, and built-in tool calling
+arch: Desktop
+model: Local LLM
+license: MIT
+stage: Prod
+stack: Swift + llama.cpp + macOS
+region: Global
+stars: 3324
+traits:
+  - local-first
+  - open-weights
+  - rag
+x: 0.21
+'y': 0.42

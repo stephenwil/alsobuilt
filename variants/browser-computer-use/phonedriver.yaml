@@ -1,0 +1,20 @@
+slug: phonedriver
+category: browser-computer-use
+name: PhoneDriver
+repo: https://github.com/hridaya423/phonedriver
+tagline: Rust MCP server and CLI letting AI coding agents see and control real Android phones over ADB
+arch: CLI
+model: Hybrid
+license: AGPL
+stage: Proto
+stack: Rust + ADB + MCP
+region: Global
+stars: 366
+traits:
+  - mobile
+  - mcp
+  - rust
+  - cli
+  - local-first
+x: 0.22
+'y': 0.64

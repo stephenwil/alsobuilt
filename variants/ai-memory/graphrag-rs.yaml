@@ -1,0 +1,19 @@
+slug: graphrag-rs
+category: ai-memory
+name: GraphRAG-rs
+repo: https://github.com/automataIA/graphrag-rs
+tagline: High-performance Rust implementation of graph-based retrieval augmented generation for local knowledge bases
+arch: SDK
+model: Local LLM
+license: MIT
+stage: Proto
+stack: Rust + GraphRAG
+region: Global
+stars: 540
+traits:
+  - rust
+  - local-first
+  - rag
+  - open-weights
+x: 0.19
+'y': 0.68

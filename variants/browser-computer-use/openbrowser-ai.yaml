@@ -1,0 +1,18 @@
+slug: openbrowser-ai
+category: browser-computer-use
+name: OpenBrowser
+repo: https://github.com/billy-enrizky/openbrowser-ai
+tagline: Lightweight Python browser automation framework using direct Chrome DevTools Protocol for fast web agents
+arch: SDK
+model: Hybrid
+license: MIT
+stage: Proto
+stack: Python + CDP
+region: Global
+stars: 279
+traits:
+  - browser
+  - python
+  - local-first
+x: 0.39
+'y': 0.36

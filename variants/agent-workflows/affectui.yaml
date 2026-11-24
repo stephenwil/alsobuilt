@@ -1,0 +1,18 @@
+slug: affectui
+category: agent-workflows
+name: AffectUI
+repo: https://github.com/flohoeller/affectui
+tagline: Composable React component kit for rendering live agent execution trees, tool calls, traces, and handoffs
+arch: SDK
+model: Hybrid
+license: MIT
+stage: Beta
+stack: TypeScript + React
+region: Global
+stars: 956
+traits:
+  - typescript
+  - multi-agent
+  - realtime
+x: 0.68
+'y': 0.42

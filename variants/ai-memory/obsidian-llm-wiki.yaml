@@ -1,0 +1,19 @@
+slug: obsidian-llm-wiki
+category: ai-memory
+name: Obsidian LLM Wiki
+repo: https://github.com/GD4AI/obsidian-llm-wiki
+tagline: Obsidian plugin that compiles local Markdown notes and PDFs into a linked, LLM-maintained personal wiki
+arch: Desktop
+model: Hybrid
+license: Apache-2
+stage: Beta
+stack: TypeScript + Obsidian
+region: Global
+stars: 812
+traits:
+  - local-first
+  - markdown
+  - rag
+  - typescript
+x: 0.22
+'y': 0.34

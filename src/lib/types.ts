@@ -12,7 +12,7 @@ export interface Variant {
   tagline: string;
   arch: 'Desktop' | 'CLI' | 'Web' | 'Browser' | 'SDK' | 'Mobile';
   model: 'Local LLM' | 'Hybrid' | 'Cloud API';
-  license: 'MIT' | 'Apache-2' | 'AGPL' | 'BSD-3' | 'Source';
+  license: 'MIT' | 'Apache-2' | 'AGPL' | 'GPL-3' | 'BSD-3' | 'Source';
   stage: 'Prod' | 'Beta' | 'Proto' | 'Lesson';
   lesson?: string;
   stack: string;
