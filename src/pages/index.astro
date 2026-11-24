@@ -9,6 +9,6 @@ const indexPath = path.resolve(process.cwd(), 'public', 'index.json');
 const catalog: CatalogIndex = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
 ---
 
-<BaseLayout title="AlsoBuilt — AI Idea Collision Hub" activeNav="hub">
+<BaseLayout title="AlsoBuilt — AI Idea Collision Hub">
   <OpenHub client:load {catalog} />
 </BaseLayout>

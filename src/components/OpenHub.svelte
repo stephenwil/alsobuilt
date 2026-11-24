@@ -18,23 +18,24 @@
 
   const PRESETS = [
     {
-      label: 'Voice + MCP vault',
+      label: 'Voice + MCP notes',
       text: 'Local-first ambient voice note agent that indexes Markdown over MCP with zero cloud dependencies'
     },
     {
-      label: 'Git terminal agent',
+      label: 'Terminal coding agent',
       text: 'Open-weights CLI coding agent using local models and MCP tools to refactor multi-file git repos'
     },
     {
-      label: 'Mobile voice swarm',
+      label: 'Offline mobile voice',
       text: 'Offline mobile realtime voice multi-agent companion syncing encrypted memory peer-to-peer'
     }
   ];
 
   let activeCategory = $state<string>('all');
-  let ideaText = $state<string>(PRESETS[0].text);
+  let ideaText = $state<string>('');
   let manualAdd = $state<string[]>([]);
   let manualRemove = $state<string[]>([]);
+  let showTagPicker = $state<boolean>(false);
   let query = $state<string>('');
   let viewMode = $state<'table' | 'map' | 'cards'>('table');
   let facetArch = $state<string | null>(null);
@@ -46,9 +47,9 @@
   let toast = $state<string>('');
 
   // Live D1 stealth pulse state (hydrated from /api/pulse when served on Cloudflare Pages / Wrangler)
-  let pulse = $state<PulseSummary>({ total: 0, byCategory: {}, byVariant: {} });
+  let pulse = $state<PulseSummary>({ total: 0, byCategory: {}, byVariant: {}, myCategories: [] });
   let d1Bookmark = $state<string>('');
-  let userCountedStealth = $state<boolean>(false);
+  let myStealthCategories = $state<string[]>([]);
   let stealthBusy = $state<boolean>(false);
 
   // PR Builder inputs
@@ -89,8 +90,14 @@
     });
   });
 
+  let hasIdea = $derived(ideaText.trim().length > 0 || activeTraits.size > 0);
   let topMatch = $derived(rankedAll[0] ?? null);
   let topScore = $derived(topMatch?.overlap ?? 0);
+  let similarCount = $derived(rankedAll.filter((r) => r.overlap >= 40).length);
+  let currentPulseCategory = $derived(
+    activeCategory === 'all' ? topMatch?.variant.category ?? 'ai-memory' : activeCategory
+  );
+  let userCountedStealth = $derived(myStealthCategories.includes(currentPulseCategory));
   let wedgeTraits = $derived.by(() => {
     if (!topMatch) return [...activeTraits];
     return [...activeTraits].filter((t) => !topMatch.variant.traits.includes(t));
@@ -179,48 +186,85 @@
       if (!res.ok) return;
       const bm = res.headers.get('x-d1-bookmark');
       if (bm) d1Bookmark = bm;
-      pulse = (await res.json()) as PulseSummary;
+      const data = (await res.json()) as PulseSummary;
+      pulse = data;
+      if (Array.isArray(data.myCategories)) {
+        myStealthCategories = data.myCategories;
+      }
     } catch {
       // Static astro dev mode without Wrangler Pages Functions
     }
   }
 
-  async function submitStealthPulse() {
+  async function toggleStealthPulse() {
     if (stealthBusy) return;
     stealthBusy = true;
-    const categorySlug = activeCategory === 'all' ? topMatch?.variant.category ?? 'ai-memory' : activeCategory;
+    const categorySlug = currentPulseCategory;
+    const removing = userCountedStealth;
+
     try {
       const headers: Record<string, string> = { 'Content-Type': 'application/json' };
       if (d1Bookmark) headers['x-d1-bookmark'] = d1Bookmark;
-      const res = await fetch('/api/pulse', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          categorySlug,
-          nearestVariantSlug: topMatch?.variant.slug ?? null,
-          traits: [...activeTraits]
-        })
-      });
-      if (res.ok) {
-        const bm = res.headers.get('x-d1-bookmark');
-        if (bm) d1Bookmark = bm;
-        const data = (await res.json()) as { recorded: boolean; alreadyCountedThisMonth: boolean; total: number };
-        userCountedStealth = true;
-        await fetchPulse();
-        showToast(
-          data.alreadyCountedThisMonth
-            ? 'Already counted for this category this month (D1 deduplicated)'
-            : 'Added anonymously to Cloudflare D1 stealth pulse!'
-        );
+
+      if (removing) {
+        const res = await fetch(`/api/pulse?categorySlug=${encodeURIComponent(categorySlug)}`, {
+          method: 'DELETE',
+          headers
+        });
+        if (res.ok) {
+          const bm = res.headers.get('x-d1-bookmark');
+          if (bm) d1Bookmark = bm;
+          myStealthCategories = myStealthCategories.filter((c) => c !== categorySlug);
+          await fetchPulse();
+          showToast('Removed your anonymous stealth pulse');
+        } else {
+          myStealthCategories = myStealthCategories.filter((c) => c !== categorySlug);
+          pulse = { ...pulse, total: Math.max(0, pulse.total - 1) };
+          showToast('Removed local stealth pulse');
+        }
       } else {
-        userCountedStealth = true;
+        const res = await fetch('/api/pulse', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            categorySlug,
+            nearestVariantSlug: topMatch?.variant.slug ?? null,
+            traits: [...activeTraits]
+          })
+        });
+        if (res.ok) {
+          const bm = res.headers.get('x-d1-bookmark');
+          if (bm) d1Bookmark = bm;
+          const data = (await res.json()) as { recorded: boolean; alreadyCountedThisMonth: boolean; total: number };
+          if (!myStealthCategories.includes(categorySlug)) {
+            myStealthCategories = [...myStealthCategories, categorySlug];
+          }
+          await fetchPulse();
+          showToast(
+            data.alreadyCountedThisMonth
+              ? 'Already counted for this category this month (D1 deduplicated)'
+              : 'Added anonymously to Cloudflare D1 stealth pulse!'
+          );
+        } else {
+          if (!myStealthCategories.includes(categorySlug)) {
+            myStealthCategories = [...myStealthCategories, categorySlug];
+          }
+          pulse = { ...pulse, total: pulse.total + 1 };
+          showToast('Preview mode: run `npm run preview` to persist to local D1');
+        }
+      }
+    } catch {
+      if (removing) {
+        myStealthCategories = myStealthCategories.filter((c) => c !== categorySlug);
+        pulse = { ...pulse, total: Math.max(0, pulse.total - 1) };
+        showToast('Removed local stealth pulse');
+      } else {
+        if (!myStealthCategories.includes(categorySlug)) {
+          myStealthCategories = [...myStealthCategories, categorySlug];
+        }
         pulse = { ...pulse, total: pulse.total + 1 };
         showToast('Preview mode: run `npm run preview` to persist to local D1');
       }
-    } catch {
-      userCountedStealth = true;
-      pulse = { ...pulse, total: pulse.total + 1 };
-      showToast('Preview mode: run `npm run preview` to persist to local D1');
     } finally {
       stealthBusy = false;
     }
@@ -239,9 +283,220 @@
   const STAGE_OPTIONS = ['Prod', 'Beta', 'Proto', 'Lesson'];
 </script>
 
-<div class="flex flex-col gap-4">
-  <!-- Category Filter Strip + Live Stealth Pulse -->
-  <div class="flex items-center justify-between gap-3 flex-wrap">
+<div class="flex flex-col gap-5">
+  <!-- HERO: Developer-First Landing + Idea Checker -->
+  <section
+    class="rounded-2xl bg-[var(--card)] bg-[radial-gradient(ellipse_at_top_left,rgba(99,102,241,0.16),transparent_60%)] border border-[var(--primary)]/40 p-6 sm:p-8 flex flex-col gap-5"
+  >
+    <div class="flex flex-col gap-2.5 max-w-3xl">
+      <div class="inline-flex items-center gap-2 self-start px-3 py-1 rounded-full bg-[var(--secondary)]/90 border border-[var(--border)] font-mono text-[11px] text-[var(--muted)]">
+        <span class="w-2 h-2 rounded-full bg-[var(--emerald)]"></span>
+        <span>Open-source AI build radar · {catalog.variants.length} repos · {pulse.total} building privately</span>
+      </div>
+
+      <h1 class="m-0 text-2xl sm:text-4xl font-bold tracking-tight leading-[1.15] text-[var(--fg)]">
+        See who's already building your AI idea.
+      </h1>
+
+      <p class="m-0 text-sm sm:text-[15px] text-[var(--muted)] leading-relaxed max-w-2xl">
+        AI developers keep building the same tools in parallel. Paste a one-sentence pitch to find similar open-source repos, spot what they're missing, and decide whether to contribute, differentiate, or build privately.
+      </p>
+    </div>
+
+    <!-- Primary Idea Input -->
+    <div class="flex flex-col gap-3">
+      <div class="flex gap-2">
+        <input
+          type="text"
+          bind:value={ideaText}
+          placeholder="What are you thinking of building? e.g. Local-first voice notes app that connects to Obsidian via MCP..."
+          class="flex-1 h-12 px-4 rounded-xl bg-[var(--bg)] border border-[var(--border)] text-sm sm:text-[15px] text-[var(--fg)] focus:outline-none focus:border-[var(--primary)] shadow-inner"
+        />
+        {#if hasIdea}
+          <button
+            type="button"
+            onclick={() => {
+              ideaText = '';
+              manualAdd = [];
+              manualRemove = [];
+              showTagPicker = false;
+            }}
+            class="px-4 rounded-xl border border-[var(--border)] bg-[var(--secondary)] text-xs font-medium text-[var(--muted)] hover:text-[var(--fg)] cursor-pointer"
+          >
+            Clear
+          </button>
+        {/if}
+      </div>
+
+      <!-- Examples (when empty) or Detected Tags (when typing) -->
+      <div class="flex items-center justify-between gap-2 flex-wrap">
+        {#if !hasIdea}
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-xs text-[var(--muted)]">Try an example:</span>
+            {#each PRESETS as preset}
+              <button
+                type="button"
+                onclick={() => applyPreset(preset.text)}
+                class="px-3 py-1 rounded-full bg-[var(--secondary)] border border-[var(--border)] text-xs text-[var(--muted)] hover:text-[var(--fg)] hover:border-[var(--primary)] cursor-pointer transition"
+              >
+                {preset.label}
+              </button>
+            {/each}
+          </div>
+        {:else}
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-xs text-[var(--muted)]">Detected tags:</span>
+            {#if activeTraits.size === 0}
+              <span class="text-xs text-[var(--muted)] italic">none yet</span>
+            {:else}
+              {#each [...activeTraits] as trait}
+                <button
+                  type="button"
+                  onclick={() => toggleTrait(trait)}
+                  title="Click to remove tag"
+                  class="px-2.5 py-0.5 rounded-full font-mono text-[11px] bg-[var(--primary)]/15 text-[var(--fg)] border border-[var(--primary)]/60 hover:bg-[var(--primary)]/25 cursor-pointer"
+                >
+                  {trait} ×
+                </button>
+              {/each}
+            {/if}
+          </div>
+        {/if}
+
+        <button
+          type="button"
+          onclick={() => (showTagPicker = !showTagPicker)}
+          class="text-xs text-[var(--muted)] hover:text-[var(--fg)] bg-transparent border-0 cursor-pointer underline underline-offset-2"
+        >
+          {showTagPicker ? 'Hide tag picker' : hasIdea ? '+ Edit tags' : 'Or pick tags manually'}
+        </button>
+      </div>
+
+      {#if showTagPicker}
+        <div class="pt-2.5 border-t border-[var(--border)] flex flex-wrap items-center gap-1.5">
+          {#each ALL_TRAITS as trait}
+            {@const on = activeTraits.has(trait)}
+            <button
+              type="button"
+              onclick={() => toggleTrait(trait)}
+              class="px-2.5 py-0.5 rounded-full font-mono text-[11px] border transition cursor-pointer {on
+                ? 'bg-[var(--primary)] text-white border-[var(--primary)]'
+                : 'bg-[var(--secondary)] text-[var(--muted)] border-[var(--border)] hover:border-[var(--primary)]'}"
+            >
+              {on ? '✓ ' : '+ '}{trait}
+            </button>
+          {/each}
+        </div>
+      {/if}
+    </div>
+
+    {#if !hasIdea}
+      <!-- 3-Step Explainer (shown before typing so developers immediately grasp the workflow) -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-[var(--border)]/70">
+        <div class="rounded-xl bg-[var(--bg)]/60 border border-[var(--border)]/70 p-3.5">
+          <div class="font-mono text-[11px] font-semibold text-[var(--primary)]">01 · Check overlap</div>
+          <div class="text-xs text-[var(--muted)] mt-1 leading-relaxed">
+            Describe your pitch above and we rank existing open-source repos by architecture and feature overlap.
+          </div>
+        </div>
+        <div class="rounded-xl bg-[var(--bg)]/60 border border-[var(--border)]/70 p-3.5">
+          <div class="font-mono text-[11px] font-semibold text-[var(--emerald)]">02 · Spot your angle</div>
+          <div class="text-xs text-[var(--muted)] mt-1 leading-relaxed">
+            See which capabilities closest repos already cover — and which traits make your idea genuinely distinct.
+          </div>
+        </div>
+        <div class="rounded-xl bg-[var(--bg)]/60 border border-[var(--border)]/70 p-3.5">
+          <div class="font-mono text-[11px] font-semibold text-[var(--blue)]">03 · Compare or join in</div>
+          <div class="text-xs text-[var(--muted)] mt-1 leading-relaxed">
+            Compare top repos side-by-side, anonymously signal you're building privately, or add your repo via PR.
+          </div>
+        </div>
+      </div>
+    {:else}
+      <!-- Plain-English Match Verdict (replaces the 3-step strip once an idea is entered) -->
+      <div class="rounded-xl bg-[var(--secondary)] border border-[var(--border)] p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3.5 min-w-0">
+          <div class="relative w-14 h-14 shrink-0 flex items-center justify-center">
+            <svg width="56" height="56" viewBox="0 0 64 64" class="-rotate-90">
+              <circle cx="32" cy="32" r="26" fill="none" stroke="var(--border)" stroke-width="5" />
+              <circle
+                cx="32"
+                cy="32"
+                r="26"
+                fill="none"
+                stroke={topScore >= 70 ? 'var(--amber)' : topScore >= 40 ? 'var(--blue)' : 'var(--emerald)'}
+                stroke-width="5"
+                stroke-dasharray={`${((topScore / 100) * 2 * Math.PI * 26).toFixed(1)} ${(2 * Math.PI * 26).toFixed(1)}`}
+                stroke-linecap="round"
+              />
+            </svg>
+            <div class="absolute text-center leading-tight">
+              <div class="font-mono text-xs font-bold">{topScore}%</div>
+              <div class="text-[8px] uppercase text-[var(--muted)]">match</div>
+            </div>
+          </div>
+
+          <div class="min-w-0">
+            <div class="text-sm font-semibold text-[var(--fg)] flex items-center gap-2 flex-wrap">
+              {#if topMatch && topScore >= 70}
+                <span>Very similar to <code class="font-mono">{topMatch.variant.name}</code></span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[var(--amber)]/20 text-[var(--amber)]">
+                  {similarCount} similar
+                </span>
+              {:else if topMatch && topScore >= 40}
+                <span>{similarCount} similar project{similarCount === 1 ? '' : 's'} — closest is <code class="font-mono">{topMatch.variant.name}</code></span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[var(--blue)]/20 text-[var(--blue)]">
+                  Adjacent
+                </span>
+              {:else if topMatch && topScore > 0}
+                <span>Looks distinct — closest is <code class="font-mono">{topMatch.variant.name}</code> ({topScore}%)</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[var(--emerald)]/20 text-[var(--emerald)]">
+                  Low overlap
+                </span>
+              {:else}
+                <span>No close matches in this category yet</span>
+              {/if}
+            </div>
+
+            <div class="text-xs text-[var(--muted)] mt-1 flex flex-wrap items-center gap-1.5">
+              {#if wedgeTraits.length > 0 && topMatch}
+                <span>What yours adds over <code class="font-mono text-[var(--fg)]">{topMatch.variant.name}</code>:</span>
+                {#each wedgeTraits as w}
+                  <span class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-[var(--emerald)]/15 text-[var(--emerald)] font-semibold">
+                    + {w}
+                  </span>
+                {/each}
+              {:else if topMatch && topScore > 0}
+                <span>Same core tags as <code class="font-mono">{topMatch.variant.name}</code> — click <strong>+ Edit tags</strong> above to highlight how yours differs.</span>
+              {:else}
+                <span>Add another keyword (e.g. <code>local</code>, <code>voice</code>, <code>cli</code>, <code>mcp</code>) to compare against the list below.</span>
+              {/if}
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onclick={diffTop2}
+            class="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium cursor-pointer hover:opacity-90"
+          >
+            Compare Top 2
+          </button>
+          <button
+            type="button"
+            onclick={() => (viewMode = viewMode === 'map' ? 'table' : 'map')}
+            class="px-3 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs font-medium cursor-pointer hover:bg-[var(--bg)]"
+          >
+            {viewMode === 'map' ? 'Back to List' : 'View on Map'}
+          </button>
+        </div>
+      </div>
+    {/if}
+  </section>
+
+  <!-- Category Filter Strip + Anonymous Private Builder Toggle -->
+  <div class="flex items-center justify-between gap-3 flex-wrap pt-1">
     <div class="flex items-center gap-1.5 flex-wrap">
       <button
         type="button"
@@ -266,153 +521,22 @@
     </div>
 
     <div class="flex items-center gap-2">
-      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--secondary)] border border-[var(--border)] font-mono text-[11px] text-[var(--muted)]">
-        <span class="w-2 h-2 rounded-full bg-[var(--emerald)]"></span>
-        {catalog.variants.length} public · {pulse.total} stealth
-      </span>
       <button
         type="button"
         disabled={stealthBusy}
-        onclick={submitStealthPulse}
+        aria-pressed={userCountedStealth}
+        title={userCountedStealth
+          ? 'Click to unselect and remove your anonymous stealth pulse'
+          : 'Anonymously count yourself as building privately in this category'}
+        onclick={toggleStealthPulse}
         class="px-3 py-1.5 rounded-lg text-xs font-medium border transition cursor-pointer {userCountedStealth
-          ? 'bg-[var(--emerald)]/15 border-[var(--emerald)] text-[var(--emerald)]'
+          ? 'bg-[var(--emerald)]/15 border-[var(--emerald)] text-[var(--emerald)] hover:bg-[var(--emerald)]/25'
           : 'bg-[var(--card)] border-[var(--border)] hover:bg-[var(--secondary)]'}"
       >
         {userCountedStealth ? '✓ Building Privately' : "+ I'm Building Privately"}
       </button>
     </div>
   </div>
-
-  <!-- HERO: Test My Idea Collision Sandbox -->
-  <section class="rounded-xl bg-[var(--card)] border border-[var(--primary)]/50 p-4 flex flex-col gap-3">
-    <div class="flex items-center justify-between gap-2 flex-wrap">
-      <span class="text-[11px] font-semibold uppercase tracking-wider text-[var(--fg)]">
-        Test My Idea — Drop your pitch to map parallel builds &amp; whitespace
-      </span>
-      <div class="flex items-center gap-1.5 flex-wrap">
-        <span class="text-[11px] text-[var(--muted)]">Try:</span>
-        {#each PRESETS as preset}
-          <button
-            type="button"
-            onclick={() => applyPreset(preset.text)}
-            class="px-2 py-0.5 rounded bg-[var(--secondary)] border border-[var(--border)] text-[11px] text-[var(--muted)] hover:text-[var(--fg)] hover:border-[var(--primary)] cursor-pointer"
-          >
-            {preset.label}
-          </button>
-        {/each}
-      </div>
-    </div>
-
-    <div class="flex gap-2">
-      <input
-        type="text"
-        bind:value={ideaText}
-        placeholder="Describe your AI project idea in 1–2 sentences (or paste a README intro)..."
-        class="flex-1 h-10 px-3 rounded-lg bg-[var(--bg)] border border-[var(--border)] text-sm text-[var(--fg)] focus:outline-none focus:border-[var(--primary)]"
-      />
-      <button
-        type="button"
-        onclick={() => {
-          ideaText = '';
-          manualAdd = [];
-          manualRemove = [];
-        }}
-        class="px-3 rounded-lg border border-[var(--border)] bg-[var(--secondary)] text-xs text-[var(--muted)] hover:text-[var(--fg)] cursor-pointer"
-      >
-        Clear
-      </button>
-    </div>
-
-    <!-- Trait pills -->
-    <div class="flex flex-wrap items-center gap-1.5">
-      <span class="text-[11px] text-[var(--muted)] mr-1">Traits:</span>
-      {#each ALL_TRAITS as trait}
-        {@const on = activeTraits.has(trait)}
-        <button
-          type="button"
-          onclick={() => toggleTrait(trait)}
-          class="px-2.5 py-0.5 rounded-full font-mono text-[11px] border transition cursor-pointer {on
-            ? 'bg-[var(--primary)] text-white border-[var(--primary)]'
-            : 'bg-[var(--secondary)] text-[var(--muted)] border-[var(--border)] hover:border-[var(--primary)]'}"
-        >
-          {on ? '✓ ' : ''}{trait}
-        </button>
-      {/each}
-    </div>
-
-    <!-- Collision Report Banner -->
-    <div class="rounded-lg bg-[var(--secondary)] border border-[var(--border)] p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-      <div class="flex items-center gap-3.5 min-w-0">
-        <div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
-          <svg width="64" height="64" viewBox="0 0 64 64" class="-rotate-90">
-            <circle cx="32" cy="32" r="26" fill="none" stroke="var(--border)" stroke-width="5" />
-            <circle
-              cx="32"
-              cy="32"
-              r="26"
-              fill="none"
-              stroke={topScore >= 70 ? 'var(--amber)' : topScore >= 40 ? 'var(--blue)' : 'var(--emerald)'}
-              stroke-width="5"
-              stroke-dasharray={`${((topScore / 100) * 2 * Math.PI * 26).toFixed(1)} ${(2 * Math.PI * 26).toFixed(1)}`}
-              stroke-linecap="round"
-            />
-          </svg>
-          <div class="absolute text-center leading-tight">
-            <div class="font-mono text-sm font-bold">{topScore}%</div>
-            <div class="text-[8px] uppercase text-[var(--muted)]">overlap</div>
-          </div>
-        </div>
-
-        <div class="min-w-0">
-          <div class="text-xs font-semibold flex items-center gap-2 flex-wrap">
-            <span
-              class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase {topScore >= 70
-                ? 'bg-[var(--amber)]/20 text-[var(--amber)]'
-                : topScore >= 40
-                  ? 'bg-[var(--blue)]/20 text-[var(--blue)]'
-                  : 'bg-[var(--emerald)]/20 text-[var(--emerald)]'}"
-            >
-              {topScore >= 70 ? 'High Collision' : topScore >= 40 ? 'Adjacent Niche' : 'Open Whitespace'}
-            </span>
-            {#if topMatch}
-              <span>
-                Closest: <code class="font-mono text-[var(--fg)]">{topMatch.variant.name}</code> ({topMatch.overlap}%)
-              </span>
-            {/if}
-          </div>
-          <div class="text-xs text-[var(--muted)] mt-1 flex flex-wrap items-center gap-1.5">
-            {#if wedgeTraits.length > 0 && topMatch}
-              <span>Your wedge vs <code>{topMatch.variant.name}</code>:</span>
-              {#each wedgeTraits as w}
-                <span class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-[var(--emerald)]/15 text-[var(--emerald)] font-semibold">
-                  + {w}
-                </span>
-              {/each}
-            {:else}
-              <span>Toggle an extra trait above (e.g. <code>mobile</code>, <code>voice</code>, <code>rust</code>) to carve a unique wedge.</span>
-            {/if}
-          </div>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-2 shrink-0">
-        <button
-          type="button"
-          onclick={diffTop2}
-          class="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium cursor-pointer hover:opacity-90"
-        >
-          Diff vs Top 2
-        </button>
-        <button
-          type="button"
-          onclick={() => (viewMode = viewMode === 'map' ? 'table' : 'map')}
-          class="px-3 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs font-medium cursor-pointer hover:bg-[var(--bg)]"
-        >
-          {viewMode === 'map' ? 'Back to Table' : 'See on Map'}
-        </button>
-      </div>
-    </div>
-  </section>
 
   <!-- Search + View Switcher + PR Button -->
   <div class="flex items-center justify-between gap-2 flex-wrap">
@@ -454,12 +578,6 @@
     </div>
 
     <div class="flex items-center gap-2">
-      <a
-        href="/vault"
-        class="px-3 py-1.5 rounded-lg border border-[var(--purple)]/50 bg-[var(--purple)]/10 text-xs font-medium text-[var(--fg)] no-underline hover:bg-[var(--purple)]/20"
-      >
-        Save to Private Vault →
-      </a>
       <button
         type="button"
         onclick={() => (showPrDrawer = !showPrDrawer)}
@@ -659,13 +777,17 @@
                 </div>
               </td>
               <td class="py-2.5 px-3">
-                <span class="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold {overlap >= 65
-                  ? 'bg-[var(--amber)]/20 text-[var(--amber)]'
-                  : overlap >= 35
-                    ? 'bg-[var(--blue)]/20 text-[var(--blue)]'
-                    : 'bg-[var(--secondary)] text-[var(--muted)]'}">
-                  {overlap}%
-                </span>
+                {#if hasIdea}
+                  <span class="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold {overlap >= 65
+                    ? 'bg-[var(--amber)]/20 text-[var(--amber)]'
+                    : overlap >= 35
+                      ? 'bg-[var(--blue)]/20 text-[var(--blue)]'
+                      : 'bg-[var(--secondary)] text-[var(--muted)]'}">
+                    {overlap}%
+                  </span>
+                {:else}
+                  <span class="font-mono text-[11px] text-[var(--muted)]">—</span>
+                {/if}
               </td>
               <td class="py-2.5 px-3 font-mono text-[11px]">
                 <div>★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars}</div>
@@ -689,8 +811,10 @@
     <!-- VIEW 2: CONSTELLATION MAP -->
     <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4">
       <div class="flex items-center justify-between mb-2 text-xs text-[var(--muted)]">
-        <span class="uppercase font-semibold tracking-wider text-[11px] text-[var(--fg)]">Idea Constellation — Your Idea Plotted Live</span>
-        <span>Dashed rays = closest collisions</span>
+        <span class="uppercase font-semibold tracking-wider text-[11px] text-[var(--fg)]">
+          {hasIdea ? 'Idea Map — Your Idea Plotted Live' : 'Project Landscape Map'}
+        </span>
+        <span>{hasIdea ? 'Dashed lines = closest matches' : 'Type an idea above to plot yours on this map'}</span>
       </div>
       <svg viewBox="0 0 760 320" class="w-full h-[320px] rounded-lg bg-[var(--bg)] border border-[var(--border)]">
         <line x1="380" y1="24" x2="380" y2="296" stroke="var(--border)" stroke-dasharray="3 4" />
@@ -699,14 +823,16 @@
         <text x="724" y="308" text-anchor="end" font-size="10" fill="var(--muted)" font-family="monospace">CLOUD / SELF-HOSTED →</text>
         <text x="16" y="36" font-size="10" fill="var(--muted)" font-family="monospace">MULTI-AGENT ↑</text>
 
-        {#each rankedAll.slice(0, 3) as { variant: v, overlap }}
-          {@const vx = 42 + v.x * 676}
-          {@const vy = 284 - v.y * 248}
-          <line x1={userSvg.x} y1={userSvg.y} x2={vx} y2={vy} stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.75" />
-          <text x={(userSvg.x + vx) / 2} y={(userSvg.y + vy) / 2 - 4} text-anchor="middle" font-size="10" font-family="monospace" fill="var(--primary)">
-            {overlap}%
-          </text>
-        {/each}
+        {#if hasIdea}
+          {#each rankedAll.slice(0, 3) as { variant: v, overlap }}
+            {@const vx = 42 + v.x * 676}
+            {@const vy = 284 - v.y * 248}
+            <line x1={userSvg.x} y1={userSvg.y} x2={vx} y2={vy} stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.75" />
+            <text x={(userSvg.x + vx) / 2} y={(userSvg.y + vy) / 2 - 4} text-anchor="middle" font-size="10" font-family="monospace" fill="var(--primary)">
+              {overlap}%
+            </text>
+          {/each}
+        {/if}
 
         {#each rankedAll as { variant: v, overlap }}
           {@const cx = 42 + v.x * 676}
@@ -715,18 +841,20 @@
           <g class="cursor-pointer" onclick={() => (selectedSlug = v.slug)}>
             <circle cx={cx} cy={cy} {r} fill="var(--blue)" fill-opacity="0.82" stroke="var(--card)" stroke-width="1.5" />
             <text x={cx} y={cy - r - 5} text-anchor="middle" font-size="10.5" font-family="monospace" fill="var(--fg)">
-              {v.name} ({overlap}%)
+              {hasIdea ? `${v.name} (${overlap}%)` : v.name}
             </text>
           </g>
         {/each}
 
-        <!-- YOUR IDEA node -->
-        <circle cx={userSvg.x} cy={userSvg.y} r="18" fill="var(--primary)" fill-opacity="0.16" />
-        <circle cx={userSvg.x} cy={userSvg.y} r="6" fill="var(--primary)" stroke="#fff" stroke-width="1.5" />
-        <rect x={userSvg.x - 38} y={userSvg.y + 12} width="76" height="17" rx="4" fill="var(--primary)" />
-        <text x={userSvg.x} y={userSvg.y + 24} text-anchor="middle" font-size="9.5" font-weight="700" font-family="monospace" fill="#fff">
-          ★ YOUR IDEA
-        </text>
+        {#if hasIdea}
+          <!-- YOUR IDEA node -->
+          <circle cx={userSvg.x} cy={userSvg.y} r="18" fill="var(--primary)" fill-opacity="0.16" />
+          <circle cx={userSvg.x} cy={userSvg.y} r="6" fill="var(--primary)" stroke="#fff" stroke-width="1.5" />
+          <rect x={userSvg.x - 38} y={userSvg.y + 12} width="76" height="17" rx="4" fill="var(--primary)" />
+          <text x={userSvg.x} y={userSvg.y + 24} text-anchor="middle" font-size="9.5" font-weight="700" font-family="monospace" fill="#fff">
+            ★ YOUR IDEA
+          </text>
+        {/if}
       </svg>
     </div>
   {:else}
@@ -742,7 +870,9 @@
               <div class="font-mono font-semibold text-sm">{v.name}</div>
               <div class="text-[11px] text-[var(--muted)] font-mono">{v.arch} · {v.stack} · {v.license}</div>
             </div>
-            <span class="px-2.5 py-0.5 rounded-full font-mono text-xs font-bold bg-[var(--blue)]/20 text-[var(--blue)]">{overlap}%</span>
+            {#if hasIdea}
+              <span class="px-2.5 py-0.5 rounded-full font-mono text-xs font-bold bg-[var(--blue)]/20 text-[var(--blue)]">{overlap}%</span>
+            {/if}
           </div>
           <p class="m-0 text-xs text-[var(--muted)]">{v.tagline}</p>
           <div class="flex flex-wrap gap-1">

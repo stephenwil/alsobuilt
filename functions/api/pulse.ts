@@ -8,10 +8,17 @@ async function sha256Hex(input: string): Promise<string> {
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
+async function computeDedupeHash(request: Request, env: Env, categorySlug: string): Promise<string> {
+  const ip = request.headers.get('CF-Connecting-IP') || '127.0.0.1';
+  const monthBucket = new Date().toISOString().slice(0, 7);
+  const salt = env.PULSE_SALT || 'alsobuilt-default-salt';
+  return sha256Hex(`${ip}|${salt}|${categorySlug}|${monthBucket}`);
+}
+
 export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const handle = openSession(env.PUBLIC_DB, request, 'first-unconstrained');
 
-  const [byCategory, byVariant, totalRow] = await Promise.all([
+  const [byCategory, byVariant, totalRow, allCategories] = await Promise.all([
     handle.db
       .prepare('SELECT category_slug, COUNT(*) AS count FROM stealth_pulses GROUP BY category_slug')
       .all<{ category_slug: string; count: number }>(),
@@ -20,7 +27,8 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
         'SELECT nearest_variant_slug, COUNT(*) AS count FROM stealth_pulses WHERE nearest_variant_slug IS NOT NULL GROUP BY nearest_variant_slug'
       )
       .all<{ nearest_variant_slug: string; count: number }>(),
-    handle.db.prepare('SELECT COUNT(*) AS total FROM stealth_pulses').first<{ total: number }>()
+    handle.db.prepare('SELECT COUNT(*) AS total FROM stealth_pulses').first<{ total: number }>(),
+    handle.db.prepare('SELECT slug FROM categories').all<{ slug: string }>()
   ]);
 
   const categories: Record<string, number> = {};
@@ -29,11 +37,24 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const variants: Record<string, number> = {};
   for (const row of byVariant.results ?? []) variants[row.nearest_variant_slug] = row.count;
 
+  const slugs = (allCategories.results ?? []).map((r) => r.slug);
+  let myCategories: string[] = [];
+  if (slugs.length > 0) {
+    const hashes = await Promise.all(slugs.map((slug) => computeDedupeHash(request, env, slug)));
+    const placeholders = hashes.map(() => '?').join(', ');
+    const mine = await handle.db
+      .prepare(`SELECT category_slug FROM stealth_pulses WHERE dedupe_hash IN (${placeholders})`)
+      .bind(...hashes)
+      .all<{ category_slug: string }>();
+    myCategories = (mine.results ?? []).map((r) => r.category_slug);
+  }
+
   return attachBookmark(
     json({
       total: totalRow?.total ?? 0,
       byCategory: categories,
-      byVariant: variants
+      byVariant: variants,
+      myCategories
     }),
     handle
   );
@@ -51,11 +72,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const nearestVariantSlug = body.nearestVariantSlug ? String(body.nearestVariantSlug).trim().slice(0, 64) : null;
   const traits = Array.isArray(body.traits) ? body.traits.slice(0, 8).map((t) => String(t).slice(0, 32)) : [];
 
-  const ip = request.headers.get('CF-Connecting-IP') || '127.0.0.1';
   const region = (request.cf?.country as string | undefined) || 'Global';
-  const monthBucket = new Date().toISOString().slice(0, 7);
-  const salt = env.PULSE_SALT || 'alsobuilt-default-salt';
-  const dedupeHash = await sha256Hex(`${ip}|${salt}|${categorySlug}|${monthBucket}`);
+  const dedupeHash = await computeDedupeHash(request, env, categorySlug);
 
   const handle = openSession(env.PUBLIC_DB, request, 'first-primary');
 
@@ -85,6 +103,41 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     json({
       recorded: (res.meta?.changes ?? 0) > 0,
       alreadyCountedThisMonth: (res.meta?.changes ?? 0) === 0,
+      total: totalRow?.total ?? 0
+    }),
+    handle
+  );
+};
+
+export const onRequestDelete: PagesFunction<Env> = async ({ request, env }) => {
+  const url = new URL(request.url);
+  let categorySlug = url.searchParams.get('categorySlug') || '';
+
+  if (!categorySlug) {
+    try {
+      const body = (await request.json()) as { categorySlug?: string };
+      categorySlug = body.categorySlug || '';
+    } catch {
+      // ignore empty/non-JSON DELETE bodies
+    }
+  }
+
+  categorySlug = (categorySlug || 'ai-memory').trim().slice(0, 48);
+  const dedupeHash = await computeDedupeHash(request, env, categorySlug);
+  const handle = openSession(env.PUBLIC_DB, request, 'first-primary');
+
+  const res = await handle.db
+    .prepare('DELETE FROM stealth_pulses WHERE dedupe_hash = ?')
+    .bind(dedupeHash)
+    .run();
+
+  const totalRow = await handle.db
+    .prepare('SELECT COUNT(*) AS total FROM stealth_pulses')
+    .first<{ total: number }>();
+
+  return attachBookmark(
+    json({
+      removed: (res.meta?.changes ?? 0) > 0,
       total: totalRow?.total ?? 0
     }),
     handle

@@ -9,8 +9,8 @@
     "preview": "npm run build && wrangler pages dev dist --ip 0.0.0.0 --port 8788",
     "validate:variants": "node scripts/build-index.mjs --check",
     "sync:stars": "node scripts/sync-github-stats.mjs",
-    "db:migrate:local": "wrangler d1 migrations apply alsobuilt-public --local && wrangler d1 migrations apply alsobuilt-vault --local",
-    "db:migrate:remote": "wrangler d1 migrations apply alsobuilt-public --remote && wrangler d1 migrations apply alsobuilt-vault --remote",
+    "db:migrate:local": "wrangler d1 migrations apply alsobuilt-public --local",
+    "db:migrate:remote": "wrangler d1 migrations apply alsobuilt-public --remote",
     "typecheck": "node scripts/build-index.mjs && astro check && tsc --noEmit -p functions/tsconfig.json"
   },
   "dependencies": {

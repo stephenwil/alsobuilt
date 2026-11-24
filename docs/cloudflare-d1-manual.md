@@ -1,6 +1,6 @@
 # Cloudflare D1 Technical Manual & Roadmap for AlsoBuilt
 
-> **Scope:** Dual-mode architecture for **AlsoBuilt** — a public **Open Hub** for parallel AI ideas (`alsobuilt-public`) paired with a physically isolated **Personal Ideas Vault** (`alsobuilt-vault`), both running serverless on **Cloudflare Pages + Workers + D1**.
+> **Architecture Note:** This repository (`alsobuilt`) hosts **only** the public **Open Hub** (`alsobuilt-public`) and exposes a CORS-enabled `/index.json` catalog feed. Any personal idea vault (`alsobuilt-vault`) lives in a completely separate private app/repo that consumes `/index.json` read-only. The D1 architecture, limits, and dual-DB isolation patterns below remain useful reference for both deployments.
 
 ---
 

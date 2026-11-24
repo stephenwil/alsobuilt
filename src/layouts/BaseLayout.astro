@@ -3,10 +3,9 @@ import '../styles/global.css';
 
 interface Props {
   title: string;
-  activeNav: 'hub' | 'vault';
 }
 
-const { title, activeNav } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -32,31 +31,17 @@ const { title, activeNav } = Astro.props;
           </div>
         </a>
 
-        <nav class="flex items-center gap-1.5 bg-[var(--secondary)] border border-[var(--border)] p-1 rounded-lg">
+        <div class="flex items-center gap-2">
           <a
-            href="/"
-            class:list={[
-              'px-3 py-1.5 rounded-md text-xs font-medium no-underline transition',
-              activeNav === 'hub'
-                ? 'bg-[var(--card)] text-[var(--fg)] shadow-sm'
-                : 'text-[var(--muted)] hover:text-[var(--fg)]'
-            ]}
+            href="/index.json"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-2.5 py-1.5 rounded-lg bg-[var(--secondary)] border border-[var(--border)] font-mono text-[11px] text-[var(--muted)] no-underline hover:text-[var(--fg)] transition"
+            title="CORS-enabled public catalog JSON feed"
           >
-            Open Hub
+            index.json
           </a>
-          <a
-            href="/vault"
-            class:list={[
-              'px-3 py-1.5 rounded-md text-xs font-medium no-underline transition inline-flex items-center gap-1.5',
-              activeNav === 'vault'
-                ? 'bg-[var(--card)] text-[var(--fg)] shadow-sm'
-                : 'text-[var(--muted)] hover:text-[var(--fg)]'
-            ]}
-          >
-            <span class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--purple)]"></span>
-            Personal Vault
-          </a>
-        </nav>
+        </div>
       </div>
     </header>
 
@@ -65,8 +50,8 @@ const { title, activeNav } = Astro.props;
     </main>
 
     <footer class="max-w-5xl mx-auto px-4 py-6 text-xs text-[var(--muted)] flex items-center justify-between flex-wrap gap-2 border-t border-[var(--border)] mt-8">
-      <span>AlsoBuilt · Dual-D1 Open Hub + Private Vault</span>
-      <span class="font-mono">Cloudflare Pages + D1 SQLite</span>
+      <span>AlsoBuilt · Open-Source AI Idea Collision Radar</span>
+      <span class="font-mono">Git-First Catalog · Cloudflare Pages + D1</span>
     </footer>
   </body>
 </html>

@@ -3,21 +3,12 @@
   "name": "alsobuilt",
   "compatibility_date": "2026-01-01",
   "pages_build_output_dir": "dist",
-  "vars": {
-    "ALLOW_LOCAL_VAULT_BYPASS": "true"
-  },
   "d1_databases": [
     {
       "binding": "PUBLIC_DB",
       "database_name": "alsobuilt-public",
       "database_id": "00000000-0000-0000-0000-000000000001",
       "migrations_dir": "migrations/public"
-    },
-    {
-      "binding": "VAULT_DB",
-      "database_name": "alsobuilt-vault",
-      "database_id": "00000000-0000-0000-0000-000000000002",
-      "migrations_dir": "migrations/vault"
     }
   ]
 }

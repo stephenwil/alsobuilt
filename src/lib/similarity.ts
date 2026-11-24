@@ -147,6 +147,6 @@ stack: ${input.stack}
 traits:
 ${traitLines}
 `;
-  const prUrl = `https://github.com/YOUR_ORG/alsobuilt/new/main/variants/${input.category}?filename=${slug}.yaml&value=${encodeURIComponent(yaml)}`;
+  const prUrl = `https://github.com/stephenwil/alsobuilt/new/main/variants/${input.category}?filename=${slug}.yaml&value=${encodeURIComponent(yaml)}`;
   return { slug, yaml, prUrl };
 }

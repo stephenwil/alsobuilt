@@ -34,23 +34,5 @@ export interface PulseSummary {
   total: number;
   byCategory: Record<string, number>;
   byVariant: Record<string, number>;
-}
-
-export type IdeaStatus = 'spark' | 'researching' | 'building' | 'parked' | 'shipped';
-
-export interface PersonalIdea {
-  id: string;
-  title: string;
-  pitch: string;
-  categorySlug: string;
-  traits: string[];
-  status: IdeaStatus;
-  conviction: number;
-  privateNotes: string;
-  wedgeNotes: string;
-  lastMaxOverlap: number | null;
-  lastCheckedAt: string | null;
-  promotedSlug: string | null;
-  createdAt: string;
-  updatedAt: string;
+  myCategories?: string[];
 }
