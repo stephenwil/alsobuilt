@@ -313,8 +313,8 @@
     }
   });
 
-  const ARCH_OPTIONS = ['Desktop', 'CLI', 'Web', 'SDK', 'Browser'];
-  const LICENSE_OPTIONS = ['MIT', 'Apache-2', 'AGPL', 'BSD-3'];
+  const ARCH_OPTIONS = ['Desktop', 'CLI', 'Web', 'SDK', 'Browser', 'Mobile'];
+  const LICENSE_OPTIONS = ['MIT', 'Apache-2', 'AGPL', 'BSD-3', 'Source'];
   const STAGE_OPTIONS = ['Prod', 'Beta', 'Proto', 'Lesson'];
 </script>
 
@@ -811,6 +811,11 @@
                     <span class="font-mono text-[10px] text-[var(--muted)] hidden sm:inline">{v.stack}</span>
                   </div>
                   <div class="text-xs text-[var(--muted)] mt-0.5">{v.tagline}</div>
+                  {#if v.lesson}
+                    <div class="mt-1 text-[11px] text-[var(--amber)] bg-[var(--amber)]/10 border border-[var(--amber)]/25 rounded px-2 py-1 leading-snug">
+                      <span class="font-mono font-semibold uppercase tracking-wide text-[10px] mr-1">Lesson:</span>{v.lesson}
+                    </div>
+                  {/if}
                   <div class="flex flex-wrap gap-1 mt-1.5">
                     {#each v.traits as t}
                       <span class="px-1.5 py-0.5 rounded font-mono text-[10px] {activeTraits.has(t)
@@ -987,6 +992,11 @@
             {/if}
           </div>
           <p class="m-0 text-xs text-[var(--muted)]">{v.tagline}</p>
+          {#if v.lesson}
+            <div class="text-[11px] text-[var(--amber)] bg-[var(--amber)]/10 border border-[var(--amber)]/25 rounded px-2 py-1 leading-snug">
+              <span class="font-mono font-semibold uppercase tracking-wide text-[10px] mr-1">Lesson:</span>{v.lesson}
+            </div>
+          {/if}
           <div class="flex items-center justify-between gap-2 pt-1 flex-wrap mt-auto">
             <div class="flex flex-wrap gap-1">
               {#each v.traits as t}

@@ -1,0 +1,19 @@
+slug: quivr
+category: ai-memory
+name: Quivr
+repo: https://github.com/The-Vibe-Company/quivr
+tagline: Opinionated RAG and second-brain assistant for querying local files and knowledge bases across models
+arch: Web
+model: Hybrid
+license: MIT
+stage: Prod
+stack: Go + Python + Postgres
+region: EU
+stars: 39661
+traits:
+  - self-hosted
+  - rag
+  - markdown
+  - open-weights
+x: 0.58
+'y': 0.32

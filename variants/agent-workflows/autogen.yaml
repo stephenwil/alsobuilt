@@ -1,0 +1,20 @@
+slug: autogen
+category: agent-workflows
+name: AutoGen
+repo: https://github.com/microsoft/autogen
+tagline: Microsoft Research multi-agent conversation framework that pioneered code-executing agent teams
+arch: SDK
+model: Hybrid
+license: Source
+stage: Lesson
+lesson: >-
+  Unbounded agent-to-agent chat loops burn tokens quickly; modern successors favor explicit state graphs and typed
+  tools.
+stack: Python + .NET
+region: US
+stars: 61970
+traits:
+  - multi-agent
+  - python
+x: 0.74
+'y': 0.86

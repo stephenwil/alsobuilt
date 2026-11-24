@@ -1,0 +1,20 @@
+slug: cognee
+category: ai-memory
+name: Cognee
+repo: https://github.com/topoteretes/cognee
+tagline: Open-source memory engine turning unstructured documents into vector + knowledge graphs for AI agents
+arch: SDK
+model: Hybrid
+license: Apache-2
+stage: Beta
+stack: Python + NetworkX + Kuzu + Vector DB
+region: Global
+stars: 33558
+traits:
+  - python
+  - rag
+  - mcp
+  - self-hosted
+  - multi-agent
+x: 0.62
+'y': 0.68

@@ -1,7 +1,7 @@
 slug: openhands
 category: coding-agents
 name: OpenHands
-repo: https://github.com/All-Hands-AI/OpenHands
+repo: https://github.com/OpenHands/OpenHands
 tagline: Sandboxed multi-agent software engineering platform running full browser and shell workflows
 arch: Web
 model: Hybrid
@@ -9,8 +9,16 @@ license: MIT
 stage: Prod
 stack: Python + Docker + React
 region: Global
-stars: 52000
-spark: [24, 29, 35, 42, 48, 53, 60, 68]
+stars: 94238
+spark:
+  - 24
+  - 29
+  - 35
+  - 42
+  - 48
+  - 53
+  - 60
+  - 68
 traits:
   - multi-agent
   - self-hosted
@@ -18,4 +26,4 @@ traits:
   - python
   - cli
 x: 0.74
-y: 0.86
+'y': 0.86

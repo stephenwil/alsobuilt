@@ -1,0 +1,20 @@
+slug: dify
+category: agent-workflows
+name: Dify
+repo: https://github.com/langgenius/dify
+tagline: Visual self-hosted LLM app and agentic workflow platform with RAG pipelines, prompt IDE, and observability
+arch: Web
+model: Hybrid
+license: Source
+stage: Prod
+stack: Python + Next.js + Docker
+region: Global
+stars: 161847
+traits:
+  - self-hosted
+  - multi-agent
+  - rag
+  - python
+  - typescript
+x: 0.78
+'y': 0.74

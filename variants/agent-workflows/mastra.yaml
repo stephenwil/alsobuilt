@@ -1,0 +1,20 @@
+slug: mastra
+category: agent-workflows
+name: Mastra
+repo: https://github.com/mastra-ai/mastra
+tagline: TypeScript-native AI agent framework with workflows, memory, RAG, evals, and MCP built by the Gatsby team
+arch: SDK
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: TypeScript + Node.js
+region: US
+stars: 29794
+traits:
+  - typescript
+  - multi-agent
+  - rag
+  - mcp
+  - self-hosted
+x: 0.58
+'y': 0.78

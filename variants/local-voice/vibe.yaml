@@ -1,0 +1,19 @@
+slug: vibe
+category: local-voice
+name: Vibe
+repo: https://github.com/thewh1teagle/vibe
+tagline: Offline desktop audio & video transcription app built in Rust/Tauri powered by whisper.cpp
+arch: Desktop
+model: Local LLM
+license: MIT
+stage: Prod
+stack: Rust + Tauri + whisper.cpp
+region: Global
+stars: 8221
+traits:
+  - voice
+  - local-first
+  - rust
+  - open-weights
+x: 0.16
+'y': 0.22

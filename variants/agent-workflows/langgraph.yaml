@@ -1,0 +1,20 @@
+slug: langgraph
+category: agent-workflows
+name: LangGraph
+repo: https://github.com/langchain-ai/langgraph
+tagline: Stateful, cyclic graph runtime for durable multi-agent workflows with human-in-the-loop checkpoints and streaming
+arch: SDK
+model: Hybrid
+license: MIT
+stage: Prod
+stack: Python + TypeScript
+region: US
+stars: 45371
+traits:
+  - multi-agent
+  - python
+  - typescript
+  - realtime
+  - self-hosted
+x: 0.68
+'y': 0.84

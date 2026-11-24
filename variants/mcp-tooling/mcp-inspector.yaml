@@ -1,0 +1,19 @@
+slug: mcp-inspector
+category: mcp-tooling
+name: MCP Inspector
+repo: https://github.com/modelcontextprotocol/inspector
+tagline: Visual developer tool for testing, debugging, and inspecting Model Context Protocol servers locally
+arch: Web
+model: Hybrid
+license: MIT
+stage: Prod
+stack: TypeScript + React + Node.js
+region: Global
+stars: 11355
+traits:
+  - mcp
+  - typescript
+  - local-first
+  - cli
+x: 0.3
+'y': 0.46

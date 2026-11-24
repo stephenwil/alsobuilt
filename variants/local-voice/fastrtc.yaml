@@ -9,8 +9,16 @@ license: MIT
 stage: Beta
 stack: Python + FastAPI + WebRTC
 region: Global
-stars: 3600
-spark: [2, 6, 12, 19, 27, 34, 41, 49]
+stars: 4641
+spark:
+  - 2
+  - 6
+  - 12
+  - 19
+  - 27
+  - 34
+  - 41
+  - 49
 traits:
   - voice
   - realtime
@@ -18,4 +26,4 @@ traits:
   - browser
   - open-weights
 x: 0.48
-y: 0.36
+'y': 0.36

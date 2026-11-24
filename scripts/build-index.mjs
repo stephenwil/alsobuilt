@@ -30,6 +30,21 @@ const CATEGORIES = [
     slug: 'mcp-tooling',
     name: 'MCP Servers & Tooling',
     description: 'Model Context Protocol servers, bridges, registries, and agent toolkits'
+  },
+  {
+    slug: 'local-llm-runners',
+    name: 'Local LLMs & Chat UIs',
+    description: 'On-device model runners, inference engines, and desktop/mobile local chat apps'
+  },
+  {
+    slug: 'browser-computer-use',
+    name: 'Browser & Computer Use',
+    description: 'Autonomous web automation, DOM agents, and desktop GUI control frameworks'
+  },
+  {
+    slug: 'agent-workflows',
+    name: 'Agent Frameworks',
+    description: 'Multi-agent orchestration graphs, workflow builders, and typed agent SDKs'
   }
 ];
 

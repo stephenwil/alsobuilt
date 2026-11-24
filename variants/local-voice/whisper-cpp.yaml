@@ -9,8 +9,16 @@ license: MIT
 stage: Prod
 stack: C++ + Metal + CoreML
 region: BG
-stars: 39500
-spark: [25, 27, 29, 31, 34, 36, 39, 41]
+stars: 55493
+spark:
+  - 25
+  - 27
+  - 29
+  - 31
+  - 34
+  - 36
+  - 39
+  - 41
 traits:
   - local-first
   - voice
@@ -18,4 +26,4 @@ traits:
   - cli
   - mobile
 x: 0.16
-y: 0.22
+'y': 0.22

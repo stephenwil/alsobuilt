@@ -1,0 +1,20 @@
+slug: jan
+category: local-llm-runners
+name: Jan
+repo: https://github.com/janhq/jan
+tagline: Offline-first open-source ChatGPT desktop alternative running local GGUF models with an extensible hub
+arch: Desktop
+model: Local LLM
+license: AGPL
+stage: Prod
+stack: Rust + Tauri + TypeScript
+region: Global
+stars: 46079
+traits:
+  - local-first
+  - rust
+  - typescript
+  - open-weights
+  - mcp
+x: 0.2
+'y': 0.44

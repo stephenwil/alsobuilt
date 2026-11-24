@@ -1,0 +1,18 @@
+slug: stagehand
+category: browser-computer-use
+name: Stagehand
+repo: https://github.com/browserbase/stagehand
+tagline: TypeScript AI browser automation SDK blending deterministic Playwright code with natural-language act/extract
+arch: Browser
+model: Hybrid
+license: MIT
+stage: Prod
+stack: TypeScript + Playwright
+region: US
+stars: 26131
+traits:
+  - browser
+  - typescript
+  - mcp
+x: 0.6
+'y': 0.52

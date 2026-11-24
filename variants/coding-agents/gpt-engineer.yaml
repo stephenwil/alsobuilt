@@ -1,0 +1,18 @@
+slug: gpt-engineer
+category: coding-agents
+name: gpt-engineer
+repo: https://github.com/AntonOsika/gpt-engineer
+tagline: Pioneering prompt-to-codebase CLI generator that sparked the AI software engineer wave before evolving into Lovable
+arch: CLI
+model: Cloud API
+license: MIT
+stage: Lesson
+lesson: One-shot repo generation hit context/debugging ceilings; iterative file-diff agents and live previews won.
+stack: Python
+region: EU
+stars: 54943
+traits:
+  - cli
+  - python
+x: 0.68
+'y': 0.38

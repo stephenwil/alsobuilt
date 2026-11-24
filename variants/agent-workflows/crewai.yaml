@@ -1,0 +1,19 @@
+slug: crewai
+category: agent-workflows
+name: CrewAI
+repo: https://github.com/crewAIInc/crewAI
+tagline: Role-playing multi-agent orchestration framework pairing autonomous agent crews with event-driven flows
+arch: SDK
+model: Hybrid
+license: MIT
+stage: Prod
+stack: Python
+region: US
+stars: 61232
+traits:
+  - multi-agent
+  - python
+  - rag
+  - mcp
+x: 0.64
+'y': 0.82

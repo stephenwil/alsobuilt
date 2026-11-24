@@ -9,12 +9,20 @@ license: Apache-2
 stage: Prod
 stack: Python + Tree-sitter + Git
 region: US
-stars: 31000
-spark: [20, 24, 28, 33, 38, 42, 47, 52]
+stars: 50241
+spark:
+  - 20
+  - 24
+  - 28
+  - 33
+  - 38
+  - 42
+  - 47
+  - 52
 traits:
   - cli
   - local-first
   - python
   - open-weights
-x: 0.20
-y: 0.44
+x: 0.2
+'y': 0.44

@@ -1,0 +1,21 @@
+slug: ui-tars-desktop
+category: browser-computer-use
+name: UI-TARS Desktop
+repo: https://github.com/bytedance/UI-TARS-desktop
+tagline: Open-source GUI computer-use desktop agent powered by vision-language models for cross-app OS automation
+arch: Desktop
+model: Hybrid
+license: Apache-2
+stage: Lesson
+lesson: Showed pure vision GUI grounding works on desktop apps, while hybrid DOM+MCP agents remain faster and more reliable.
+stack: TypeScript + Electron + Vision Models
+region: APAC
+stars: 39593
+traits:
+  - browser
+  - typescript
+  - local-first
+  - open-weights
+  - mcp
+x: 0.34
+'y': 0.64

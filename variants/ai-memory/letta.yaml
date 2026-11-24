@@ -9,8 +9,16 @@ license: Apache-2
 stage: Prod
 stack: Python + Postgres + pgvector
 region: US
-stars: 15800
-spark: [14, 16, 19, 21, 24, 27, 30, 33]
+stars: 25532
+spark:
+  - 14
+  - 16
+  - 19
+  - 21
+  - 24
+  - 27
+  - 30
+  - 33
 traits:
   - multi-agent
   - python
@@ -18,4 +26,4 @@ traits:
   - open-weights
   - rag
 x: 0.66
-y: 0.84
+'y': 0.84

@@ -1,0 +1,19 @@
+slug: browser-use
+category: browser-computer-use
+name: browser-use
+repo: https://github.com/browser-use/browser-use
+tagline: Python library making websites accessible to LLM agents via structured DOM extraction and Playwright actions
+arch: Browser
+model: Hybrid
+license: MIT
+stage: Prod
+stack: Python + Playwright
+region: EU
+stars: 121933
+traits:
+  - browser
+  - python
+  - multi-agent
+  - mcp
+x: 0.56
+'y': 0.72

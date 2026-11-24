@@ -1,0 +1,20 @@
+slug: roo-code
+category: coding-agents
+name: Roo Code
+repo: https://github.com/RooCodeInc/Roo-Code
+tagline: Autonomous multi-mode VS Code coding agent forked from Cline with custom roles and MCP tool use
+arch: Desktop
+model: Hybrid
+license: Apache-2
+stage: Lesson
+lesson: Demonstrated rapid community demand for custom agent personas/modes inside IDE forks before archiving.
+stack: TypeScript + VS Code
+region: Global
+stars: 24236
+traits:
+  - typescript
+  - mcp
+  - multi-agent
+  - local-first
+x: 0.42
+'y': 0.66

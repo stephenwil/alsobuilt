@@ -1,0 +1,21 @@
+slug: surfsense
+category: ai-memory
+name: SurfSense
+repo: https://github.com/MODSetter/SurfSense
+tagline: Open-source NotebookLM alternative connecting personal docs, Slack, Notion, and web bookmarks to local LLMs
+arch: Web
+model: Hybrid
+license: Apache-2
+stage: Beta
+stack: Python + FastAPI + Next.js + pgvector
+region: Global
+stars: 16941
+traits:
+  - self-hosted
+  - rag
+  - python
+  - markdown
+  - browser
+  - open-weights
+x: 0.52
+'y': 0.42

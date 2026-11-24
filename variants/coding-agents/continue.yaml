@@ -1,0 +1,19 @@
+slug: continue
+category: coding-agents
+name: Continue
+repo: https://github.com/continuedev/continue
+tagline: Open-source VS Code and JetBrains AI code assistant with custom autocomplete, chat, and local Ollama support
+arch: Desktop
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: TypeScript + VS Code + JetBrains
+region: US
+stars: 36551
+traits:
+  - typescript
+  - local-first
+  - mcp
+  - open-weights
+x: 0.36
+'y': 0.44

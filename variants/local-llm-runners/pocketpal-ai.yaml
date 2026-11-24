@@ -1,0 +1,19 @@
+slug: pocketpal-ai
+category: local-llm-runners
+name: PocketPal AI
+repo: https://github.com/a-ghorbani/pocketpal-ai
+tagline: Offline mobile assistant running small GGUF open-weights LLMs directly on iOS and Android devices
+arch: Mobile
+model: Local LLM
+license: MIT
+stage: Prod
+stack: React Native + TypeScript + llama.rn
+region: Global
+stars: 9769
+traits:
+  - mobile
+  - local-first
+  - open-weights
+  - typescript
+x: 0.18
+'y': 0.18

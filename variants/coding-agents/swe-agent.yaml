@@ -1,0 +1,19 @@
+slug: swe-agent
+category: coding-agents
+name: SWE-agent
+repo: https://github.com/SWE-agent/SWE-agent
+tagline: Research-backed autonomous GitHub issue solver from Princeton using an agent-computer interface in Docker
+arch: CLI
+model: Cloud API
+license: MIT
+stage: Prod
+stack: Python + Docker
+region: US
+stars: 20867
+traits:
+  - cli
+  - python
+  - multi-agent
+  - self-hosted
+x: 0.64
+'y': 0.76

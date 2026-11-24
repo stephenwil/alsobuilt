@@ -23,7 +23,15 @@
     },
     "category": {
       "type": "string",
-      "enum": ["ai-memory", "coding-agents", "local-voice", "mcp-tooling"]
+      "enum": [
+        "ai-memory",
+        "coding-agents",
+        "local-voice",
+        "mcp-tooling",
+        "local-llm-runners",
+        "browser-computer-use",
+        "agent-workflows"
+      ]
     },
     "name": {
       "type": "string",

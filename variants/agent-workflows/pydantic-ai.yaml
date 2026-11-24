@@ -1,0 +1,19 @@
+slug: pydantic-ai
+category: agent-workflows
+name: PydanticAI
+repo: https://github.com/pydantic/pydantic-ai
+tagline: Type-safe Python agent framework from the Pydantic team focused on structured outputs, dependency injection, and MCP
+arch: SDK
+model: Hybrid
+license: MIT
+stage: Prod
+stack: Python + Pydantic
+region: EU
+stars: 21368
+traits:
+  - python
+  - mcp
+  - multi-agent
+  - realtime
+x: 0.56
+'y': 0.7

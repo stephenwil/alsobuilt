@@ -1,0 +1,20 @@
+slug: open-interpreter
+category: browser-computer-use
+name: Open Interpreter
+repo: https://github.com/openinterpreter/open-interpreter
+tagline: Local natural-language computer interface letting LLMs run shell commands, Python, and OS actions on your machine
+arch: CLI
+model: Hybrid
+license: Apache-2
+stage: Beta
+stack: Rust + Python
+region: US
+stars: 68961
+traits:
+  - local-first
+  - cli
+  - rust
+  - python
+  - open-weights
+x: 0.28
+'y': 0.52

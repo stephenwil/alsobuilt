@@ -1,0 +1,19 @@
+slug: context7
+category: mcp-tooling
+name: Context7 MCP
+repo: https://github.com/upstash/context7
+tagline: MCP server injecting up-to-date, version-specific library documentation directly into coding agent prompts
+arch: CLI
+model: Cloud API
+license: MIT
+stage: Prod
+stack: TypeScript + Node.js
+region: US
+stars: 65405
+traits:
+  - mcp
+  - typescript
+  - rag
+  - cli
+x: 0.72
+'y': 0.48

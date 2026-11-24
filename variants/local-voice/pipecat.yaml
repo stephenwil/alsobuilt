@@ -9,13 +9,21 @@ license: BSD-3
 stage: Prod
 stack: Python + WebRTC + Daily
 region: US
-stars: 5900
-spark: [8, 12, 17, 23, 29, 35, 42, 50]
+stars: 17415
+spark:
+  - 8
+  - 12
+  - 17
+  - 23
+  - 29
+  - 35
+  - 42
+  - 50
 traits:
   - voice
   - realtime
   - multi-agent
   - python
   - self-hosted
-x: 0.60
-y: 0.66
+x: 0.6
+'y': 0.66

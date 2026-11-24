@@ -1,0 +1,18 @@
+slug: llama-cpp
+category: local-llm-runners
+name: llama.cpp
+repo: https://github.com/ggml-org/llama.cpp
+tagline: Foundational C/C++ LLM inference engine and GGUF ecosystem running open-weights models on consumer hardware
+arch: CLI
+model: Local LLM
+license: MIT
+stage: Prod
+stack: C++ + CUDA + Metal + Vulkan
+region: Global
+stars: 136134
+traits:
+  - local-first
+  - cli
+  - open-weights
+x: 0.12
+'y': 0.28

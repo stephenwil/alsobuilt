@@ -1,0 +1,19 @@
+slug: skyvern
+category: browser-computer-use
+name: Skyvern
+repo: https://github.com/Skyvern-AI/skyvern
+tagline: Vision + LLM workflow engine automating brittle browser forms and back-office portals without brittle XPaths
+arch: Web
+model: Hybrid
+license: AGPL
+stage: Prod
+stack: Python + Playwright + Vision LLMs
+region: US
+stars: 23507
+traits:
+  - browser
+  - python
+  - self-hosted
+  - multi-agent
+x: 0.7
+'y': 0.66

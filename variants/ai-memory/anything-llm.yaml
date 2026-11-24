@@ -1,0 +1,21 @@
+slug: anything-llm
+category: ai-memory
+name: AnythingLLM
+repo: https://github.com/Mintplex-Labs/anything-llm
+tagline: All-in-one desktop and self-hosted AI workspace with built-in RAG, custom agents, and MCP support
+arch: Desktop
+model: Hybrid
+license: MIT
+stage: Prod
+stack: Node.js + React + Electron + LanceDB
+region: Global
+stars: 68605
+traits:
+  - local-first
+  - self-hosted
+  - rag
+  - mcp
+  - typescript
+  - open-weights
+x: 0.34
+'y': 0.56

@@ -1,0 +1,20 @@
+slug: livekit-agents
+category: local-voice
+name: LiveKit Agents
+repo: https://github.com/livekit/agents
+tagline: Production realtime multimodal voice and video agent framework built over WebRTC with turn-taking detection
+arch: SDK
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: Python + Node.js + WebRTC
+region: US
+stars: 15329
+traits:
+  - voice
+  - realtime
+  - python
+  - self-hosted
+  - multi-agent
+x: 0.66
+'y': 0.64

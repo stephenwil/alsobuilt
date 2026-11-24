@@ -1,0 +1,18 @@
+slug: github-mcp-server
+category: mcp-tooling
+name: GitHub MCP Server
+repo: https://github.com/github/github-mcp-server
+tagline: Official GitHub MCP server in Go exposing repos, PRs, issues, actions, and code search to AI agents
+arch: CLI
+model: Cloud API
+license: MIT
+stage: Prod
+stack: Go + Docker
+region: US
+stars: 34724
+traits:
+  - mcp
+  - cli
+  - self-hosted
+x: 0.76
+'y': 0.54

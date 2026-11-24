@@ -1,0 +1,21 @@
+slug: open-webui
+category: local-llm-runners
+name: Open WebUI
+repo: https://github.com/open-webui/open-webui
+tagline: Feature-rich self-hosted AI web interface for Ollama and OpenAI-compatible APIs with RAG, voice, and tools
+arch: Web
+model: Hybrid
+license: Source
+stage: Prod
+stack: Svelte + Python + FastAPI + Docker
+region: Global
+stars: 159442
+traits:
+  - self-hosted
+  - local-first
+  - rag
+  - voice
+  - open-weights
+  - python
+x: 0.44
+'y': 0.5

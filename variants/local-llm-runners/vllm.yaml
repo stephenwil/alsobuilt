@@ -1,0 +1,19 @@
+slug: vllm
+category: local-llm-runners
+name: vLLM
+repo: https://github.com/vllm-project/vllm
+tagline: High-throughput PagedAttention inference and serving engine for self-hosting open-weights LLMs at scale
+arch: SDK
+model: Local LLM
+license: Apache-2
+stage: Prod
+stack: Python + CUDA + C++
+region: US
+stars: 97494
+traits:
+  - self-hosted
+  - open-weights
+  - python
+  - realtime
+x: 0.62
+'y': 0.36

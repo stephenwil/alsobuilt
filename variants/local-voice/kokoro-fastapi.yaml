@@ -1,0 +1,21 @@
+slug: kokoro-fastapi
+category: local-voice
+name: Kokoro-FastAPI
+repo: https://github.com/remsky/Kokoro-FastAPI
+tagline: Dockerized OpenAI-compatible local text-to-speech server running the 82M-parameter Kokoro voice model
+arch: Web
+model: Local LLM
+license: Apache-2
+stage: Beta
+stack: Python + FastAPI + ONNX + Docker
+region: Global
+stars: 5731
+traits:
+  - voice
+  - local-first
+  - self-hosted
+  - python
+  - open-weights
+  - realtime
+x: 0.32
+'y': 0.34

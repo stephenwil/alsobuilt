@@ -9,8 +9,16 @@ license: Apache-2
 stage: Beta
 stack: Python + Neo4j
 region: US
-stars: 6400
-spark: [4, 7, 11, 15, 21, 26, 32, 41]
+stars: 33066
+spark:
+  - 4
+  - 7
+  - 11
+  - 15
+  - 21
+  - 26
+  - 32
+  - 41
 traits:
   - multi-agent
   - python
@@ -18,4 +26,4 @@ traits:
   - realtime
   - self-hosted
 x: 0.78
-y: 0.68
+'y': 0.68

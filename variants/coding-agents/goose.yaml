@@ -1,0 +1,21 @@
+slug: goose
+category: coding-agents
+name: Goose
+repo: https://github.com/aaif-goose/goose
+tagline: Extensible open-source developer agent in Rust running locally via CLI or Desktop with native MCP extensions
+arch: Desktop
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: Rust + Electron + MCP
+region: US
+stars: 56945
+traits:
+  - rust
+  - cli
+  - mcp
+  - local-first
+  - multi-agent
+  - open-weights
+x: 0.26
+'y': 0.74

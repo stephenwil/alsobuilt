@@ -1,0 +1,22 @@
+slug: babyagi
+category: agent-workflows
+name: BabyAGI
+repo: https://github.com/yoheinakajima/babyagi
+tagline: Minimalist 140-line autonomous task-loop script that catalyzed the 2023 AI agent explosion
+arch: CLI
+model: Cloud API
+license: MIT
+stage: Lesson
+lesson: >-
+  Proved simple vector-memory + task-queue loops could self-direct, while exposing infinite-loop and hallucination
+  drift.
+stack: Python
+region: US
+stars: 22362
+traits:
+  - python
+  - rag
+  - multi-agent
+  - cli
+x: 0.8
+'y': 0.62

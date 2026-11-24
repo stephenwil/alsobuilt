@@ -1,0 +1,19 @@
+slug: ollama
+category: local-llm-runners
+name: Ollama
+repo: https://github.com/ollama/ollama
+tagline: One-command local LLM runtime and model registry for macOS, Linux, and Windows with OpenAI-compatible API
+arch: CLI
+model: Local LLM
+license: MIT
+stage: Prod
+stack: Go + C++ + llama.cpp
+region: US
+stars: 187998
+traits:
+  - local-first
+  - cli
+  - open-weights
+  - self-hosted
+x: 0.16
+'y': 0.36

@@ -1,0 +1,19 @@
+slug: faster-whisper
+category: local-voice
+name: faster-whisper
+repo: https://github.com/SYSTRAN/faster-whisper
+tagline: 4x faster Whisper speech-to-text transcription using CTranslate2 with low VRAM and INT8 quantization
+arch: SDK
+model: Local LLM
+license: MIT
+stage: Prod
+stack: Python + CTranslate2
+region: EU
+stars: 26987
+traits:
+  - voice
+  - local-first
+  - python
+  - open-weights
+x: 0.22
+'y': 0.28

@@ -1,0 +1,20 @@
+slug: opencode
+category: coding-agents
+name: OpenCode
+repo: https://github.com/anomalyco/opencode
+tagline: Open-source terminal-native AI coding agent supporting 75+ providers, LSP integration, and MCP tools
+arch: CLI
+model: Hybrid
+license: MIT
+stage: Prod
+stack: TypeScript + Bun + TUI
+region: Global
+stars: 228963
+traits:
+  - cli
+  - typescript
+  - mcp
+  - local-first
+  - open-weights
+x: 0.24
+'y': 0.62

@@ -1,0 +1,20 @@
+slug: playwright-mcp
+category: mcp-tooling
+name: Playwright MCP
+repo: https://github.com/microsoft/playwright-mcp
+tagline: Official Microsoft MCP server giving AI agents deterministic browser control via accessibility snapshots
+arch: CLI
+model: Hybrid
+license: Apache-2
+stage: Prod
+stack: TypeScript + Playwright
+region: US
+stars: 40102
+traits:
+  - mcp
+  - browser
+  - typescript
+  - cli
+  - local-first
+x: 0.38
+'y': 0.58

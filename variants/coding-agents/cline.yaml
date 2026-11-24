@@ -9,8 +9,16 @@ license: Apache-2
 stage: Prod
 stack: TypeScript + VS Code + MCP
 region: US
-stars: 39000
-spark: [15, 22, 31, 39, 46, 54, 62, 70]
+stars: 71870
+spark:
+  - 15
+  - 22
+  - 31
+  - 39
+  - 46
+  - 54
+  - 62
+  - 70
 traits:
   - mcp
   - browser
@@ -18,4 +26,4 @@ traits:
   - multi-agent
   - local-first
 x: 0.36
-y: 0.62
+'y': 0.62
