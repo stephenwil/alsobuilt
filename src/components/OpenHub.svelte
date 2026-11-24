@@ -605,50 +605,84 @@
     </div>
   </div>
 
-  <!-- Pre-filled GitHub PR Builder Drawer -->
+  <!-- Pre-filled GitHub PR Builder & Issue Submitter Drawer -->
   {#if showPrDrawer}
-    <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="flex flex-col gap-2">
-        <div class="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
-          Add an Open-Source Project — creates <code>variants/{prCategory}/{prGenerated.slug}.yaml</code>
+    {@const badgeUrl = `https://img.shields.io/badge/AlsoBuilt-listed-6366f1?style=flat-square`}
+    {@const badgeTarget = `https://alsobuilt.pages.dev/?cat=${prCategory}`}
+    {@const badgeMarkdown = `[![Listed on AlsoBuilt](${badgeUrl})](${badgeTarget})`}
+    <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+              Add an Open-Source Project — creates <code>variants/{prCategory}/{prGenerated.slug}.yaml</code>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <input bind:value={prName} placeholder="Project name" class="h-8 px-2.5 rounded bg-[var(--bg)] border border-[var(--border)] text-xs" />
+            <select bind:value={prCategory} class="h-8 px-2 rounded bg-[var(--bg)] border border-[var(--border)] text-xs">
+              {#each catalog.categories as cat}
+                <option value={cat.slug}>{cat.name}</option>
+              {/each}
+            </select>
+          </div>
+          <input bind:value={prRepo} placeholder="https://github.com/..." class="h-8 px-2.5 rounded bg-[var(--bg)] border border-[var(--border)] text-xs" />
+          <div class="grid grid-cols-3 gap-2">
+            <input bind:value={prStack} placeholder="Stack" class="h-8 px-2.5 rounded bg-[var(--bg)] border border-[var(--border)] text-xs" />
+            <select bind:value={prArch} class="h-8 px-2 rounded bg-[var(--bg)] border border-[var(--border)] text-xs">
+              {#each ARCH_OPTIONS as a}<option value={a}>{a}</option>{/each}
+            </select>
+            <select bind:value={prLicense} class="h-8 px-2 rounded bg-[var(--bg)] border border-[var(--border)] text-xs">
+              {#each LICENSE_OPTIONS as l}<option value={l}>{l}</option>{/each}
+            </select>
+          </div>
+          <div class="flex gap-2 mt-1 flex-wrap">
+            <a
+              href="https://github.com/stephenwil/alsobuilt/issues/new?template=submit-project.yml"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-3 py-1.5 rounded-lg bg-[var(--emerald)] text-white text-xs font-medium no-underline hover:opacity-90"
+              title="Paste just a GitHub URL — a GitHub Action fetches live stars and opens the PR for you"
+            >
+              Submit via GitHub Issue (No YAML) ↗
+            </a>
+            <a
+              href={prGenerated.prUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium no-underline hover:opacity-90"
+            >
+              Open PR on GitHub ↗
+            </a>
+            <button
+              type="button"
+              onclick={() => copyText(prGenerated.yaml, 'Project YAML copied')}
+              class="px-3 py-1.5 rounded-lg bg-[var(--secondary)] border border-[var(--border)] text-xs cursor-pointer hover:border-[var(--primary)]"
+            >
+              Copy YAML
+            </button>
+          </div>
         </div>
-        <div class="grid grid-cols-2 gap-2">
-          <input bind:value={prName} placeholder="Project name" class="h-8 px-2.5 rounded bg-[var(--bg)] border border-[var(--border)] text-xs" />
-          <select bind:value={prCategory} class="h-8 px-2 rounded bg-[var(--bg)] border border-[var(--border)] text-xs">
-            {#each catalog.categories as cat}
-              <option value={cat.slug}>{cat.name}</option>
-            {/each}
-          </select>
-        </div>
-        <input bind:value={prRepo} placeholder="https://github.com/..." class="h-8 px-2.5 rounded bg-[var(--bg)] border border-[var(--border)] text-xs" />
-        <div class="grid grid-cols-3 gap-2">
-          <input bind:value={prStack} placeholder="Stack" class="h-8 px-2.5 rounded bg-[var(--bg)] border border-[var(--border)] text-xs" />
-          <select bind:value={prArch} class="h-8 px-2 rounded bg-[var(--bg)] border border-[var(--border)] text-xs">
-            {#each ARCH_OPTIONS as a}<option value={a}>{a}</option>{/each}
-          </select>
-          <select bind:value={prLicense} class="h-8 px-2 rounded bg-[var(--bg)] border border-[var(--border)] text-xs">
-            {#each LICENSE_OPTIONS as l}<option value={l}>{l}</option>{/each}
-          </select>
-        </div>
-        <div class="flex gap-2 mt-1 flex-wrap">
-          <a
-            href={prGenerated.prUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium no-underline hover:opacity-90"
-          >
-            Open PR on GitHub ↗
-          </a>
-          <button
-            type="button"
-            onclick={() => copyText(prGenerated.yaml, 'Project YAML copied')}
-            class="px-3 py-1.5 rounded-lg bg-[var(--secondary)] border border-[var(--border)] text-xs cursor-pointer hover:border-[var(--primary)]"
-          >
-            Copy YAML
-          </button>
-        </div>
+        <pre class="m-0 p-3 rounded-lg bg-[var(--bg)] border border-[var(--border)] font-mono text-[11px] overflow-x-auto">{prGenerated.yaml}</pre>
       </div>
-      <pre class="m-0 p-3 rounded-lg bg-[var(--bg)] border border-[var(--border)] font-mono text-[11px] overflow-x-auto">{prGenerated.yaml}</pre>
+
+      <!-- README Badge Strip -->
+      <div class="pt-3 border-t border-[var(--border)] flex items-center justify-between gap-3 flex-wrap">
+        <div class="flex items-center gap-2.5 flex-wrap min-w-0">
+          <span class="text-xs font-medium text-[var(--muted)]">Listed already? Add the README badge:</span>
+          <a href={badgeTarget} target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
+            <img src={badgeUrl} alt="Listed on AlsoBuilt" height="20" class="rounded-sm" />
+          </a>
+          <code class="text-[11px] font-mono text-[var(--muted)] bg-[var(--bg)] border border-[var(--border)] rounded px-2 py-0.5 truncate max-w-md">{badgeMarkdown}</code>
+        </div>
+        <button
+          type="button"
+          onclick={() => copyText(badgeMarkdown, 'README badge Markdown copied!')}
+          class="px-2.5 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-xs font-medium cursor-pointer hover:border-[var(--primary)] shrink-0"
+        >
+          Copy README Badge
+        </button>
+      </div>
     </div>
   {/if}
 

@@ -11,7 +11,8 @@
     "sync:stars": "node scripts/sync-github-stats.mjs",
     "db:migrate:local": "wrangler d1 migrations apply alsobuilt-public --local",
     "db:migrate:remote": "wrangler d1 migrations apply alsobuilt-public --remote",
-    "typecheck": "node scripts/build-index.mjs && astro check && tsc --noEmit -p functions/tsconfig.json"
+    "typecheck": "node scripts/build-index.mjs && astro check && tsc --noEmit -p functions/tsconfig.json",
+    "mcp": "node mcp/server.mjs"
   },
   "dependencies": {
     "@astrojs/svelte": "^7.0.5",

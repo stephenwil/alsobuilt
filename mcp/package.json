@@ -1,0 +1,22 @@
+{
+  "name": "alsobuilt-mcp",
+  "version": "0.1.0",
+  "description": "Zero-dependency MCP server to check AI idea overlap against the live AlsoBuilt open-source catalog",
+  "type": "module",
+  "bin": {
+    "alsobuilt-mcp": "./server.mjs"
+  },
+  "files": [
+    "server.mjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephenwil/alsobuilt.git",
+    "directory": "mcp"
+  }
+}

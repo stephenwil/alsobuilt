@@ -1,9 +1,24 @@
 # AlsoBuilt
 
-**Parallel AI builds & idea collision radar** — an open-source, Git-first catalog and collision sandbox built on **Astro 5 + Svelte 5 + Cloudflare Pages + Cloudflare D1 (`alsobuilt-public`)**.
+**Live:** [alsobuilt.pages.dev](https://alsobuilt.pages.dev/) · **Feed:** [`/index.json`](https://alsobuilt.pages.dev/index.json) · **MCP Server:** [`mcp/`](./mcp/README.md)
 
-- **Collision Sandbox (`/`)** — Drop an AI idea pitch, see live overlap %, spot your unique wedge, compare variants side-by-side across Table / Constellation Map / Cards views, log an anonymous *"I'm Building Privately"* pulse (`/api/pulse`), or generate a pre-filled variant PR (`variants/<category>/<slug>.yaml`).
-- **Open Catalog Feed (`/index.json`)** — Static, CORS-enabled JSON index compiled at build time from `variants/**/*.yaml` so separate private notebooks, CLI tools, or personal idea vaults can run read-only collision checks without coupling to this repo.
+**See who's already building your AI idea.** An open-source, Git-first catalog and collision radar (76 verified open-source AI projects — including 29 indie `<5k ★` builds — across 7 categories) built on **Astro 5 + Svelte 5 + Cloudflare Pages + Cloudflare D1**.
+
+- **Collision Radar (`/`)** — Paste a one-sentence pitch to rank similar open-source repos by trait & keyword overlap, spot missing wedge traits, compare projects side-by-side, explore the 2D Constellation Map, or filter specifically to **Indie (`<5k ★`)** and **Lesson** builds.
+- **Anonymous Stealth Pulse (`/api/pulse`)** — Building privately and don't want to expose your repo? Toggle *"+ I'm Building Privately"* to anonymously increment the live monthly-deduplicated counter for your category (Cloudflare D1).
+- **Zero-YAML Submissions** — [Submit a GitHub repo via Issue Form](https://github.com/stephenwil/alsobuilt/issues/new?template=submit-project.yml) and GitHub Actions automatically fetches live stars/license and opens a validated catalog PR — or open a direct PR adding `variants/<category>/<slug>.yaml`.
+- **MCP Server (`mcp/server.mjs`)** — Zero-dependency stdio MCP server so Claude Code, Cursor, or Codex can check AlsoBuilt before scaffolding a new repo. See [mcp/README.md](./mcp/README.md).
+- **Open JSON Feed (`/index.json`)** — Static, CORS-enabled catalog compiled at build time from `variants/**/*.yaml` with nightly GitHub star refreshes and automatic deploys.
+
+---
+
+## Add the README Badge to Your Project
+
+If your repo is listed in AlsoBuilt, feel free to add a badge linking back to your category:
+
+```markdown
+[![Listed on AlsoBuilt](https://img.shields.io/badge/AlsoBuilt-listed-6366f1?style=flat-square)](https://alsobuilt.pages.dev/)
+```
 
 ---
 
@@ -20,31 +35,18 @@ npm run db:migrate:local
 npm run preview
 ```
 
-Open `http://<your-tailscale-host>.ts.net:8788/` (Open Hub) or `http://<your-tailscale-host>.ts.net:8788/index.json` (catalog feed). Both `npm run dev` and `npm run preview` bind to `0.0.0.0` so they are immediately reachable over Tailscale.
-
 ---
 
-## Deploying to Cloudflare Pages + D1
+## Contributing a Project
 
-1. **Create the public D1 database** in your Cloudflare account:
-   ```bash
-   npx wrangler d1 create alsobuilt-public
-   ```
-2. Paste the returned `database_id` UUID into `wrangler.jsonc`.
-3. **Apply remote migrations**:
-   ```bash
-   npm run db:migrate:remote
-   ```
-4. **Deploy to Cloudflare Pages** (connect this GitHub repo in Cloudflare Dashboard → Pages → Build command `npm run build`, output directory `dist`), bind `PUBLIC_DB` → `alsobuilt-public` under **Settings → Functions → D1 database bindings**, and set an optional `PULSE_SALT` secret for monthly anonymous IP hashing.
+**Option A (Fastest — No YAML):** Open a [Project Submission Issue](https://github.com/stephenwil/alsobuilt/issues/new?template=submit-project.yml) with your GitHub repo URL. Our Action validates it against the GitHub API and opens the PR automatically.
 
----
-
-## Contributing a Public Variant
-
-Add one YAML file under `variants/<category>/<slug>.yaml` matching `schema/variant.schema.json`, then verify locally:
+**Option B (Direct PR):** Add one YAML file under `variants/<category>/<slug>.yaml` matching `schema/variant.schema.json`, then verify locally:
 
 ```bash
 npm run validate:variants
 ```
 
-See [docs/cloudflare-d1-manual.md](./docs/cloudflare-d1-manual.md) for the Cloudflare D1 architecture reference, limits, and read replication guide.
+Merging to `main` automatically validates, runs D1 migrations, and deploys to [alsobuilt.pages.dev](https://alsobuilt.pages.dev/).
+
+See [docs/cloudflare-d1-manual.md](./docs/cloudflare-d1-manual.md) for the Cloudflare D1 architecture reference.

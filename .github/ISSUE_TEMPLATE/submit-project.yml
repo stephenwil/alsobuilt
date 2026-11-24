@@ -1,0 +1,99 @@
+name: Submit an Open-Source AI Project
+description: Paste a GitHub repo URL and we'll automatically fetch live stars/license and open a catalog PR for you.
+title: "[Submit]: "
+labels: ["project-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Want to add your indie build or an open-source AI project to **AlsoBuilt** without hand-editing YAML?
+        Fill in the fields below — our GitHub Action will fetch live stars & metadata from GitHub and open a ready-to-merge PR automatically.
+
+  - type: input
+    id: repo
+    attributes:
+      label: GitHub Repository URL
+      description: Public GitHub repository URL (`https://github.com/owner/repo`).
+      placeholder: https://github.com/owner/my-ai-tool
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - ai-memory
+        - coding-agents
+        - local-voice
+        - mcp-tooling
+        - local-llm-runners
+        - browser-computer-use
+        - agent-workflows
+    validations:
+      required: true
+
+  - type: dropdown
+    id: arch
+    attributes:
+      label: Architecture / Form Factor
+      options:
+        - CLI
+        - Desktop
+        - Web
+        - SDK
+        - Browser
+        - Mobile
+    validations:
+      required: true
+
+  - type: dropdown
+    id: model
+    attributes:
+      label: Model Runtime
+      options:
+        - Local LLM
+        - Hybrid
+        - Cloud API
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Project Stage
+      options:
+        - Proto
+        - Beta
+        - Prod
+        - Lesson
+    validations:
+      required: true
+
+  - type: input
+    id: tagline
+    attributes:
+      label: One-line Tagline (optional)
+      description: Leave blank to auto-use the GitHub repository description (12–180 chars).
+      placeholder: Local-first voice notes daemon with Obsidian Markdown and MCP support
+
+  - type: input
+    id: stack
+    attributes:
+      label: Primary Stack (optional)
+      description: Leave blank to infer from the GitHub primary language.
+      placeholder: Rust + SQLite + Whisper
+
+  - type: input
+    id: traits
+    attributes:
+      label: Extra Traits (optional, comma-separated)
+      description: "Allowed: local-first, mcp, voice, markdown, multi-agent, browser, cli, rust, python, typescript, open-weights, self-hosted, mobile, rag, realtime"
+      placeholder: local-first, mcp, cli, rust
+
+  - type: textarea
+    id: lesson
+    attributes:
+      label: Lesson Note (only if Stage = Lesson)
+      description: Optional takeaway if this project is archived, superseded, or paused (max 280 chars).
+      placeholder: Showed early demand for X, though superseded by Y because...

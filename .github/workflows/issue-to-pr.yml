@@ -1,0 +1,90 @@
+name: Issue to Variant PR
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  create-pr:
+    if: contains(github.event.issue.labels.*.name, 'project-submission')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generate variant YAML from issue
+        id: gen
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          node scripts/issue-to-pr.mjs 2> /tmp/issue_err.txt
+          npm run validate:variants 2>> /tmp/issue_err.txt
+
+      - name: Report validation error back to issue
+        if: steps.gen.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          ERR=$(cat /tmp/issue_err.txt | tail -n 20)
+          gh issue comment "$ISSUE_NUMBER" --body "$(cat <<EOF
+          Thanks for submitting a project to **AlsoBuilt**! I ran into a quick issue while generating the catalog entry:
+
+          \`\`\`
+          $ERR
+          \`\`\`
+
+          Feel free to edit the issue description and re-add the \`project-submission\` label (or open a direct PR adding \`variants/<category>/<slug>.yaml\`).
+          EOF
+          )"
+          exit 1
+
+      - name: Create branch and open Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          SLUG: ${{ steps.gen.outputs.slug }}
+          FILE_PATH: ${{ steps.gen.outputs.file_path }}
+          PROJECT_NAME: ${{ steps.gen.outputs.project_name }}
+          CATEGORY: ${{ steps.gen.outputs.category }}
+          STARS: ${{ steps.gen.outputs.stars }}
+          REPO_URL: ${{ steps.gen.outputs.repo_url }}
+        run: |
+          BRANCH="submit/${SLUG}-issue-${ISSUE_NUMBER}"
+          git config user.name "alsobuilt-bot"
+          git config user.email "bot@alsobuilt.dev"
+          git checkout -b "$BRANCH"
+          git add "$FILE_PATH"
+          git commit -m "feat(catalog): add ${PROJECT_NAME} (${CATEGORY})"
+          git push -u origin "$BRANCH"
+
+          PR_URL=$(gh pr create \
+            --title "feat(catalog): add ${PROJECT_NAME} (${CATEGORY})" \
+            --body "$(cat <<EOF
+          Automated catalog submission generated from #${ISSUE_NUMBER}.
+
+          - **Project:** [${PROJECT_NAME}](${REPO_URL})
+          - **Category:** \`${CATEGORY}\`
+          - **Live GitHub Stars:** ★ ${STARS}
+          - **File:** \`${FILE_PATH}\`
+
+          Validated against \`schema/variant.schema.json\`. Merging this PR automatically rebuilds \`public/index.json\` and deploys to **https://alsobuilt.pages.dev/**.
+
+          Closes #${ISSUE_NUMBER}
+          EOF
+          )")
+
+          gh issue comment "$ISSUE_NUMBER" --body "Opened Pull Request ${PR_URL} for **${PROJECT_NAME}** (\`${FILE_PATH}\`, ★ ${STARS}). Once merged, it will appear live on **https://alsobuilt.pages.dev/** within ~40 seconds!"
