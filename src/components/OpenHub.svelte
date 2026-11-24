@@ -41,10 +41,11 @@
   let facetArch = $state<string | null>(null);
   let facetLicense = $state<string | null>(null);
   let facetStage = $state<string | null>(null);
-  let pinnedSlugs = $state<string[]>(['khoj', 'cline']);
-  let selectedSlug = $state<string>('khoj');
+  let pinnedSlugs = $state<string[]>([]);
+  let selectedSlug = $state<string | null>(null);
   let showPrDrawer = $state<boolean>(false);
   let toast = $state<string>('');
+  let urlHydrated = $state<boolean>(false);
 
   // Live D1 stealth pulse state (hydrated from /api/pulse when served on Cloudflare Pages / Wrangler)
   let pulse = $state<PulseSummary>({ total: 0, byCategory: {}, byVariant: {}, myCategories: [] });
@@ -113,7 +114,7 @@
   );
 
   let selectedVariant = $derived(
-    catalog.variants.find((v) => v.slug === selectedSlug) ?? catalog.variants[0]
+    selectedSlug ? (catalog.variants.find((v) => v.slug === selectedSlug) ?? null) : null
   );
 
   let prGenerated = $derived(
@@ -121,7 +122,7 @@
       name: prName || 'my-variant',
       category: prCategory,
       repo: prRepo || 'https://github.com/you/my-variant',
-      tagline: ideaText.trim() || 'Describe what makes this variant distinct',
+      tagline: ideaText.trim() || 'Describe what makes this project distinct',
       arch: prArch,
       model: activeTraits.has('local-first') ? 'Local LLM' : 'Hybrid',
       license: prLicense,
@@ -166,7 +167,15 @@
 
   function diffTop2() {
     pinnedSlugs = rankedAll.slice(0, 2).map((r) => r.variant.slug);
-    showToast('Pinned top 2 collisions to diff tray');
+    showToast('Comparing top 2 similar projects below');
+    setTimeout(() => {
+      document.getElementById('compare-tray')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 40);
+  }
+
+  function shareCurrentLink() {
+    if (typeof window === 'undefined') return;
+    copyText(window.location.href, 'Shareable link copied!');
   }
 
   async function copyText(text: string, msg: string) {
@@ -275,7 +284,33 @@
   }
 
   onMount(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlIdea = params.get('idea');
+    const urlCat = params.get('cat');
+    const urlView = params.get('view');
+
+    if (urlIdea) ideaText = urlIdea.slice(0, 300);
+    if (urlCat && (urlCat === 'all' || catalog.categories.some((c) => c.slug === urlCat))) {
+      activeCategory = urlCat;
+    }
+    if (urlView === 'table' || urlView === 'map' || urlView === 'cards') {
+      viewMode = urlView;
+    }
+    urlHydrated = true;
     fetchPulse();
+  });
+
+  $effect(() => {
+    if (!urlHydrated || typeof window === 'undefined') return;
+    const params = new URLSearchParams();
+    if (ideaText.trim()) params.set('idea', ideaText.trim());
+    if (activeCategory !== 'all') params.set('cat', activeCategory);
+    if (viewMode !== 'table') params.set('view', viewMode);
+    const qs = params.toString();
+    const nextUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+    if (nextUrl !== `${window.location.pathname}${window.location.search}`) {
+      window.history.replaceState(null, '', nextUrl);
+    }
   });
 
   const ARCH_OPTIONS = ['Desktop', 'CLI', 'Web', 'SDK', 'Browser'];
@@ -490,12 +525,20 @@
           >
             {viewMode === 'map' ? 'Back to List' : 'View on Map'}
           </button>
+          <button
+            type="button"
+            onclick={shareCurrentLink}
+            title="Copy a link to this idea check"
+            class="px-3 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs font-medium text-[var(--muted)] hover:text-[var(--fg)] cursor-pointer hover:bg-[var(--bg)]"
+          >
+            Share
+          </button>
         </div>
       </div>
     {/if}
   </section>
 
-  <!-- Category Filter Strip + Anonymous Private Builder Toggle -->
+  <!-- Category Strip + Private Builder Toggle -->
   <div class="flex items-center justify-between gap-3 flex-wrap pt-1">
     <div class="flex items-center gap-1.5 flex-wrap">
       <button
@@ -526,7 +569,7 @@
         disabled={stealthBusy}
         aria-pressed={userCountedStealth}
         title={userCountedStealth
-          ? 'Click to unselect and remove your anonymous stealth pulse'
+          ? 'Click to unselect and remove your anonymous private-builder count'
           : 'Anonymously count yourself as building privately in this category'}
         onclick={toggleStealthPulse}
         class="px-3 py-1.5 rounded-lg text-xs font-medium border transition cursor-pointer {userCountedStealth
@@ -535,65 +578,22 @@
       >
         {userCountedStealth ? '✓ Building Privately' : "+ I'm Building Privately"}
       </button>
-    </div>
-  </div>
-
-  <!-- Search + View Switcher + PR Button -->
-  <div class="flex items-center justify-between gap-2 flex-wrap">
-    <div class="flex items-center gap-2 flex-wrap flex-1">
-      <input
-        type="text"
-        bind:value={query}
-        placeholder="Filter variants, stacks, licenses..."
-        class="h-9 px-3 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs w-56 focus:outline-none focus:border-[var(--primary)]"
-      />
-      <div class="inline-flex bg-[var(--secondary)] border border-[var(--border)] p-0.5 rounded-lg">
-        {#each (['table', 'map', 'cards'] as const) as mode}
-          <button
-            type="button"
-            onclick={() => (viewMode = mode)}
-            class="px-3 py-1 rounded-md text-xs font-medium capitalize cursor-pointer {viewMode === mode
-              ? 'bg-[var(--card)] text-[var(--fg)]'
-              : 'text-[var(--muted)] hover:text-[var(--fg)]'}"
-          >
-            {mode}
-          </button>
-        {/each}
-      </div>
-      <span class="text-xs text-[var(--muted)]">{filteredRanked.length} / {categoryVariants.length} shown</span>
-      {#if facetArch || facetLicense || facetStage || query}
-        <button
-          type="button"
-          onclick={() => {
-            facetArch = null;
-            facetLicense = null;
-            facetStage = null;
-            query = '';
-          }}
-          class="text-xs text-[var(--primary)] underline cursor-pointer bg-transparent border-0"
-        >
-          Reset filters
-        </button>
-      {/if}
-    </div>
-
-    <div class="flex items-center gap-2">
       <button
         type="button"
         onclick={() => (showPrDrawer = !showPrDrawer)}
         class="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium cursor-pointer hover:opacity-90"
       >
-        + Submit Variant PR
+        {showPrDrawer ? 'Close Form' : '+ Add a Project'}
       </button>
     </div>
   </div>
 
-  <!-- Pre-filled Variant PR Builder Drawer -->
+  <!-- Pre-filled GitHub PR Builder Drawer -->
   {#if showPrDrawer}
     <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="flex flex-col gap-2">
         <div class="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
-          Zero-Ops Contribution — Generates <code>variants/{prCategory}/{prGenerated.slug}.yaml</code>
+          Add an Open-Source Project — creates <code>variants/{prCategory}/{prGenerated.slug}.yaml</code>
         </div>
         <div class="grid grid-cols-2 gap-2">
           <input bind:value={prName} placeholder="Project name" class="h-8 px-2.5 rounded bg-[var(--bg)] border border-[var(--border)] text-xs" />
@@ -613,20 +613,21 @@
             {#each LICENSE_OPTIONS as l}<option value={l}>{l}</option>{/each}
           </select>
         </div>
-        <div class="flex gap-2 mt-1">
+        <div class="flex gap-2 mt-1 flex-wrap">
+          <a
+            href={prGenerated.prUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium no-underline hover:opacity-90"
+          >
+            Open PR on GitHub ↗
+          </a>
           <button
             type="button"
-            onclick={() => copyText(prGenerated.yaml, 'Variant YAML copied')}
-            class="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium cursor-pointer"
+            onclick={() => copyText(prGenerated.yaml, 'Project YAML copied')}
+            class="px-3 py-1.5 rounded-lg bg-[var(--secondary)] border border-[var(--border)] text-xs cursor-pointer hover:border-[var(--primary)]"
           >
             Copy YAML
-          </button>
-          <button
-            type="button"
-            onclick={() => copyText(prGenerated.prUrl, 'Pre-filled GitHub PR URL copied')}
-            class="px-3 py-1.5 rounded-lg bg-[var(--secondary)] border border-[var(--border)] text-xs cursor-pointer"
-          >
-            Copy GitHub PR URL
           </button>
         </div>
       </div>
@@ -634,92 +635,117 @@
     </div>
   {/if}
 
-  <!-- Cross-Filtering Mini-Histograms -->
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-    <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-3">
-      <div class="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)] mb-2">Architecture</div>
-      {#each ARCH_OPTIONS as opt}
-        {@const c = countFacet('arch', opt)}
+  <!-- Compact Inline Search, Filters & View Switcher -->
+  <div class="flex items-center justify-between gap-2 flex-wrap">
+    <div class="flex items-center gap-2 flex-wrap flex-1">
+      <input
+        type="text"
+        bind:value={query}
+        placeholder="Filter list by name, stack, license..."
+        class="h-8 px-3 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs w-52 focus:outline-none focus:border-[var(--primary)]"
+      />
+
+      <select
+        aria-label="Filter by architecture"
+        value={facetArch ?? ''}
+        onchange={(e) => (facetArch = (e.target as HTMLSelectElement).value || null)}
+        class="h-8 px-2.5 rounded-lg border text-xs cursor-pointer {facetArch
+          ? 'bg-[var(--primary)]/15 border-[var(--primary)] text-[var(--fg)]'
+          : 'bg-[var(--card)] border-[var(--border)] text-[var(--muted)]'}"
+      >
+        <option value="">Type: All</option>
+        {#each ARCH_OPTIONS as opt}
+          <option value={opt}>{opt} ({countFacet('arch', opt)})</option>
+        {/each}
+      </select>
+
+      <select
+        aria-label="Filter by license"
+        value={facetLicense ?? ''}
+        onchange={(e) => (facetLicense = (e.target as HTMLSelectElement).value || null)}
+        class="h-8 px-2.5 rounded-lg border text-xs cursor-pointer {facetLicense
+          ? 'bg-[var(--primary)]/15 border-[var(--primary)] text-[var(--fg)]'
+          : 'bg-[var(--card)] border-[var(--border)] text-[var(--muted)]'}"
+      >
+        <option value="">License: All</option>
+        {#each LICENSE_OPTIONS as opt}
+          <option value={opt}>{opt} ({countFacet('license', opt)})</option>
+        {/each}
+      </select>
+
+      <select
+        aria-label="Filter by stage"
+        value={facetStage ?? ''}
+        onchange={(e) => (facetStage = (e.target as HTMLSelectElement).value || null)}
+        class="h-8 px-2.5 rounded-lg border text-xs cursor-pointer {facetStage
+          ? 'bg-[var(--primary)]/15 border-[var(--primary)] text-[var(--fg)]'
+          : 'bg-[var(--card)] border-[var(--border)] text-[var(--muted)]'}"
+      >
+        <option value="">Stage: All</option>
+        {#each STAGE_OPTIONS as opt}
+          <option value={opt}>{opt} ({countFacet('stage', opt)})</option>
+        {/each}
+      </select>
+
+      <span class="text-xs text-[var(--muted)]">{filteredRanked.length} / {categoryVariants.length} shown</span>
+
+      {#if facetArch || facetLicense || facetStage || query}
         <button
           type="button"
-          onclick={() => (facetArch = facetArch === opt ? null : opt)}
-          class="w-full grid grid-cols-[64px_1fr_20px] items-center gap-2 py-0.5 px-1 rounded text-left text-xs cursor-pointer border-0 {facetArch === opt
-            ? 'bg-[var(--primary)]/20 text-[var(--fg)]'
-            : 'bg-transparent text-[var(--fg)] hover:bg-[var(--secondary)]'}"
+          onclick={() => {
+            facetArch = null;
+            facetLicense = null;
+            facetStage = null;
+            query = '';
+          }}
+          class="text-xs text-[var(--primary)] underline cursor-pointer bg-transparent border-0"
         >
-          <span class="truncate">{opt}</span>
-          <span class="h-1.5 rounded-full bg-[var(--secondary)] overflow-hidden block">
-            <span class="h-full block bg-[var(--blue)]" style="width:{Math.round((c / Math.max(categoryVariants.length, 1)) * 100)}%"></span>
-          </span>
-          <span class="font-mono text-[10px] text-right text-[var(--muted)]">{c}</span>
+          Reset
         </button>
-      {/each}
+      {/if}
     </div>
 
-    <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-3">
-      <div class="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)] mb-2">License</div>
-      {#each LICENSE_OPTIONS as opt}
-        {@const c = countFacet('license', opt)}
+    <div class="inline-flex bg-[var(--secondary)] border border-[var(--border)] p-0.5 rounded-lg">
+      {#each ([
+        { id: 'table', label: 'List' },
+        { id: 'map', label: 'Map' },
+        { id: 'cards', label: 'Cards' }
+      ] as const) as mode}
         <button
           type="button"
-          onclick={() => (facetLicense = facetLicense === opt ? null : opt)}
-          class="w-full grid grid-cols-[64px_1fr_20px] items-center gap-2 py-0.5 px-1 rounded text-left text-xs cursor-pointer border-0 {facetLicense === opt
-            ? 'bg-[var(--primary)]/20 text-[var(--fg)]'
-            : 'bg-transparent text-[var(--fg)] hover:bg-[var(--secondary)]'}"
+          onclick={() => (viewMode = mode.id)}
+          class="px-3 py-1 rounded-md text-xs font-medium cursor-pointer {viewMode === mode.id
+            ? 'bg-[var(--card)] text-[var(--fg)]'
+            : 'text-[var(--muted)] hover:text-[var(--fg)]'}"
         >
-          <span class="truncate">{opt}</span>
-          <span class="h-1.5 rounded-full bg-[var(--secondary)] overflow-hidden block">
-            <span class="h-full block bg-[var(--amber)]" style="width:{Math.round((c / Math.max(categoryVariants.length, 1)) * 100)}%"></span>
-          </span>
-          <span class="font-mono text-[10px] text-right text-[var(--muted)]">{c}</span>
-        </button>
-      {/each}
-    </div>
-
-    <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-3">
-      <div class="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)] mb-2">Status</div>
-      {#each STAGE_OPTIONS as opt}
-        {@const c = countFacet('stage', opt)}
-        <button
-          type="button"
-          onclick={() => (facetStage = facetStage === opt ? null : opt)}
-          class="w-full grid grid-cols-[64px_1fr_20px] items-center gap-2 py-0.5 px-1 rounded text-left text-xs cursor-pointer border-0 {facetStage === opt
-            ? 'bg-[var(--primary)]/20 text-[var(--fg)]'
-            : 'bg-transparent text-[var(--fg)] hover:bg-[var(--secondary)]'}"
-        >
-          <span class="truncate">{opt}</span>
-          <span class="h-1.5 rounded-full bg-[var(--secondary)] overflow-hidden block">
-            <span class="h-full block bg-[var(--purple)]" style="width:{Math.round((c / Math.max(categoryVariants.length, 1)) * 100)}%"></span>
-          </span>
-          <span class="font-mono text-[10px] text-right text-[var(--muted)]">{c}</span>
+          {mode.label}
         </button>
       {/each}
     </div>
   </div>
 
-  <!-- VIEW 1: TABLE -->
+  <!-- VIEW 1: LIST TABLE -->
   {#if viewMode === 'table'}
     <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] overflow-x-auto">
       <table class="w-full border-collapse text-left">
         <thead>
           <tr class="bg-[var(--secondary)] text-[10px] uppercase tracking-wider text-[var(--muted)] border-b border-[var(--border)]">
-            <th class="py-2.5 px-3 w-10 text-center">Pin</th>
-            <th class="py-2.5 px-3">Variant &amp; Distinct Angle</th>
-            <th class="py-2.5 px-3 w-24">Overlap</th>
-            <th class="py-2.5 px-3 w-32">Stars / Stealth</th>
-            <th class="py-2.5 px-3 w-20">Status</th>
+            <th class="py-2.5 px-3">Project</th>
+            <th class="py-2.5 px-3 w-20">Match</th>
+            <th class="py-2.5 px-3 w-28">Stars / Private</th>
+            <th class="py-2.5 px-3 w-20">Stage</th>
+            <th class="py-2.5 px-3 w-40 text-right">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {#if ideaText.trim() || activeTraits.size > 0}
+          {#if hasIdea}
             <tr class="bg-[var(--primary)]/10 border-b border-[var(--border)]">
-              <td class="py-2.5 px-3 text-center text-[var(--primary)]">★</td>
               <td class="py-2.5 px-3">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono font-bold text-xs text-[var(--primary)]">YOUR IDEA</span>
-                  <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] text-[10px] font-mono text-[var(--muted)]">Draft Pitch</span>
+                  <span class="font-mono font-bold text-xs text-[var(--primary)]">★ YOUR IDEA</span>
+                  <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] text-[10px] font-mono text-[var(--muted)]">Draft</span>
                 </div>
-                <div class="text-xs mt-0.5 text-[var(--fg)] line-clamp-1">{ideaText || 'Custom trait combination'}</div>
+                <div class="text-xs mt-0.5 text-[var(--fg)] line-clamp-1">{ideaText || 'Custom tag combination'}</div>
                 <div class="flex flex-wrap gap-1 mt-1.5">
                   {#each [...activeTraits] as t}
                     <span class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-[var(--primary)]/20 border border-[var(--primary)]/50">{t}</span>
@@ -730,91 +756,133 @@
                 <span class="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold bg-[var(--primary)] text-white">YOU</span>
               </td>
               <td class="py-2.5 px-3 font-mono text-[11px] text-[var(--muted)]">
-                {userCountedStealth ? 'Stealth ✓' : 'Local draft'}
+                {userCountedStealth ? 'Private ✓' : 'Local only'}
               </td>
               <td class="py-2.5 px-3">
-                <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase bg-[var(--blue)]/20 text-[var(--blue)]">Sandbox</span>
+                <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase bg-[var(--blue)]/20 text-[var(--blue)]">Draft</span>
+              </td>
+              <td class="py-2.5 px-3 text-right">
+                <button
+                  type="button"
+                  onclick={diffTop2}
+                  class="px-2.5 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-[11px] font-medium hover:border-[var(--primary)] cursor-pointer"
+                >
+                  Compare Top 2
+                </button>
               </td>
             </tr>
           {/if}
 
-          {#each filteredRanked as { variant: v, overlap }}
-            {@const isPinned = pinnedSlugs.includes(v.slug)}
-            {@const stealthHere = pulse.byVariant[v.slug] ?? 0}
-            <tr
-              onclick={() => (selectedSlug = v.slug)}
-              class="border-b border-[var(--border)] last:border-b-0 cursor-pointer hover:bg-[var(--secondary)]/60 {selectedSlug === v.slug ? 'bg-[var(--primary)]/8' : ''}"
-            >
-              <td class="py-2.5 px-3 text-center">
+          {#if filteredRanked.length === 0}
+            <tr>
+              <td colspan="5" class="py-8 px-4 text-center text-xs text-[var(--muted)]">
+                No projects match these filters.
                 <button
                   type="button"
-                  onclick={(e) => {
-                    e.stopPropagation();
-                    togglePin(v.slug);
+                  onclick={() => {
+                    facetArch = null;
+                    facetLicense = null;
+                    facetStage = null;
+                    query = '';
                   }}
-                  class="w-6 h-6 rounded border text-xs cursor-pointer {isPinned
-                    ? 'bg-[var(--primary)] text-white border-[var(--primary)]'
-                    : 'bg-transparent text-[var(--muted)] border-[var(--border)] hover:border-[var(--primary)]'}"
+                  class="ml-1 text-[var(--primary)] underline bg-transparent border-0 cursor-pointer"
                 >
-                  {isPinned ? '✓' : '+'}
+                  Reset filters
                 </button>
               </td>
-              <td class="py-2.5 px-3">
-                <div class="flex items-center gap-2 flex-wrap">
-                  <span class="font-mono font-semibold text-xs">{v.name}</span>
-                  <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] font-mono text-[10px] text-[var(--muted)]">{v.arch}</span>
-                  <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] font-mono text-[10px] text-[var(--muted)]">{v.license}</span>
-                </div>
-                <div class="text-xs text-[var(--muted)] mt-0.5">{v.tagline}</div>
-                <div class="flex flex-wrap gap-1 mt-1.5">
-                  {#each v.traits as t}
-                    <span class="px-1.5 py-0.5 rounded font-mono text-[10px] {activeTraits.has(t)
-                      ? 'bg-[var(--emerald)]/20 border border-[var(--emerald)] text-[var(--fg)] font-semibold'
-                      : 'bg-[var(--secondary)] text-[var(--muted)]'}">
-                      {t}
-                    </span>
-                  {/each}
-                </div>
-              </td>
-              <td class="py-2.5 px-3">
-                {#if hasIdea}
-                  <span class="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold {overlap >= 65
-                    ? 'bg-[var(--amber)]/20 text-[var(--amber)]'
-                    : overlap >= 35
-                      ? 'bg-[var(--blue)]/20 text-[var(--blue)]'
-                      : 'bg-[var(--secondary)] text-[var(--muted)]'}">
-                    {overlap}%
-                  </span>
-                {:else}
-                  <span class="font-mono text-[11px] text-[var(--muted)]">—</span>
-                {/if}
-              </td>
-              <td class="py-2.5 px-3 font-mono text-[11px]">
-                <div>★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars}</div>
-                <div class="text-[10px] text-[var(--muted)]">{stealthHere} stealth</div>
-              </td>
-              <td class="py-2.5 px-3">
-                <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase {v.stage === 'Prod'
-                  ? 'bg-[var(--emerald)]/20 text-[var(--emerald)]'
-                  : v.stage === 'Beta'
-                    ? 'bg-[var(--blue)]/20 text-[var(--blue)]'
-                    : 'bg-[var(--purple)]/20 text-[var(--purple)]'}">
-                  {v.stage}
-                </span>
-              </td>
             </tr>
-          {/each}
+          {:else}
+            {#each filteredRanked as { variant: v, overlap }}
+              {@const isPinned = pinnedSlugs.includes(v.slug)}
+              {@const stealthHere = pulse.byVariant[v.slug] ?? 0}
+              <tr class="border-b border-[var(--border)] last:border-b-0 hover:bg-[var(--secondary)]/50 transition-colors">
+                <td class="py-3 px-3">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <a
+                      href={v.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-mono font-semibold text-xs text-[var(--fg)] no-underline hover:text-[var(--primary)] hover:underline"
+                    >
+                      {v.name}
+                    </a>
+                    <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] font-mono text-[10px] text-[var(--muted)]">{v.arch}</span>
+                    <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] font-mono text-[10px] text-[var(--muted)]">{v.license}</span>
+                    <span class="font-mono text-[10px] text-[var(--muted)] hidden sm:inline">{v.stack}</span>
+                  </div>
+                  <div class="text-xs text-[var(--muted)] mt-0.5">{v.tagline}</div>
+                  <div class="flex flex-wrap gap-1 mt-1.5">
+                    {#each v.traits as t}
+                      <span class="px-1.5 py-0.5 rounded font-mono text-[10px] {activeTraits.has(t)
+                        ? 'bg-[var(--emerald)]/20 border border-[var(--emerald)] text-[var(--fg)] font-semibold'
+                        : 'bg-[var(--secondary)] text-[var(--muted)]'}">
+                        {t}
+                      </span>
+                    {/each}
+                  </div>
+                </td>
+                <td class="py-3 px-3">
+                  {#if hasIdea}
+                    <span class="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold {overlap >= 65
+                      ? 'bg-[var(--amber)]/20 text-[var(--amber)]'
+                      : overlap >= 35
+                        ? 'bg-[var(--blue)]/20 text-[var(--blue)]'
+                        : 'bg-[var(--secondary)] text-[var(--muted)]'}">
+                      {overlap}%
+                    </span>
+                  {:else}
+                    <span class="font-mono text-[11px] text-[var(--muted)]">—</span>
+                  {/if}
+                </td>
+                <td class="py-3 px-3 font-mono text-[11px]">
+                  <div>★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars}</div>
+                  <div class="text-[10px] text-[var(--muted)]">{stealthHere} private</div>
+                </td>
+                <td class="py-3 px-3">
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase {v.stage === 'Prod'
+                    ? 'bg-[var(--emerald)]/20 text-[var(--emerald)]'
+                    : v.stage === 'Beta'
+                      ? 'bg-[var(--blue)]/20 text-[var(--blue)]'
+                      : 'bg-[var(--purple)]/20 text-[var(--purple)]'}">
+                    {v.stage}
+                  </span>
+                </td>
+                <td class="py-3 px-3 text-right">
+                  <div class="inline-flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onclick={() => togglePin(v.slug)}
+                      class="px-2.5 py-1 rounded-md border text-[11px] font-medium cursor-pointer transition {isPinned
+                        ? 'bg-[var(--primary)] text-white border-[var(--primary)]'
+                        : 'bg-[var(--secondary)] text-[var(--fg)] border-[var(--border)] hover:border-[var(--primary)]'}"
+                    >
+                      {isPinned ? '✓ Comparing' : 'Compare'}
+                    </button>
+                    <a
+                      href={v.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="px-2 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-[11px] text-[var(--muted)] hover:text-[var(--fg)] hover:border-[var(--primary)] no-underline"
+                      title="Open GitHub repository"
+                    >
+                      GitHub ↗
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            {/each}
+          {/if}
         </tbody>
       </table>
     </div>
   {:else if viewMode === 'map'}
-    <!-- VIEW 2: CONSTELLATION MAP -->
-    <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4">
-      <div class="flex items-center justify-between mb-2 text-xs text-[var(--muted)]">
+    <!-- VIEW 2: LANDSCAPE MAP -->
+    <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-3">
+      <div class="flex items-center justify-between text-xs text-[var(--muted)] flex-wrap gap-2">
         <span class="uppercase font-semibold tracking-wider text-[11px] text-[var(--fg)]">
           {hasIdea ? 'Idea Map — Your Idea Plotted Live' : 'Project Landscape Map'}
         </span>
-        <span>{hasIdea ? 'Dashed lines = closest matches' : 'Type an idea above to plot yours on this map'}</span>
+        <span>{hasIdea ? 'Dashed lines = closest matches · Click any dot for links' : 'Type an idea above to plot yours · Click any dot for details'}</span>
       </div>
       <svg viewBox="0 0 760 320" class="w-full h-[320px] rounded-lg bg-[var(--bg)] border border-[var(--border)]">
         <line x1="380" y1="24" x2="380" y2="296" stroke="var(--border)" stroke-dasharray="3 4" />
@@ -834,12 +902,20 @@
           {/each}
         {/if}
 
-        {#each rankedAll as { variant: v, overlap }}
+        {#each filteredRanked as { variant: v, overlap }}
           {@const cx = 42 + v.x * 676}
           {@const cy = 284 - v.y * 248}
           {@const r = 6 + Math.min(8, Math.sqrt(v.stars) / 26)}
           <g class="cursor-pointer" onclick={() => (selectedSlug = v.slug)}>
-            <circle cx={cx} cy={cy} {r} fill="var(--blue)" fill-opacity="0.82" stroke="var(--card)" stroke-width="1.5" />
+            <circle
+              cx={cx}
+              cy={cy}
+              {r}
+              fill={selectedSlug === v.slug ? 'var(--emerald)' : 'var(--blue)'}
+              fill-opacity="0.86"
+              stroke="var(--card)"
+              stroke-width="1.5"
+            />
             <text x={cx} y={cy - r - 5} text-anchor="middle" font-size="10.5" font-family="monospace" fill="var(--fg)">
               {hasIdea ? `${v.name} (${overlap}%)` : v.name}
             </text>
@@ -856,60 +932,119 @@
           </text>
         {/if}
       </svg>
+
+      {#if selectedVariant}
+        <div class="rounded-lg bg-[var(--secondary)] border border-[var(--border)] p-3 flex items-center justify-between gap-3 flex-wrap">
+          <div class="min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-mono font-bold text-xs">{selectedVariant.name}</span>
+              <span class="font-mono text-[10px] text-[var(--muted)]">{selectedVariant.arch} · {selectedVariant.stack} · {selectedVariant.license}</span>
+            </div>
+            <p class="m-0 mt-0.5 text-xs text-[var(--muted)]">{selectedVariant.tagline}</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onclick={() => togglePin(selectedVariant.slug)}
+              class="px-2.5 py-1.5 rounded-lg text-xs font-medium cursor-pointer {pinnedSlugs.includes(selectedVariant.slug)
+                ? 'bg-[var(--primary)] text-white border-0'
+                : 'bg-[var(--card)] border border-[var(--border)]'}"
+            >
+              {pinnedSlugs.includes(selectedVariant.slug) ? '✓ Comparing' : 'Compare'}
+            </button>
+            <a
+              href={selectedVariant.repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs no-underline hover:border-[var(--primary)]"
+            >
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      {/if}
     </div>
   {:else}
     <!-- VIEW 3: CARDS -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       {#each filteredRanked as { variant: v, overlap }}
-        <div
-          onclick={() => (selectedSlug = v.slug)}
-          class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-2 cursor-pointer hover:border-[var(--primary)]"
-        >
+        {@const isPinned = pinnedSlugs.includes(v.slug)}
+        <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-2.5 hover:border-[var(--primary)]/60 transition">
           <div class="flex items-start justify-between gap-2">
             <div>
-              <div class="font-mono font-semibold text-sm">{v.name}</div>
-              <div class="text-[11px] text-[var(--muted)] font-mono">{v.arch} · {v.stack} · {v.license}</div>
+              <a
+                href={v.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-mono font-semibold text-sm text-[var(--fg)] no-underline hover:text-[var(--primary)] hover:underline"
+              >
+                {v.name}
+              </a>
+              <div class="text-[11px] text-[var(--muted)] font-mono">{v.arch} · {v.stack} · {v.license} · ★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars}</div>
             </div>
             {#if hasIdea}
               <span class="px-2.5 py-0.5 rounded-full font-mono text-xs font-bold bg-[var(--blue)]/20 text-[var(--blue)]">{overlap}%</span>
             {/if}
           </div>
           <p class="m-0 text-xs text-[var(--muted)]">{v.tagline}</p>
-          <div class="flex flex-wrap gap-1">
-            {#each v.traits as t}
-              <span class="px-1.5 py-0.5 rounded font-mono text-[10px] {activeTraits.has(t)
-                ? 'bg-[var(--emerald)]/20 border border-[var(--emerald)]'
-                : 'bg-[var(--secondary)] text-[var(--muted)]'}">
-                {t}
-              </span>
-            {/each}
+          <div class="flex items-center justify-between gap-2 pt-1 flex-wrap mt-auto">
+            <div class="flex flex-wrap gap-1">
+              {#each v.traits as t}
+                <span class="px-1.5 py-0.5 rounded font-mono text-[10px] {activeTraits.has(t)
+                  ? 'bg-[var(--emerald)]/20 border border-[var(--emerald)]'
+                  : 'bg-[var(--secondary)] text-[var(--muted)]'}">
+                  {t}
+                </span>
+              {/each}
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                onclick={() => togglePin(v.slug)}
+                class="px-2.5 py-1 rounded-md border text-[11px] font-medium cursor-pointer {isPinned
+                  ? 'bg-[var(--primary)] text-white border-[var(--primary)]'
+                  : 'bg-[var(--secondary)] border-[var(--border)] hover:border-[var(--primary)]'}"
+              >
+                {isPinned ? '✓ Comparing' : 'Compare'}
+              </button>
+              <a
+                href={v.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-2 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-[11px] text-[var(--muted)] hover:text-[var(--fg)] no-underline"
+              >
+                GitHub ↗
+              </a>
+            </div>
           </div>
         </div>
       {/each}
     </div>
   {/if}
 
-  <!-- SIDE-BY-SIDE DIFF TRAY -->
+  <!-- SIDE-BY-SIDE COMPARISON TRAY (opens on demand when projects are selected) -->
   {#if pinnedVariants.length > 0}
-    <section class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4">
+    <section id="compare-tray" class="rounded-xl bg-[var(--card)] border border-[var(--primary)]/40 p-4">
       <div class="flex items-center justify-between gap-2 flex-wrap mb-3">
-        <span class="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
-          Your Idea vs Pinned Variants ({pinnedVariants.length}/2)
+        <span class="text-xs font-semibold uppercase tracking-wider text-[var(--fg)]">
+          Side-by-Side Comparison ({pinnedVariants.length}/2 selected)
         </span>
         <div class="flex gap-2">
-          <button
-            type="button"
-            onclick={() => copyText(buildCollisionReceipt(rankedAll, activeTraits), 'Collision receipt copied!')}
-            class="px-2.5 py-1 rounded bg-[var(--secondary)] border border-[var(--border)] text-xs cursor-pointer"
-          >
-            Copy Collision Receipt
-          </button>
+          {#if hasIdea}
+            <button
+              type="button"
+              onclick={() => copyText(buildCollisionReceipt(rankedAll, activeTraits), 'Comparison summary copied!')}
+              class="px-2.5 py-1 rounded bg-[var(--secondary)] border border-[var(--border)] text-xs cursor-pointer hover:border-[var(--primary)]"
+            >
+              Copy Summary
+            </button>
+          {/if}
           <button
             type="button"
             onclick={() => (pinnedSlugs = [])}
-            class="px-2.5 py-1 rounded bg-[var(--secondary)] border border-[var(--border)] text-xs cursor-pointer"
+            class="px-2.5 py-1 rounded bg-[var(--secondary)] border border-[var(--border)] text-xs text-[var(--muted)] hover:text-[var(--fg)] cursor-pointer"
           >
-            Clear Pins
+            Clear
           </button>
         </div>
       </div>
@@ -918,67 +1053,48 @@
         <table class="w-full border-collapse text-xs">
           <thead>
             <tr class="border-b border-[var(--border)]">
-              <th class="p-2 text-left bg-[var(--secondary)] w-24 text-[10px] uppercase text-[var(--muted)]">Dimension</th>
-              <th class="p-2 text-left bg-[var(--primary)]/20 font-mono">★ YOUR IDEA</th>
+              <th class="p-2 text-left bg-[var(--secondary)] w-28 text-[10px] uppercase text-[var(--muted)]">Dimension</th>
+              {#if hasIdea}
+                <th class="p-2 text-left bg-[var(--primary)]/20 font-mono">★ YOUR IDEA</th>
+              {/if}
               {#each pinnedVariants as pv}
-                <th class="p-2 text-left bg-[var(--secondary)] font-mono">{pv.name}</th>
+                <th class="p-2 text-left bg-[var(--secondary)] font-mono">
+                  <a href={pv.repo} target="_blank" rel="noopener noreferrer" class="no-underline hover:underline">
+                    {pv.name} ↗
+                  </a>
+                </th>
               {/each}
             </tr>
           </thead>
           <tbody>
             <tr class="border-b border-[var(--border)]">
               <td class="p-2 bg-[var(--secondary)] text-[10px] uppercase font-semibold text-[var(--muted)]">Pitch</td>
-              <td class="p-2 bg-[var(--primary)]/5">{ideaText || 'Custom traits'}</td>
+              {#if hasIdea}
+                <td class="p-2 bg-[var(--primary)]/5">{ideaText || 'Custom tags'}</td>
+              {/if}
               {#each pinnedVariants as pv}<td class="p-2">{pv.tagline}</td>{/each}
             </tr>
-            <tr class="border-b border-[var(--border)]">
-              <td class="p-2 bg-[var(--secondary)] text-[10px] uppercase font-semibold text-[var(--muted)]">Your Wedge</td>
-              <td class="p-2 bg-[var(--primary)]/5 text-[var(--muted)]">What they lack →</td>
-              {#each pinnedVariants as pv}
-                {@const diff = [...activeTraits].filter((t) => !pv.traits.includes(t))}
-                <td class="p-2 bg-[var(--amber)]/10 font-mono text-[11px]">
-                  {diff.length ? diff.map((d) => `+ ${d}`).join(', ') : 'Full overlap'}
-                </td>
-              {/each}
-            </tr>
+            {#if hasIdea}
+              <tr class="border-b border-[var(--border)]">
+                <td class="p-2 bg-[var(--secondary)] text-[10px] uppercase font-semibold text-[var(--muted)]">What yours adds</td>
+                <td class="p-2 bg-[var(--primary)]/5 text-[var(--muted)]">Tags they don't cover →</td>
+                {#each pinnedVariants as pv}
+                  {@const diff = [...activeTraits].filter((t) => !pv.traits.includes(t))}
+                  <td class="p-2 bg-[var(--emerald)]/10 font-mono text-[11px] text-[var(--emerald)]">
+                    {diff.length ? diff.map((d) => `+ ${d}`).join(', ') : 'Same core tags'}
+                  </td>
+                {/each}
+              </tr>
+            {/if}
             <tr>
               <td class="p-2 bg-[var(--secondary)] text-[10px] uppercase font-semibold text-[var(--muted)]">Stack</td>
-              <td class="p-2 bg-[var(--primary)]/5">Your choice</td>
+              {#if hasIdea}
+                <td class="p-2 bg-[var(--primary)]/5 text-[var(--muted)]">Your choice</td>
+              {/if}
               {#each pinnedVariants as pv}<td class="p-2 font-mono text-[11px]">{pv.arch} · {pv.stack} ({pv.license})</td>{/each}
             </tr>
           </tbody>
         </table>
-      </div>
-    </section>
-  {/if}
-
-  <!-- INSPECTOR FOOTER -->
-  {#if selectedVariant}
-    <section class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex items-center justify-between gap-4 flex-wrap">
-      <div>
-        <div class="flex items-center gap-2 flex-wrap">
-          <span class="font-mono font-bold text-sm">{selectedVariant.name}</span>
-          <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] font-mono text-[10px] text-[var(--muted)]">{selectedVariant.stack}</span>
-          <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] font-mono text-[10px] text-[var(--muted)]">{selectedVariant.license}</span>
-        </div>
-        <p class="m-0 mt-1 text-xs text-[var(--muted)]">{selectedVariant.tagline}</p>
-      </div>
-      <div class="flex items-center gap-2">
-        <a
-          href={selectedVariant.repo}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="px-3 py-1.5 rounded-lg bg-[var(--secondary)] border border-[var(--border)] text-xs no-underline hover:border-[var(--primary)]"
-        >
-          Open GitHub Repo ↗
-        </a>
-        <button
-          type="button"
-          onclick={() => togglePin(selectedVariant.slug)}
-          class="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs cursor-pointer"
-        >
-          {pinnedSlugs.includes(selectedVariant.slug) ? '✓ Pinned in Diff' : '+ Pin to Diff'}
-        </button>
       </div>
     </section>
   {/if}
