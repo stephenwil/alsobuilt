@@ -7,7 +7,7 @@
     {
       "binding": "PUBLIC_DB",
       "database_name": "alsobuilt-public",
-      "database_id": "00000000-0000-0000-0000-000000000001",
+      "database_id": "cf30383d-4177-453e-b688-63c014cd4657",
       "migrations_dir": "migrations/public"
     }
   ]
