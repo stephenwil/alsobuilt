@@ -7,7 +7,7 @@ tagline: >-
   OBD-II/UDS over ISO-TP
 arch: Web
 model: Standalone
-license: Source
+license: MIT
 stage: Beta
 stack: JavaScript + Three.js + WebGL
 region: Global
