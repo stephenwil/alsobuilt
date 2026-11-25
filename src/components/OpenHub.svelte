@@ -843,7 +843,7 @@
           <tr class="bg-[var(--secondary)] text-[10px] uppercase tracking-wider text-[var(--muted)] border-b border-[var(--border)]">
             <th class="py-2.5 px-3">Project</th>
             <th class="py-2.5 px-3 w-20">Match</th>
-            <th class="py-2.5 px-3 w-36">Scale / Private</th>
+            <th class="py-2.5 px-3 w-36">Scale</th>
             <th class="py-2.5 px-3 w-20">Stage</th>
             <th class="py-2.5 px-3 w-40 text-right">Actions</th>
           </tr>
@@ -968,7 +968,14 @@
                     <span class="{scale.id === 'indie' ? 'text-[var(--primary)] font-semibold' : 'text-[var(--fg)]'}">{scale.label}</span>
                     <span class="text-[var(--muted)]">· ★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars}</span>
                   </div>
-                  <div class="text-[10px] text-[var(--muted)]">{stealthHere} private</div>
+                  {#if stealthHere > 0}
+                    <div
+                      class="text-[10px] text-[var(--emerald)]"
+                      title="Anonymous builders who signaled they are building something similar privately"
+                    >
+                      +{stealthHere} building privately
+                    </div>
+                  {/if}
                 </td>
                 <td class="py-3 px-3">
                   <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase {v.stage === 'Prod'
