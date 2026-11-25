@@ -12,6 +12,7 @@
     rankVariants,
     type SortMode
   } from '../lib/similarity';
+  import { SITE_URL } from '../lib/site';
 
   interface Props {
     catalog: CatalogIndex;
@@ -629,7 +630,7 @@
   <!-- Pre-filled GitHub PR Builder & Issue Submitter Drawer -->
   {#if showPrDrawer}
     {@const badgeUrl = `https://img.shields.io/badge/AlsoBuilt-listed-6366f1?style=flat-square`}
-    {@const badgeTarget = `https://alsobuilt.pages.dev/?cat=${prCategory}`}
+    {@const badgeTarget = `${SITE_URL}/?cat=${prCategory}`}
     {@const badgeMarkdown = `[![Listed on AlsoBuilt](${badgeUrl})](${badgeTarget})`}
     <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1028,7 +1029,8 @@
         <line x1="28" y1="160" x2="732" y2="160" stroke="var(--border)" stroke-dasharray="3 4" />
         <text x="36" y="308" font-size="10" fill="var(--muted)" font-family="monospace">← LOCAL-FIRST</text>
         <text x="724" y="308" text-anchor="end" font-size="10" fill="var(--muted)" font-family="monospace">CLOUD / SELF-HOSTED →</text>
-        <text x="16" y="36" font-size="10" fill="var(--muted)" font-family="monospace">MULTI-AGENT ↑</text>
+        <text x="380" y="18" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="monospace">PLATFORM / SDK ↑</text>
+        <text x="380" y="308" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="monospace">FOCUSED TOOL ↓</text>
 
         {#if hasIdea}
           {#each rankedAll.slice(0, 3) as { variant: v, overlap }}

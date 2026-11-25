@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T10:41:41.765Z",
+  "generatedAt": "2026-11-25T11:31:03.714Z",
   "categories": [
     {
       "slug": "ai-memory",
@@ -2249,6 +2249,31 @@
       "x": 0.49,
       "y": 0.34,
       "addedAt": "2026-11-25T10:27:59+00:00"
+    },
+    {
+      "slug": "tessera-kit",
+      "category": "gamedev-retro",
+      "name": "Tessera Kit",
+      "repo": "https://github.com/stephenwil/tessera-kit",
+      "tagline": "Developer kit, CLI, MagicaVoxel pipeline, and MCP server for the Tessera High-Res 3D voxel fantasy console",
+      "arch": "CLI",
+      "model": "Standalone",
+      "license": "MIT",
+      "stage": "Beta",
+      "stack": "Node.js + Lua 5.4 + WebGL2 + WebAssembly",
+      "region": "Global",
+      "stars": 0,
+      "traits": [
+        "gamedev",
+        "3d-webgl",
+        "cli",
+        "mcp",
+        "local-first",
+        "browser"
+      ],
+      "x": 0.56,
+      "y": 0.31,
+      "addedAt": "2026-11-25T11:26:17+00:00"
     }
   ]
 }

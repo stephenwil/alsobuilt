@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * alsobuilt-mcp — Zero-dependency MCP stdio server for AlsoBuilt.
- * Lets Claude Code, Cursor, Codex, and other MCP clients check AI idea overlap
- * against the live AlsoBuilt open-source catalog before scaffolding a new repo.
+ * Lets Claude Code, Cursor, Codex, and other MCP clients check open-source idea overlap
+ * across AI, hardware, gamedev, and devtools before scaffolding a new repo.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -10,8 +10,35 @@ import readline from 'node:readline';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PKG = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'));
+const VERSION = PKG.version || '0.1.0';
 const BASE_URL = (process.env.ALSOBUILT_URL || 'https://alsobuilt.pages.dev').replace(/\/+$/, '');
 const CACHE_TTL_MS = 5 * 60 * 1000;
+
+if (process.argv.includes('--version') || process.argv.includes('-v')) {
+  process.stdout.write(`alsobuilt-mcp v${VERSION}\n`);
+  process.exit(0);
+}
+
+if (process.argv.includes('--help') || process.argv.includes('-h')) {
+  process.stdout.write(
+    [
+      `alsobuilt-mcp v${VERSION} — MCP stdio server for AlsoBuilt (${BASE_URL})`,
+      '',
+      'Usage:',
+      '  npx -y alsobuilt-mcp          Start MCP JSON-RPC server over stdio',
+      '  npx -y alsobuilt-mcp --help   Show this help message',
+      '  npx -y alsobuilt-mcp -v       Show version',
+      '',
+      'Claude Code:',
+      '  claude mcp add alsobuilt -- npx -y alsobuilt-mcp',
+      '',
+      'Environment:',
+      '  ALSOBUILT_URL   Override catalog host (default: https://alsobuilt.pages.dev)'
+    ].join('\n') + '\n'
+  );
+  process.exit(0);
+}
 
 let catalogCache = { data: null, fetchedAt: 0 };
 
@@ -93,7 +120,7 @@ async function getCatalog() {
   }
   try {
     const res = await fetch(`${BASE_URL}/index.json`, {
-      headers: { 'User-Agent': 'alsobuilt-mcp/0.1.0' }
+      headers: { 'User-Agent': `alsobuilt-mcp/${VERSION}` }
     });
     if (res.ok) {
       const data = await res.json();
@@ -116,7 +143,7 @@ async function getCatalog() {
 async function getPulse() {
   try {
     const res = await fetch(`${BASE_URL}/api/pulse`, {
-      headers: { 'User-Agent': 'alsobuilt-mcp/0.1.0' }
+      headers: { 'User-Agent': `alsobuilt-mcp/${VERSION}` }
     });
     if (res.ok) return await res.json();
   } catch {
@@ -135,13 +162,13 @@ const TOOLS = [
   {
     name: 'check_idea_overlap',
     description:
-      'Check if open-source AI projects already exist for a pitch/idea. Returns overlap percentages, top matches (major & indie), missing wedge traits your idea adds, and a shareable AlsoBuilt radar URL.',
+      'Check if open-source projects already exist for a pitch/idea across AI, hardware, gamedev, and devtools. Returns overlap percentages, top matches (major & indie), missing wedge traits your idea adds, and a shareable AlsoBuilt radar URL.',
     inputSchema: {
       type: 'object',
       properties: {
         pitch: {
           type: 'string',
-          description: 'One-sentence description of the AI tool or agent you plan to build.'
+          description: 'One-sentence description of the open-source tool, app, hardware utility, or game kit you plan to build.'
         },
         category: {
           type: 'string',
@@ -169,7 +196,7 @@ const TOOLS = [
   {
     name: 'list_categories',
     description:
-      'List all AlsoBuilt AI categories with total repo counts, indie (<5k stars) counts, and live anonymous stealth builder counts.',
+      'List all AlsoBuilt categories with total repo counts, indie (<5k stars) counts, and live anonymous stealth builder counts.',
     inputSchema: {
       type: 'object',
       properties: {}
@@ -178,7 +205,7 @@ const TOOLS = [
   {
     name: 'search_projects',
     description:
-      'Search or inspect open-source AI projects in AlsoBuilt by keyword, category, size tier (indie/mid/major), stage (Prod/Beta/Proto/Lesson), or exact slug.',
+      'Search or inspect open-source projects in AlsoBuilt by keyword, category, size tier (indie/mid/major), stage (Prod/Beta/Proto/Lesson), or exact slug.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -376,7 +403,7 @@ async function handleMessage(msg) {
         result: {
           protocolVersion: params?.protocolVersion || '2024-11-05',
           capabilities: { tools: {} },
-          serverInfo: { name: 'alsobuilt-mcp', version: '0.1.0' }
+          serverInfo: { name: 'alsobuilt-mcp', version: VERSION }
         }
       });
     }

@@ -2,12 +2,12 @@
 
 **Live:** [alsobuilt.pages.dev](https://alsobuilt.pages.dev/) · **Feed:** [`/index.json`](https://alsobuilt.pages.dev/index.json) · **MCP Server:** [`mcp/`](./mcp/README.md)
 
-**See who's already building your idea.** An open-source, Git-first catalog and collision radar (94 verified open-source repos — including 36 indie `<5k ★` builds — across 10 categories spanning AI, Hardware & Embedded, Game Dev & Retro, and DevTools) built on **Astro 5 + Svelte 5 + Cloudflare Pages + Cloudflare D1**.
+**See who's already building your idea.** An open-source, Git-first catalog and collision radar (96+ verified open-source repos — including 38 indie `<5k ★` builds — across 10 categories spanning AI, Hardware & Embedded, Game Dev & Retro, and DevTools) built on **Astro 5 + Svelte 5 + Cloudflare Pages + Cloudflare D1**.
 
 - **Collision Radar (`/`)** — Paste a one-sentence pitch to rank similar open-source repos by trait & keyword overlap, spot missing wedge traits, compare projects side-by-side, explore the 2D Constellation Map, or filter specifically to **Indie (`<5k ★`)** and **Lesson** builds.
 - **Anonymous Stealth Pulse (`/api/pulse`)** — Building privately and don't want to expose your repo? Toggle *"+ I'm Building Privately"* to anonymously increment the live monthly-deduplicated counter for your category (Cloudflare D1).
 - **Zero-YAML Submissions** — [Submit a GitHub repo via Issue Form](https://github.com/stephenwil/alsobuilt/issues/new?template=submit-project.yml) and GitHub Actions automatically fetches live stars/license and opens a validated catalog PR — or open a direct PR adding `variants/<category>/<slug>.yaml`.
-- **MCP Server (`mcp/server.mjs`)** — Zero-dependency stdio MCP server so Claude Code, Cursor, or Codex can check AlsoBuilt before scaffolding a new repo. See [mcp/README.md](./mcp/README.md).
+- **MCP Server (`npx -y alsobuilt-mcp`)** — Zero-dependency stdio MCP server so Claude Code, Cursor, or Codex can check AlsoBuilt before scaffolding a new repo (`claude mcp add alsobuilt -- npx -y alsobuilt-mcp`). See [mcp/README.md](./mcp/README.md).
 - **Open JSON Feed (`/index.json`)** — Static, CORS-enabled catalog compiled at build time from `variants/**/*.yaml` with nightly GitHub star refreshes and automatic deploys.
 
 ---

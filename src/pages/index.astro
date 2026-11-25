@@ -9,6 +9,10 @@ const indexPath = path.resolve(process.cwd(), 'public', 'index.json');
 const catalog: CatalogIndex = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
 ---
 
-<BaseLayout title="AlsoBuilt — Open-Source Build & Idea Collision Radar">
+<BaseLayout
+  title="AlsoBuilt — Open-Source Build & Idea Collision Radar"
+  repoCount={catalog.variants.length}
+  categoryCount={catalog.categories.length}
+>
   <OpenHub client:load {catalog} />
 </BaseLayout>

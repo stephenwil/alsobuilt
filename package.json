@@ -15,6 +15,7 @@
     "db:sync-categories:local": "node scripts/sync-categories.mjs --sql /tmp/alsobuilt-categories.sql && wrangler d1 execute alsobuilt-public --local --file /tmp/alsobuilt-categories.sql",
     "db:sync-categories:remote": "node scripts/sync-categories.mjs --sql /tmp/alsobuilt-categories.sql && wrangler d1 execute alsobuilt-public --remote --file /tmp/alsobuilt-categories.sql",
     "typecheck": "node scripts/build-index.mjs && astro check && tsc --noEmit -p functions/tsconfig.json",
+    "og:card": "node scripts/generate-og-card.mjs",
     "mcp": "node mcp/server.mjs"
   },
   "dependencies": {

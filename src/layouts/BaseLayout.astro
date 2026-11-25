@@ -1,17 +1,22 @@
 ---
 import '../styles/global.css';
+import { SITE_URL } from '../lib/site';
 
 interface Props {
   title: string;
   description?: string;
+  repoCount?: number;
+  categoryCount?: number;
 }
 
 const {
   title,
-  description = "Open-source idea collision radar for developers. Paste a one-sentence pitch to check overlap across 94+ repos (AI, hardware, gamedev, devtools & indie builds), spot missing angles, or signal stealth work anonymously."
+  repoCount,
+  categoryCount,
+  description = `Open-source idea collision radar for developers. Paste a one-sentence pitch to check overlap across ${repoCount ? `${repoCount}+` : '95+'} repos in ${categoryCount ?? 10} categories (AI, hardware, gamedev, devtools & indie builds), spot missing angles, or signal stealth work anonymously.`
 } = Astro.props;
 
-const siteUrl = 'https://alsobuilt.pages.dev';
+const siteUrl = SITE_URL;
 const ogImage = `${siteUrl}/og-card.png`;
 ---
 

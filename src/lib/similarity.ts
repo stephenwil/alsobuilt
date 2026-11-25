@@ -1,4 +1,5 @@
 import type { Variant } from './types';
+import { SITE_URL } from './site';
 
 export const TRAIT_KEYWORDS: Record<string, string[]> = {
   'local-first': ['local', 'offline', 'zero cloud', 'privacy', 'sqlite', 'on-device', 'desktop'],
@@ -245,10 +246,10 @@ export function computeUserCoords(ranked: RankedVariant[], activeTraits: Set<str
 
 export function buildCollisionReceipt(ranked: RankedVariant[], activeTraits: Set<string>): string {
   const top = ranked[0];
-  if (!top) return 'Tested my AI idea on AlsoBuilt — open whitespace! https://alsobuilt.dev';
+  if (!top) return `Tested my idea on AlsoBuilt — open whitespace! ${SITE_URL}`;
   const wedge = [...activeTraits].filter((t) => !top.variant.traits.includes(t));
   const wedgePart = wedge.length ? ` · My wedge: ${wedge.map((w) => `+${w}`).join(', ')}` : '';
-  return `Tested my AI idea on AlsoBuilt: ${top.overlap}% overlap with ${top.variant.name}${wedgePart} · https://alsobuilt.dev`;
+  return `Tested my idea on AlsoBuilt: ${top.overlap}% overlap with ${top.variant.name}${wedgePart} · ${SITE_URL}`;
 }
 
 export function buildVariantYaml(input: {
