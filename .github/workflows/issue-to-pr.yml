@@ -109,10 +109,34 @@ jobs:
           NEW_CATEGORY_NAME: ${{ steps.gen.outputs.new_category_name }}
         run: |
           BRANCH="submit/${SLUG}-issue-${ISSUE_NUMBER}"
+          SLUG_PREFIX="submit/${SLUG}-issue-"
 
-          EXISTING_BRANCH_PR=$(gh pr list --state open --head "$BRANCH" --json url --jq '.[0].url // empty')
+          OPEN_PRS=$(gh pr list --repo "${{ github.repository }}" --state open --limit 50 --json headRefName,url)
+          EXISTING_BRANCH_PR=$(printf '%s' "$OPEN_PRS" | jq -r --arg b "$BRANCH" '.[] | select(.headRefName == $b) | .url' | head -n 1)
           if [ -n "$EXISTING_BRANCH_PR" ]; then
             echo "Open PR already exists for branch ${BRANCH}: ${EXISTING_BRANCH_PR}"
+            exit 0
+          fi
+
+          EXISTING_SLUG_PR=$(printf '%s' "$OPEN_PRS" | jq -r --arg p "$SLUG_PREFIX" '.[] | select(.headRefName | startswith($p)) | .url' | head -n 1)
+          if [ -n "$EXISTING_SLUG_PR" ]; then
+            echo "Open PR already exists for slug ${SLUG}: ${EXISTING_SLUG_PR}"
+            gh issue comment "$ISSUE_NUMBER" --body "A catalog Pull Request for **${PROJECT_NAME}** (\`${SLUG}\`) is already open: ${EXISTING_SLUG_PR} — skipping duplicate PR creation."
+            exit 0
+          fi
+
+          # Also catch the brief race window where another issue for the same slug just pushed its branch
+          OTHER_BRANCH=$(git ls-remote --heads origin "${SLUG_PREFIX}*" | awk '{print $2}' | sed 's|^refs/heads/||' | grep -Fxv "$BRANCH" | head -n 1 || true)
+          if [ -n "$OTHER_BRANCH" ]; then
+            sleep 3
+            RACE_PR=$(gh pr list --repo "${{ github.repository }}" --state open --head "$OTHER_BRANCH" --json url --jq '.[0].url // empty')
+            if [ -n "$RACE_PR" ]; then
+              echo "Concurrent submission PR already opened for slug ${SLUG}: ${RACE_PR}"
+              gh issue comment "$ISSUE_NUMBER" --body "A catalog Pull Request for **${PROJECT_NAME}** (\`${SLUG}\`) is already open: ${RACE_PR} — skipping duplicate PR creation."
+              exit 0
+            fi
+            echo "Concurrent submission branch ${OTHER_BRANCH} already in progress for slug ${SLUG}; skipping duplicate PR."
+            gh issue comment "$ISSUE_NUMBER" --body "Another submission for **${PROJECT_NAME}** (\`${SLUG}\`) is already being processed on branch \`${OTHER_BRANCH}\` — skipping duplicate PR creation."
             exit 0
           fi
 
