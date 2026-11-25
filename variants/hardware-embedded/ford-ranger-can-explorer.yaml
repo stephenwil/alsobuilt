@@ -1,0 +1,22 @@
+slug: ford-ranger-can-explorer
+category: hardware-embedded
+name: Ranger CAN Explorer
+repo: https://github.com/stephenwil/ford-ranger-can-explorer
+tagline: >-
+  Interactive 3D explorer of a Ford Ranger's CAN networks: ISO 11898 frames, arbitration, error confinement, gateway,
+  OBD-II/UDS over ISO-TP
+arch: Web
+model: Standalone
+license: MIT
+stage: Beta
+stack: JavaScript + Three.js + WebGL
+region: Global
+stars: 0
+traits:
+  - hardware
+  - 3d-webgl
+  - browser
+  - realtime
+  - local-first
+x: 0.49
+'y': 0.34
