@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: TypeScript + Playwright
 region: US
-stars: 40102
+stars: 40126
 traits:
   - mcp
   - browser

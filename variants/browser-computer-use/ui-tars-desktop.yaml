@@ -10,7 +10,7 @@ stage: Lesson
 lesson: Showed pure vision GUI grounding works on desktop apps, while hybrid DOM+MCP agents remain faster and more reliable.
 stack: TypeScript + Electron + Vision Models
 region: APAC
-stars: 39593
+stars: 39589
 traits:
   - browser
   - typescript

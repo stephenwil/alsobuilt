@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T11:31:03.714Z",
+  "generatedAt": "2026-11-25T13:47:37.442Z",
   "categories": [
     {
       "slug": "ai-memory",
@@ -65,7 +65,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Bun + TUI",
       "region": "Global",
-      "stars": 228963,
+      "stars": 229101,
       "traits": [
         "cli",
         "typescript",
@@ -75,7 +75,7 @@
       ],
       "x": 0.24,
       "y": 0.62,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "ollama",
@@ -89,7 +89,7 @@
       "stage": "Prod",
       "stack": "Go + C++ + llama.cpp",
       "region": "US",
-      "stars": 187998,
+      "stars": 188087,
       "traits": [
         "local-first",
         "cli",
@@ -98,7 +98,7 @@
       ],
       "x": 0.16,
       "y": 0.36,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "dify",
@@ -112,7 +112,7 @@
       "stage": "Prod",
       "stack": "Python + Next.js + Docker",
       "region": "Global",
-      "stars": 161847,
+      "stars": 161887,
       "traits": [
         "self-hosted",
         "multi-agent",
@@ -122,7 +122,7 @@
       ],
       "x": 0.78,
       "y": 0.74,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "open-webui",
@@ -136,7 +136,7 @@
       "stage": "Prod",
       "stack": "Svelte + Python + FastAPI + Docker",
       "region": "Global",
-      "stars": 159442,
+      "stars": 159527,
       "traits": [
         "self-hosted",
         "local-first",
@@ -147,7 +147,7 @@
       ],
       "x": 0.44,
       "y": 0.5,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "llama-cpp",
@@ -161,7 +161,7 @@
       "stage": "Prod",
       "stack": "C++ + CUDA + Metal + Vulkan",
       "region": "Global",
-      "stars": 136134,
+      "stars": 136222,
       "traits": [
         "local-first",
         "cli",
@@ -169,7 +169,7 @@
       ],
       "x": 0.12,
       "y": 0.28,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "browser-use",
@@ -183,7 +183,7 @@
       "stage": "Prod",
       "stack": "Python + Playwright",
       "region": "EU",
-      "stars": 121933,
+      "stars": 122024,
       "traits": [
         "browser",
         "python",
@@ -192,7 +192,7 @@
       ],
       "x": 0.56,
       "y": 0.72,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "vllm",
@@ -206,7 +206,7 @@
       "stage": "Prod",
       "stack": "Python + CUDA + C++",
       "region": "US",
-      "stars": 97494,
+      "stars": 97552,
       "traits": [
         "self-hosted",
         "open-weights",
@@ -215,7 +215,7 @@
       ],
       "x": 0.62,
       "y": 0.36,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "openhands",
@@ -229,7 +229,7 @@
       "stage": "Prod",
       "stack": "Python + Docker + React",
       "region": "Global",
-      "stars": 94238,
+      "stars": 94308,
       "traits": [
         "multi-agent",
         "self-hosted",
@@ -239,7 +239,7 @@
       ],
       "x": 0.74,
       "y": 0.86,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "mcp-servers",
@@ -253,7 +253,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Python + MCP",
       "region": "US",
-      "stars": 92223,
+      "stars": 92240,
       "traits": [
         "mcp",
         "cli",
@@ -263,7 +263,7 @@
       ],
       "x": 0.26,
       "y": 0.52,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "cline",
@@ -277,7 +277,7 @@
       "stage": "Prod",
       "stack": "TypeScript + VS Code + MCP",
       "region": "US",
-      "stars": 71870,
+      "stars": 71891,
       "traits": [
         "mcp",
         "browser",
@@ -287,7 +287,7 @@
       ],
       "x": 0.36,
       "y": 0.62,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "mem0",
@@ -301,7 +301,7 @@
       "stage": "Prod",
       "stack": "Python + TypeScript + Qdrant",
       "region": "US",
-      "stars": 69425,
+      "stars": 69457,
       "traits": [
         "multi-agent",
         "python",
@@ -311,7 +311,7 @@
       ],
       "x": 0.72,
       "y": 0.76,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "open-interpreter",
@@ -325,7 +325,7 @@
       "stage": "Beta",
       "stack": "Rust + Python",
       "region": "US",
-      "stars": 68961,
+      "stars": 68962,
       "traits": [
         "local-first",
         "cli",
@@ -335,7 +335,7 @@
       ],
       "x": 0.28,
       "y": 0.52,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "anything-llm",
@@ -349,7 +349,7 @@
       "stage": "Prod",
       "stack": "Node.js + React + Electron + LanceDB",
       "region": "Global",
-      "stars": 68605,
+      "stars": 68631,
       "traits": [
         "local-first",
         "self-hosted",
@@ -360,7 +360,7 @@
       ],
       "x": 0.34,
       "y": 0.56,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "context7",
@@ -374,7 +374,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Node.js",
       "region": "US",
-      "stars": 65405,
+      "stars": 65439,
       "traits": [
         "mcp",
         "typescript",
@@ -383,7 +383,7 @@
       ],
       "x": 0.72,
       "y": 0.48,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "autogen",
@@ -398,14 +398,14 @@
       "lesson": "Unbounded agent-to-agent chat loops burn tokens quickly; modern successors favor explicit state graphs and typed tools.",
       "stack": "Python + .NET",
       "region": "US",
-      "stars": 61970,
+      "stars": 61968,
       "traits": [
         "multi-agent",
         "python"
       ],
       "x": 0.74,
       "y": 0.86,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "crewai",
@@ -419,7 +419,7 @@
       "stage": "Prod",
       "stack": "Python",
       "region": "US",
-      "stars": 61232,
+      "stars": 61251,
       "traits": [
         "multi-agent",
         "python",
@@ -428,7 +428,7 @@
       ],
       "x": 0.64,
       "y": 0.82,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "goose",
@@ -442,7 +442,7 @@
       "stage": "Prod",
       "stack": "Rust + Electron + MCP",
       "region": "US",
-      "stars": 56945,
+      "stars": 56979,
       "traits": [
         "rust",
         "cli",
@@ -453,7 +453,7 @@
       ],
       "x": 0.26,
       "y": 0.74,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "whisper-cpp",
@@ -467,7 +467,7 @@
       "stage": "Prod",
       "stack": "C++ + Metal + CoreML",
       "region": "BG",
-      "stars": 55493,
+      "stars": 55514,
       "traits": [
         "local-first",
         "voice",
@@ -477,7 +477,7 @@
       ],
       "x": 0.16,
       "y": 0.22,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "gpt-engineer",
@@ -492,14 +492,14 @@
       "lesson": "One-shot repo generation hit context/debugging ceilings; iterative file-diff agents and live previews won.",
       "stack": "Python",
       "region": "EU",
-      "stars": 54943,
+      "stars": 54938,
       "traits": [
         "cli",
         "python"
       ],
       "x": 0.68,
       "y": 0.38,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "aider",
@@ -513,7 +513,7 @@
       "stage": "Prod",
       "stack": "Python + Tree-sitter + Git",
       "region": "US",
-      "stars": 50241,
+      "stars": 50254,
       "traits": [
         "cli",
         "local-first",
@@ -522,7 +522,7 @@
       ],
       "x": 0.2,
       "y": 0.44,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "bevy",
@@ -536,7 +536,7 @@
       "stage": "Beta",
       "stack": "Rust + ECS + wgpu",
       "region": "Global",
-      "stars": 49981,
+      "stars": 49994,
       "traits": [
         "gamedev",
         "rust",
@@ -545,7 +545,7 @@
       ],
       "x": 0.36,
       "y": 0.68,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "jan",
@@ -559,7 +559,7 @@
       "stage": "Prod",
       "stack": "Rust + Tauri + TypeScript",
       "region": "Global",
-      "stars": 46079,
+      "stars": 46113,
       "traits": [
         "local-first",
         "rust",
@@ -569,7 +569,7 @@
       ],
       "x": 0.2,
       "y": 0.44,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "langgraph",
@@ -583,7 +583,7 @@
       "stage": "Prod",
       "stack": "Python + TypeScript",
       "region": "US",
-      "stars": 45371,
+      "stars": 45405,
       "traits": [
         "multi-agent",
         "python",
@@ -593,7 +593,7 @@
       ],
       "x": 0.68,
       "y": 0.84,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "sniffnet",
@@ -607,7 +607,7 @@
       "stage": "Prod",
       "stack": "Rust + Iced + libpcap",
       "region": "Global",
-      "stars": 43293,
+      "stars": 43303,
       "traits": [
         "rust",
         "local-first",
@@ -615,7 +615,7 @@
       ],
       "x": 0.25,
       "y": 0.33,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "playwright-mcp",
@@ -629,7 +629,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Playwright",
       "region": "US",
-      "stars": 40102,
+      "stars": 40126,
       "traits": [
         "mcp",
         "browser",
@@ -639,7 +639,7 @@
       ],
       "x": 0.38,
       "y": 0.58,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "quivr",
@@ -653,7 +653,7 @@
       "stage": "Prod",
       "stack": "Go + Python + Postgres",
       "region": "EU",
-      "stars": 39661,
+      "stars": 39664,
       "traits": [
         "self-hosted",
         "rag",
@@ -662,7 +662,7 @@
       ],
       "x": 0.58,
       "y": 0.32,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "ui-tars-desktop",
@@ -677,7 +677,7 @@
       "lesson": "Showed pure vision GUI grounding works on desktop apps, while hybrid DOM+MCP agents remain faster and more reliable.",
       "stack": "TypeScript + Electron + Vision Models",
       "region": "APAC",
-      "stars": 39593,
+      "stars": 39589,
       "traits": [
         "browser",
         "typescript",
@@ -687,7 +687,7 @@
       ],
       "x": 0.34,
       "y": 0.64,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "khoj",
@@ -701,7 +701,7 @@
       "stage": "Prod",
       "stack": "Python + Django + Postgres",
       "region": "Global",
-      "stars": 38232,
+      "stars": 38239,
       "traits": [
         "local-first",
         "markdown",
@@ -712,7 +712,7 @@
       ],
       "x": 0.28,
       "y": 0.34,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "continue",
@@ -726,7 +726,7 @@
       "stage": "Prod",
       "stack": "TypeScript + VS Code + JetBrains",
       "region": "US",
-      "stars": 36551,
+      "stars": 36559,
       "traits": [
         "typescript",
         "local-first",
@@ -735,7 +735,7 @@
       ],
       "x": 0.36,
       "y": 0.44,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "github-mcp-server",
@@ -749,7 +749,7 @@
       "stage": "Prod",
       "stack": "Go + Docker",
       "region": "US",
-      "stars": 34724,
+      "stars": 34742,
       "traits": [
         "mcp",
         "cli",
@@ -757,7 +757,7 @@
       ],
       "x": 0.76,
       "y": 0.54,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "cognee",
@@ -771,7 +771,7 @@
       "stage": "Beta",
       "stack": "Python + NetworkX + Kuzu + Vector DB",
       "region": "Global",
-      "stars": 33558,
+      "stars": 33594,
       "traits": [
         "python",
         "rag",
@@ -781,7 +781,7 @@
       ],
       "x": 0.62,
       "y": 0.68,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "graphiti",
@@ -795,7 +795,7 @@
       "stage": "Beta",
       "stack": "Python + Neo4j",
       "region": "US",
-      "stars": 33066,
+      "stars": 33084,
       "traits": [
         "multi-agent",
         "python",
@@ -805,7 +805,7 @@
       ],
       "x": 0.78,
       "y": 0.68,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "actual-budget",
@@ -819,7 +819,7 @@
       "stage": "Prod",
       "stack": "TypeScript + React + SQLite",
       "region": "Global",
-      "stars": 30442,
+      "stars": 30453,
       "traits": [
         "local-first",
         "self-hosted",
@@ -827,7 +827,7 @@
       ],
       "x": 0.34,
       "y": 0.42,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "mastra",
@@ -841,7 +841,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Node.js",
       "region": "US",
-      "stars": 29794,
+      "stars": 29811,
       "traits": [
         "typescript",
         "multi-agent",
@@ -851,7 +851,7 @@
       ],
       "x": 0.58,
       "y": 0.78,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "fastmcp",
@@ -865,7 +865,7 @@
       "stage": "Prod",
       "stack": "Python + Pydantic + MCP",
       "region": "US",
-      "stars": 28736,
+      "stars": 28749,
       "traits": [
         "mcp",
         "python",
@@ -874,7 +874,7 @@
       ],
       "x": 0.34,
       "y": 0.54,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "faster-whisper",
@@ -888,7 +888,7 @@
       "stage": "Prod",
       "stack": "Python + CTranslate2",
       "region": "EU",
-      "stars": 26987,
+      "stars": 27006,
       "traits": [
         "voice",
         "local-first",
@@ -897,7 +897,7 @@
       ],
       "x": 0.22,
       "y": 0.28,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "stagehand",
@@ -911,7 +911,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Playwright",
       "region": "US",
-      "stars": 26131,
+      "stars": 26140,
       "traits": [
         "browser",
         "typescript",
@@ -919,7 +919,7 @@
       ],
       "x": 0.6,
       "y": 0.52,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "letta",
@@ -933,7 +933,7 @@
       "stage": "Prod",
       "stack": "Python + Postgres + pgvector",
       "region": "US",
-      "stars": 25532,
+      "stars": 25543,
       "traits": [
         "multi-agent",
         "python",
@@ -943,7 +943,7 @@
       ],
       "x": 0.66,
       "y": 0.84,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "roo-code",
@@ -958,7 +958,7 @@
       "lesson": "Demonstrated rapid community demand for custom agent personas/modes inside IDE forks before archiving.",
       "stack": "TypeScript + VS Code",
       "region": "Global",
-      "stars": 24236,
+      "stars": 24234,
       "traits": [
         "typescript",
         "mcp",
@@ -967,7 +967,7 @@
       ],
       "x": 0.42,
       "y": 0.66,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "skyvern",
@@ -981,7 +981,7 @@
       "stage": "Prod",
       "stack": "Python + Playwright + Vision LLMs",
       "region": "US",
-      "stars": 23507,
+      "stars": 23533,
       "traits": [
         "browser",
         "python",
@@ -990,7 +990,7 @@
       ],
       "x": 0.7,
       "y": 0.66,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "ratatui",
@@ -1004,7 +1004,7 @@
       "stage": "Prod",
       "stack": "Rust + TUI",
       "region": "Global",
-      "stars": 23420,
+      "stars": 23433,
       "traits": [
         "rust",
         "cli",
@@ -1012,7 +1012,7 @@
       ],
       "x": 0.28,
       "y": 0.39,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "babyagi",
@@ -1036,7 +1036,7 @@
       ],
       "x": 0.8,
       "y": 0.62,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "pydantic-ai",
@@ -1050,7 +1050,7 @@
       "stage": "Prod",
       "stack": "Python + Pydantic",
       "region": "EU",
-      "stars": 21368,
+      "stars": 21380,
       "traits": [
         "python",
         "mcp",
@@ -1059,7 +1059,7 @@
       ],
       "x": 0.56,
       "y": 0.7,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "swe-agent",
@@ -1073,7 +1073,7 @@
       "stage": "Prod",
       "stack": "Python + Docker",
       "region": "US",
-      "stars": 20867,
+      "stars": 20869,
       "traits": [
         "cli",
         "python",
@@ -1082,7 +1082,7 @@
       ],
       "x": 0.64,
       "y": 0.76,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "pipecat",
@@ -1096,7 +1096,7 @@
       "stage": "Prod",
       "stack": "Python + WebRTC + Daily",
       "region": "US",
-      "stars": 17415,
+      "stars": 17432,
       "traits": [
         "voice",
         "realtime",
@@ -1106,7 +1106,7 @@
       ],
       "x": 0.6,
       "y": 0.66,
-      "addedAt": "2026-11-23T20:47:46+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "surfsense",
@@ -1120,7 +1120,7 @@
       "stage": "Beta",
       "stack": "Python + FastAPI + Next.js + pgvector",
       "region": "Global",
-      "stars": 16941,
+      "stars": 16948,
       "traits": [
         "self-hosted",
         "rag",
@@ -1131,7 +1131,7 @@
       ],
       "x": 0.52,
       "y": 0.42,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "livekit-agents",
@@ -1145,7 +1145,7 @@
       "stage": "Prod",
       "stack": "Python + Node.js + WebRTC",
       "region": "US",
-      "stars": 15329,
+      "stars": 15339,
       "traits": [
         "voice",
         "realtime",
@@ -1155,7 +1155,7 @@
       ],
       "x": 0.66,
       "y": 0.64,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "esphome",
@@ -1169,7 +1169,7 @@
       "stage": "Prod",
       "stack": "C++ + Python + ESP32",
       "region": "Global",
-      "stars": 12167,
+      "stars": 12169,
       "traits": [
         "hardware",
         "self-hosted",
@@ -1179,7 +1179,7 @@
       ],
       "x": 0.35,
       "y": 0.64,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "bandwhich",
@@ -1193,7 +1193,7 @@
       "stage": "Prod",
       "stack": "Rust + TUI",
       "region": "Global",
-      "stars": 12111,
+      "stars": 12115,
       "traits": [
         "cli",
         "rust",
@@ -1202,7 +1202,7 @@
       ],
       "x": 0.22,
       "y": 0.26,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "mcp-inspector",
@@ -1225,7 +1225,7 @@
       ],
       "x": 0.3,
       "y": 0.46,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "pixelorama",
@@ -1239,14 +1239,14 @@
       "stage": "Prod",
       "stack": "GDScript + Godot",
       "region": "Global",
-      "stars": 11193,
+      "stars": 11200,
       "traits": [
         "gamedev",
         "local-first"
       ],
       "x": 0.24,
       "y": 0.22,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "embassy",
@@ -1260,7 +1260,7 @@
       "stage": "Prod",
       "stack": "Rust + Async Embedded",
       "region": "Global",
-      "stars": 10145,
+      "stars": 10146,
       "traits": [
         "hardware",
         "rust",
@@ -1269,7 +1269,7 @@
       ],
       "x": 0.28,
       "y": 0.58,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "pocketpal-ai",
@@ -1283,7 +1283,7 @@
       "stage": "Prod",
       "stack": "React Native + TypeScript + llama.rn",
       "region": "Global",
-      "stars": 9769,
+      "stars": 9789,
       "traits": [
         "mobile",
         "local-first",
@@ -1292,7 +1292,7 @@
       ],
       "x": 0.18,
       "y": 0.18,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "gb-studio",
@@ -1315,7 +1315,7 @@
       ],
       "x": 0.31,
       "y": 0.46,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "vibe",
@@ -1329,7 +1329,7 @@
       "stage": "Prod",
       "stack": "Rust + Tauri + whisper.cpp",
       "region": "Global",
-      "stars": 8221,
+      "stars": 8226,
       "traits": [
         "voice",
         "local-first",
@@ -1338,7 +1338,7 @@
       ],
       "x": 0.16,
       "y": 0.22,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "tic-80",
@@ -1360,7 +1360,7 @@
       ],
       "x": 0.18,
       "y": 0.38,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "kokoro-fastapi",
@@ -1374,7 +1374,7 @@
       "stage": "Beta",
       "stack": "Python + FastAPI + ONNX + Docker",
       "region": "Global",
-      "stars": 5731,
+      "stars": 5732,
       "traits": [
         "voice",
         "local-first",
@@ -1385,7 +1385,7 @@
       ],
       "x": 0.32,
       "y": 0.34,
-      "addedAt": "2026-11-24T21:44:18+00:00"
+      "addedAt": "2026-11-24T21:44:18Z"
     },
     {
       "slug": "ldtk",
@@ -1399,14 +1399,14 @@
       "stage": "Prod",
       "stack": "Haxe + Electron + JSON",
       "region": "Global",
-      "stars": 5012,
+      "stars": 5016,
       "traits": [
         "gamedev",
         "local-first"
       ],
       "x": 0.26,
       "y": 0.24,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "fastrtc",
@@ -1430,30 +1430,7 @@
       ],
       "x": 0.48,
       "y": 0.36,
-      "addedAt": "2026-11-23T20:47:46+00:00"
-    },
-    {
-      "slug": "fast-agent",
-      "category": "agent-workflows",
-      "name": "fast-agent",
-      "repo": "https://github.com/evalstate/fast-agent",
-      "tagline": "Declarative Python framework to build, chain, and evaluate multi-agent workflows with native MCP and A2A support",
-      "arch": "CLI",
-      "model": "Hybrid",
-      "license": "Apache-2",
-      "stage": "Beta",
-      "stack": "Python + MCP + A2A",
-      "region": "Global",
-      "stars": 3977,
-      "traits": [
-        "multi-agent",
-        "mcp",
-        "python",
-        "cli"
-      ],
-      "x": 0.43,
-      "y": 0.66,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-23T20:47:46Z"
     },
     {
       "slug": "dbhub",
@@ -1467,7 +1444,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Node.js",
       "region": "Global",
-      "stars": 3974,
+      "stars": 3989,
       "traits": [
         "mcp",
         "cli",
@@ -1476,7 +1453,30 @@
       ],
       "x": 0.44,
       "y": 0.46,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
+    },
+    {
+      "slug": "fast-agent",
+      "category": "agent-workflows",
+      "name": "fast-agent",
+      "repo": "https://github.com/evalstate/fast-agent",
+      "tagline": "Declarative Python framework to build, chain, and evaluate multi-agent workflows with native MCP and A2A support",
+      "arch": "CLI",
+      "model": "Hybrid",
+      "license": "Apache-2",
+      "stage": "Beta",
+      "stack": "Python + MCP + A2A",
+      "region": "Global",
+      "stars": 3978,
+      "traits": [
+        "multi-agent",
+        "mcp",
+        "python",
+        "cli"
+      ],
+      "x": 0.43,
+      "y": 0.66,
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "lean-ctx",
@@ -1490,7 +1490,7 @@
       "stage": "Beta",
       "stack": "Rust + MCP",
       "region": "Global",
-      "stars": 3961,
+      "stars": 3962,
       "traits": [
         "mcp",
         "rust",
@@ -1499,7 +1499,7 @@
       ],
       "x": 0.27,
       "y": 0.61,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "abtop",
@@ -1522,7 +1522,7 @@
       ],
       "x": 0.24,
       "y": 0.28,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "beeai-framework",
@@ -1545,7 +1545,7 @@
       ],
       "x": 0.54,
       "y": 0.74,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "sidekick",
@@ -1559,7 +1559,7 @@
       "stage": "Prod",
       "stack": "Swift + llama.cpp + macOS",
       "region": "Global",
-      "stars": 3324,
+      "stars": 3326,
       "traits": [
         "local-first",
         "open-weights",
@@ -1567,7 +1567,7 @@
       ],
       "x": 0.21,
       "y": 0.42,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "tio",
@@ -1589,7 +1589,7 @@
       ],
       "x": 0.16,
       "y": 0.21,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "willow",
@@ -1612,7 +1612,7 @@
       ],
       "x": 0.14,
       "y": 0.52,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "probe-rs",
@@ -1626,7 +1626,7 @@
       "stage": "Prod",
       "stack": "Rust + Embedded + SWD/JTAG",
       "region": "Global",
-      "stars": 3024,
+      "stars": 3025,
       "traits": [
         "hardware",
         "rust",
@@ -1635,7 +1635,7 @@
       ],
       "x": 0.21,
       "y": 0.44,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "cantools",
@@ -1658,7 +1658,7 @@
       ],
       "x": 0.24,
       "y": 0.28,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "vital",
@@ -1681,30 +1681,28 @@
       ],
       "x": 0.17,
       "y": 0.35,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
-      "slug": "typewhisper-mac",
-      "category": "local-voice",
-      "name": "TypeWhisper",
-      "repo": "https://github.com/TypeWhisper/typewhisper-mac",
-      "tagline": "Native macOS on-device speech-to-text dictation app powered by private local Whisper models",
-      "arch": "Desktop",
-      "model": "Local LLM",
-      "license": "GPL-3",
+      "slug": "poki",
+      "category": "browser-computer-use",
+      "name": "Poki",
+      "repo": "https://github.com/JosssphZhou/poki",
+      "tagline": "Open-source Swift mobile agent app that reads your iPhone screen and automates taps like a human user",
+      "arch": "Mobile",
+      "model": "Hybrid",
+      "license": "AGPL",
       "stage": "Beta",
-      "stack": "Swift + macOS + Whisper",
+      "stack": "Swift + iOS",
       "region": "Global",
-      "stars": 1942,
+      "stars": 2012,
       "traits": [
-        "voice",
-        "local-first",
-        "open-weights",
+        "mobile",
         "realtime"
       ],
-      "x": 0.16,
-      "y": 0.26,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "x": 0.56,
+      "y": 0.54,
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "savvycan",
@@ -1726,28 +1724,30 @@
       ],
       "x": 0.19,
       "y": 0.34,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
-      "slug": "poki",
-      "category": "browser-computer-use",
-      "name": "Poki",
-      "repo": "https://github.com/JosssphZhou/poki",
-      "tagline": "Open-source Swift mobile agent app that reads your iPhone screen and automates taps like a human user",
-      "arch": "Mobile",
-      "model": "Hybrid",
-      "license": "AGPL",
+      "slug": "typewhisper-mac",
+      "category": "local-voice",
+      "name": "TypeWhisper",
+      "repo": "https://github.com/TypeWhisper/typewhisper-mac",
+      "tagline": "Native macOS on-device speech-to-text dictation app powered by private local Whisper models",
+      "arch": "Desktop",
+      "model": "Local LLM",
+      "license": "GPL-3",
       "stage": "Beta",
-      "stack": "Swift + iOS",
+      "stack": "Swift + macOS + Whisper",
       "region": "Global",
-      "stars": 1915,
+      "stars": 1941,
       "traits": [
-        "mobile",
+        "voice",
+        "local-first",
+        "open-weights",
         "realtime"
       ],
-      "x": 0.56,
-      "y": 0.54,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "x": 0.16,
+      "y": 0.26,
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "wasm4",
@@ -1771,7 +1771,7 @@
       ],
       "x": 0.22,
       "y": 0.31,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "embed-anything",
@@ -1785,7 +1785,7 @@
       "stage": "Beta",
       "stack": "Rust + Candle + Python",
       "region": "Global",
-      "stars": 1341,
+      "stars": 1342,
       "traits": [
         "rust",
         "local-first",
@@ -1794,7 +1794,7 @@
       ],
       "x": 0.26,
       "y": 0.48,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "agent-deck",
@@ -1808,7 +1808,7 @@
       "stage": "Beta",
       "stack": "Go + Bubble Tea",
       "region": "Global",
-      "stars": 1300,
+      "stars": 1305,
       "traits": [
         "cli",
         "multi-agent",
@@ -1816,7 +1816,7 @@
       ],
       "x": 0.42,
       "y": 0.62,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "anomaly-browse",
@@ -1830,7 +1830,7 @@
       "stage": "Beta",
       "stack": "TypeScript + Chromium Extension + MCP",
       "region": "Global",
-      "stars": 1076,
+      "stars": 1087,
       "traits": [
         "browser",
         "mcp",
@@ -1839,7 +1839,7 @@
       ],
       "x": 0.34,
       "y": 0.44,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "herdr-reviewr",
@@ -1853,7 +1853,7 @@
       "stage": "Beta",
       "stack": "Rust + TUI",
       "region": "Global",
-      "stars": 1019,
+      "stars": 1020,
       "traits": [
         "cli",
         "rust",
@@ -1861,7 +1861,7 @@
       ],
       "x": 0.28,
       "y": 0.41,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "affectui",
@@ -1875,7 +1875,7 @@
       "stage": "Beta",
       "stack": "TypeScript + React",
       "region": "Global",
-      "stars": 956,
+      "stars": 964,
       "traits": [
         "typescript",
         "multi-agent",
@@ -1883,7 +1883,7 @@
       ],
       "x": 0.68,
       "y": 0.42,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "obsidian-llm-wiki",
@@ -1897,7 +1897,7 @@
       "stage": "Beta",
       "stack": "TypeScript + Obsidian",
       "region": "Global",
-      "stars": 812,
+      "stars": 813,
       "traits": [
         "local-first",
         "markdown",
@@ -1906,7 +1906,7 @@
       ],
       "x": 0.22,
       "y": 0.34,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "swarmvault",
@@ -1920,7 +1920,7 @@
       "stage": "Proto",
       "stack": "TypeScript + SQLite",
       "region": "Global",
-      "stars": 739,
+      "stars": 740,
       "traits": [
         "local-first",
         "markdown",
@@ -1930,7 +1930,7 @@
       ],
       "x": 0.31,
       "y": 0.56,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "agent-manager",
@@ -1944,7 +1944,7 @@
       "stage": "Proto",
       "stack": "Go + Terminal",
       "region": "Global",
-      "stars": 707,
+      "stars": 710,
       "traits": [
         "cli",
         "multi-agent",
@@ -1952,7 +1952,7 @@
       ],
       "x": 0.36,
       "y": 0.54,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "graphrag-rs",
@@ -1975,7 +1975,7 @@
       ],
       "x": 0.19,
       "y": 0.68,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "phonedriver",
@@ -1989,7 +1989,7 @@
       "stage": "Proto",
       "stack": "Rust + ADB + MCP",
       "region": "Global",
-      "stars": 366,
+      "stars": 372,
       "traits": [
         "mobile",
         "mcp",
@@ -1999,7 +1999,29 @@
       ],
       "x": 0.22,
       "y": 0.64,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
+    },
+    {
+      "slug": "gram",
+      "category": "mcp-tooling",
+      "name": "Gram",
+      "repo": "https://github.com/speakeasy-api/gram",
+      "tagline": "Go-based MCP gateway and control plane for governing toolsets, auth, and audit trails across AI agents",
+      "arch": "Web",
+      "model": "Hybrid",
+      "license": "AGPL",
+      "stage": "Proto",
+      "stack": "Go + MCP",
+      "region": "Global",
+      "stars": 279,
+      "traits": [
+        "mcp",
+        "self-hosted",
+        "multi-agent"
+      ],
+      "x": 0.64,
+      "y": 0.72,
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "openbrowser-ai",
@@ -2021,29 +2043,7 @@
       ],
       "x": 0.39,
       "y": 0.36,
-      "addedAt": "2026-11-24T22:46:10+00:00"
-    },
-    {
-      "slug": "gram",
-      "category": "mcp-tooling",
-      "name": "Gram",
-      "repo": "https://github.com/speakeasy-api/gram",
-      "tagline": "Go-based MCP gateway and control plane for governing toolsets, auth, and audit trails across AI agents",
-      "arch": "Web",
-      "model": "Hybrid",
-      "license": "AGPL",
-      "stage": "Proto",
-      "stack": "Go + MCP",
-      "region": "Global",
-      "stars": 278,
-      "traits": [
-        "mcp",
-        "self-hosted",
-        "multi-agent"
-      ],
-      "x": 0.64,
-      "y": 0.72,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "agent-cli",
@@ -2067,7 +2067,7 @@
       ],
       "x": 0.35,
       "y": 0.45,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "etos-llm-studio",
@@ -2089,7 +2089,7 @@
       ],
       "x": 0.15,
       "y": 0.22,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "qwentts-cpp",
@@ -2112,7 +2112,7 @@
       ],
       "x": 0.18,
       "y": 0.38,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "cabana",
@@ -2135,7 +2135,7 @@
       ],
       "x": 0.52,
       "y": 0.38,
-      "addedAt": "2026-11-24T23:54:05+00:00"
+      "addedAt": "2026-11-24T23:54:05Z"
     },
     {
       "slug": "smarter-router",
@@ -2149,7 +2149,7 @@
       "stage": "Proto",
       "stack": "Python + FastAPI",
       "region": "Global",
-      "stars": 165,
+      "stars": 166,
       "traits": [
         "local-first",
         "self-hosted",
@@ -2158,29 +2158,7 @@
       ],
       "x": 0.46,
       "y": 0.58,
-      "addedAt": "2026-11-24T22:46:10+00:00"
-    },
-    {
-      "slug": "coding-sh",
-      "category": "agent-workflows",
-      "name": "coding.sh",
-      "repo": "https://github.com/jackulau/coding.sh",
-      "tagline": "Local-first observability, trace viewer, and evaluation harness for Claude Code, Codex, and Cursor agent runs",
-      "arch": "Web",
-      "model": "Hybrid",
-      "license": "MIT",
-      "stage": "Proto",
-      "stack": "TypeScript + SQLite",
-      "region": "Global",
-      "stars": 154,
-      "traits": [
-        "local-first",
-        "typescript",
-        "self-hosted"
-      ],
-      "x": 0.31,
-      "y": 0.33,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "mlxtop",
@@ -2203,7 +2181,7 @@
       ],
       "x": 0.25,
       "y": 0.29,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "frontmcp",
@@ -2224,7 +2202,29 @@
       ],
       "x": 0.52,
       "y": 0.35,
-      "addedAt": "2026-11-24T22:46:10+00:00"
+      "addedAt": "2026-11-24T22:46:10Z"
+    },
+    {
+      "slug": "coding-sh",
+      "category": "agent-workflows",
+      "name": "coding.sh",
+      "repo": "https://github.com/jackulau/coding.sh",
+      "tagline": "Local-first observability, trace viewer, and evaluation harness for Claude Code, Codex, and Cursor agent runs",
+      "arch": "Web",
+      "model": "Hybrid",
+      "license": "MIT",
+      "stage": "Proto",
+      "stack": "TypeScript + SQLite",
+      "region": "Global",
+      "stars": 149,
+      "traits": [
+        "local-first",
+        "typescript",
+        "self-hosted"
+      ],
+      "x": 0.31,
+      "y": 0.33,
+      "addedAt": "2026-11-24T22:46:10Z"
     },
     {
       "slug": "ford-ranger-can-explorer",
@@ -2248,7 +2248,7 @@
       ],
       "x": 0.49,
       "y": 0.34,
-      "addedAt": "2026-11-25T10:27:59+00:00"
+      "addedAt": "2026-11-25T10:27:59Z"
     },
     {
       "slug": "tessera-kit",
@@ -2273,7 +2273,7 @@
       ],
       "x": 0.56,
       "y": 0.31,
-      "addedAt": "2026-11-25T11:26:17+00:00"
+      "addedAt": "2026-11-25T11:26:17Z"
     }
   ]
 }

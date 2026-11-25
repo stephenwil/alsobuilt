@@ -10,13 +10,13 @@
     "actual-budget": [
       {
         "date": "2026-11-25",
-        "stars": 30442
+        "stars": 30453
       }
     ],
     "affectui": [
       {
         "date": "2026-11-25",
-        "stars": 956
+        "stars": 964
       }
     ],
     "agent-cli": [
@@ -28,37 +28,37 @@
     "agent-deck": [
       {
         "date": "2026-11-25",
-        "stars": 1300
+        "stars": 1305
       }
     ],
     "agent-manager": [
       {
         "date": "2026-11-25",
-        "stars": 707
+        "stars": 710
       }
     ],
     "aider": [
       {
         "date": "2026-11-25",
-        "stars": 50241
+        "stars": 50254
       }
     ],
     "anomaly-browse": [
       {
         "date": "2026-11-25",
-        "stars": 1076
+        "stars": 1087
       }
     ],
     "anything-llm": [
       {
         "date": "2026-11-25",
-        "stars": 68605
+        "stars": 68631
       }
     ],
     "autogen": [
       {
         "date": "2026-11-25",
-        "stars": 61970
+        "stars": 61968
       }
     ],
     "babyagi": [
@@ -70,7 +70,7 @@
     "bandwhich": [
       {
         "date": "2026-11-25",
-        "stars": 12111
+        "stars": 12115
       }
     ],
     "beeai-framework": [
@@ -82,13 +82,13 @@
     "bevy": [
       {
         "date": "2026-11-25",
-        "stars": 49981
+        "stars": 49994
       }
     ],
     "browser-use": [
       {
         "date": "2026-11-25",
-        "stars": 121933
+        "stars": 122024
       }
     ],
     "cabana": [
@@ -106,67 +106,67 @@
     "cline": [
       {
         "date": "2026-11-25",
-        "stars": 71870
+        "stars": 71891
       }
     ],
     "coding-sh": [
       {
         "date": "2026-11-25",
-        "stars": 154
+        "stars": 149
       }
     ],
     "cognee": [
       {
         "date": "2026-11-25",
-        "stars": 33558
+        "stars": 33594
       }
     ],
     "context7": [
       {
         "date": "2026-11-25",
-        "stars": 65405
+        "stars": 65439
       }
     ],
     "continue": [
       {
         "date": "2026-11-25",
-        "stars": 36551
+        "stars": 36559
       }
     ],
     "crewai": [
       {
         "date": "2026-11-25",
-        "stars": 61232
+        "stars": 61251
       }
     ],
     "dbhub": [
       {
         "date": "2026-11-25",
-        "stars": 3974
+        "stars": 3989
       }
     ],
     "dify": [
       {
         "date": "2026-11-25",
-        "stars": 161847
+        "stars": 161887
       }
     ],
     "embassy": [
       {
         "date": "2026-11-25",
-        "stars": 10145
+        "stars": 10146
       }
     ],
     "embed-anything": [
       {
         "date": "2026-11-25",
-        "stars": 1341
+        "stars": 1342
       }
     ],
     "esphome": [
       {
         "date": "2026-11-25",
-        "stars": 12167
+        "stars": 12169
       }
     ],
     "etos-llm-studio": [
@@ -178,19 +178,19 @@
     "fast-agent": [
       {
         "date": "2026-11-25",
-        "stars": 3977
+        "stars": 3978
       }
     ],
     "faster-whisper": [
       {
         "date": "2026-11-25",
-        "stars": 26987
+        "stars": 27006
       }
     ],
     "fastmcp": [
       {
         "date": "2026-11-25",
-        "stars": 28736
+        "stars": 28749
       }
     ],
     "fastrtc": [
@@ -220,31 +220,31 @@
     "github-mcp-server": [
       {
         "date": "2026-11-25",
-        "stars": 34724
+        "stars": 34742
       }
     ],
     "goose": [
       {
         "date": "2026-11-25",
-        "stars": 56945
+        "stars": 56979
       }
     ],
     "gpt-engineer": [
       {
         "date": "2026-11-25",
-        "stars": 54943
+        "stars": 54938
       }
     ],
     "gram": [
       {
         "date": "2026-11-25",
-        "stars": 278
+        "stars": 279
       }
     ],
     "graphiti": [
       {
         "date": "2026-11-25",
-        "stars": 33066
+        "stars": 33084
       }
     ],
     "graphrag-rs": [
@@ -256,67 +256,67 @@
     "herdr-reviewr": [
       {
         "date": "2026-11-25",
-        "stars": 1019
+        "stars": 1020
       }
     ],
     "jan": [
       {
         "date": "2026-11-25",
-        "stars": 46079
+        "stars": 46113
       }
     ],
     "khoj": [
       {
         "date": "2026-11-25",
-        "stars": 38232
+        "stars": 38239
       }
     ],
     "kokoro-fastapi": [
       {
         "date": "2026-11-25",
-        "stars": 5731
+        "stars": 5732
       }
     ],
     "langgraph": [
       {
         "date": "2026-11-25",
-        "stars": 45371
+        "stars": 45405
       }
     ],
     "ldtk": [
       {
         "date": "2026-11-25",
-        "stars": 5012
+        "stars": 5016
       }
     ],
     "lean-ctx": [
       {
         "date": "2026-11-25",
-        "stars": 3961
+        "stars": 3962
       }
     ],
     "letta": [
       {
         "date": "2026-11-25",
-        "stars": 25532
+        "stars": 25543
       }
     ],
     "livekit-agents": [
       {
         "date": "2026-11-25",
-        "stars": 15329
+        "stars": 15339
       }
     ],
     "llama-cpp": [
       {
         "date": "2026-11-25",
-        "stars": 136134
+        "stars": 136222
       }
     ],
     "mastra": [
       {
         "date": "2026-11-25",
-        "stars": 29794
+        "stars": 29811
       }
     ],
     "mcp-inspector": [
@@ -328,13 +328,13 @@
     "mcp-servers": [
       {
         "date": "2026-11-25",
-        "stars": 92223
+        "stars": 92240
       }
     ],
     "mem0": [
       {
         "date": "2026-11-25",
-        "stars": 69425
+        "stars": 69457
       }
     ],
     "mlxtop": [
@@ -346,25 +346,25 @@
     "obsidian-llm-wiki": [
       {
         "date": "2026-11-25",
-        "stars": 812
+        "stars": 813
       }
     ],
     "ollama": [
       {
         "date": "2026-11-25",
-        "stars": 187998
+        "stars": 188087
       }
     ],
     "open-interpreter": [
       {
         "date": "2026-11-25",
-        "stars": 68961
+        "stars": 68962
       }
     ],
     "open-webui": [
       {
         "date": "2026-11-25",
-        "stars": 159442
+        "stars": 159527
       }
     ],
     "openbrowser-ai": [
@@ -376,67 +376,67 @@
     "opencode": [
       {
         "date": "2026-11-25",
-        "stars": 228963
+        "stars": 229101
       }
     ],
     "openhands": [
       {
         "date": "2026-11-25",
-        "stars": 94238
+        "stars": 94308
       }
     ],
     "phonedriver": [
       {
         "date": "2026-11-25",
-        "stars": 366
+        "stars": 372
       }
     ],
     "pipecat": [
       {
         "date": "2026-11-25",
-        "stars": 17415
+        "stars": 17432
       }
     ],
     "pixelorama": [
       {
         "date": "2026-11-25",
-        "stars": 11193
+        "stars": 11200
       }
     ],
     "playwright-mcp": [
       {
         "date": "2026-11-25",
-        "stars": 40102
+        "stars": 40126
       }
     ],
     "pocketpal-ai": [
       {
         "date": "2026-11-25",
-        "stars": 9769
+        "stars": 9789
       }
     ],
     "poki": [
       {
         "date": "2026-11-25",
-        "stars": 1915
+        "stars": 2012
       }
     ],
     "probe-rs": [
       {
         "date": "2026-11-25",
-        "stars": 3024
+        "stars": 3025
       }
     ],
     "pydantic-ai": [
       {
         "date": "2026-11-25",
-        "stars": 21368
+        "stars": 21380
       }
     ],
     "quivr": [
       {
         "date": "2026-11-25",
-        "stars": 39661
+        "stars": 39664
       }
     ],
     "qwentts-cpp": [
@@ -448,13 +448,13 @@
     "ratatui": [
       {
         "date": "2026-11-25",
-        "stars": 23420
+        "stars": 23433
       }
     ],
     "roo-code": [
       {
         "date": "2026-11-25",
-        "stars": 24236
+        "stars": 24234
       }
     ],
     "savvycan": [
@@ -466,49 +466,55 @@
     "sidekick": [
       {
         "date": "2026-11-25",
-        "stars": 3324
+        "stars": 3326
       }
     ],
     "skyvern": [
       {
         "date": "2026-11-25",
-        "stars": 23507
+        "stars": 23533
       }
     ],
     "smarter-router": [
       {
         "date": "2026-11-25",
-        "stars": 165
+        "stars": 166
       }
     ],
     "sniffnet": [
       {
         "date": "2026-11-25",
-        "stars": 43293
+        "stars": 43303
       }
     ],
     "stagehand": [
       {
         "date": "2026-11-25",
-        "stars": 26131
+        "stars": 26140
       }
     ],
     "surfsense": [
       {
         "date": "2026-11-25",
-        "stars": 16941
+        "stars": 16948
       }
     ],
     "swarmvault": [
       {
         "date": "2026-11-25",
-        "stars": 739
+        "stars": 740
       }
     ],
     "swe-agent": [
       {
         "date": "2026-11-25",
-        "stars": 20867
+        "stars": 20869
+      }
+    ],
+    "tessera-kit": [
+      {
+        "date": "2026-11-25",
+        "stars": 0
       }
     ],
     "tic-80": [
@@ -526,19 +532,19 @@
     "typewhisper-mac": [
       {
         "date": "2026-11-25",
-        "stars": 1942
+        "stars": 1941
       }
     ],
     "ui-tars-desktop": [
       {
         "date": "2026-11-25",
-        "stars": 39593
+        "stars": 39589
       }
     ],
     "vibe": [
       {
         "date": "2026-11-25",
-        "stars": 8221
+        "stars": 8226
       }
     ],
     "vital": [
@@ -550,7 +556,7 @@
     "vllm": [
       {
         "date": "2026-11-25",
-        "stars": 97494
+        "stars": 97552
       }
     ],
     "wasm4": [
@@ -562,7 +568,7 @@
     "whisper-cpp": [
       {
         "date": "2026-11-25",
-        "stars": 55493
+        "stars": 55514
       }
     ],
     "willow": [

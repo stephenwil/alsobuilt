@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Go + Docker
 region: US
-stars: 34724
+stars: 34742
 traits:
   - mcp
   - cli

@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: Python + FastAPI + ONNX + Docker
 region: Global
-stars: 5731
+stars: 5732
 traits:
   - voice
   - local-first

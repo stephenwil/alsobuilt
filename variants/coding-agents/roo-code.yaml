@@ -10,7 +10,7 @@ stage: Lesson
 lesson: Demonstrated rapid community demand for custom agent personas/modes inside IDE forks before archiving.
 stack: TypeScript + VS Code
 region: Global
-stars: 24236
+stars: 24234
 traits:
   - typescript
   - mcp

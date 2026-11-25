@@ -9,7 +9,7 @@ license: AGPL
 stage: Prod
 stack: Python + Playwright + Vision LLMs
 region: US
-stars: 23507
+stars: 23533
 traits:
   - browser
   - python

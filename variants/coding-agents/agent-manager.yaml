@@ -9,7 +9,7 @@ license: Apache-2
 stage: Proto
 stack: Go + Terminal
 region: Global
-stars: 707
+stars: 710
 traits:
   - cli
   - multi-agent

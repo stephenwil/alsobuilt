@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: Rust + MCP
 region: Global
-stars: 3961
+stars: 3962
 traits:
   - mcp
   - rust

@@ -9,7 +9,7 @@ license: MIT
 stage: Beta
 stack: TypeScript + Chromium Extension + MCP
 region: Global
-stars: 1076
+stars: 1087
 traits:
   - browser
   - mcp

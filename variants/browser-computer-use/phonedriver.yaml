@@ -9,7 +9,7 @@ license: AGPL
 stage: Proto
 stack: Rust + ADB + MCP
 region: Global
-stars: 366
+stars: 372
 traits:
   - mobile
   - mcp

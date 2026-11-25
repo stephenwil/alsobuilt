@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: Rust + Electron + MCP
 region: US
-stars: 56945
+stars: 56979
 traits:
   - rust
   - cli

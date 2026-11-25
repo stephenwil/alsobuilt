@@ -9,7 +9,7 @@ license: MIT
 stage: Proto
 stack: Python + FastAPI
 region: Global
-stars: 165
+stars: 166
 traits:
   - local-first
   - self-hosted

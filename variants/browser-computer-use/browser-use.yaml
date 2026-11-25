@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Python + Playwright
 region: EU
-stars: 121933
+stars: 122024
 traits:
   - browser
   - python

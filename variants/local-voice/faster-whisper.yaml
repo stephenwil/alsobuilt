@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Python + CTranslate2
 region: EU
-stars: 26987
+stars: 27006
 traits:
   - voice
   - local-first

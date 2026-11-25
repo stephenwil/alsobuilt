@@ -9,7 +9,7 @@ license: AGPL
 stage: Beta
 stack: Swift + iOS
 region: Global
-stars: 1915
+stars: 2012
 traits:
   - mobile
   - realtime

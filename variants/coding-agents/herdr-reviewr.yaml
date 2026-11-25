@@ -9,7 +9,7 @@ license: MIT
 stage: Beta
 stack: Rust + TUI
 region: Global
-stars: 1019
+stars: 1020
 traits:
   - cli
   - rust

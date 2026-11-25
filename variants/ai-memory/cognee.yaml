@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: Python + NetworkX + Kuzu + Vector DB
 region: Global
-stars: 33558
+stars: 33594
 traits:
   - python
   - rag

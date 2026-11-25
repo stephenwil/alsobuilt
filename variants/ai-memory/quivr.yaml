@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Go + Python + Postgres
 region: EU
-stars: 39661
+stars: 39664
 traits:
   - self-hosted
   - rag
