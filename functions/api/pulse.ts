@@ -60,7 +60,25 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   );
 };
 
+function isAllowedWriteOrigin(request: Request): boolean {
+  const fetchSite = request.headers.get('Sec-Fetch-Site');
+  if (fetchSite && fetchSite.toLowerCase() === 'cross-site') {
+    return false;
+  }
+  const origin = request.headers.get('Origin');
+  if (!origin) return true;
+  try {
+    return new URL(origin).origin === new URL(request.url).origin;
+  } catch {
+    return false;
+  }
+}
+
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  if (!isAllowedWriteOrigin(request)) {
+    return json({ error: 'Cross-origin pulse writes are not allowed' }, { status: 403 });
+  }
+
   let body: { categorySlug?: string; nearestVariantSlug?: string | null; traits?: string[] };
   try {
     body = await request.json();
@@ -110,6 +128,10 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 };
 
 export const onRequestDelete: PagesFunction<Env> = async ({ request, env }) => {
+  if (!isAllowedWriteOrigin(request)) {
+    return json({ error: 'Cross-origin pulse deletes are not allowed' }, { status: 403 });
+  }
+
   const url = new URL(request.url);
   let categorySlug = url.searchParams.get('categorySlug') || '';
 

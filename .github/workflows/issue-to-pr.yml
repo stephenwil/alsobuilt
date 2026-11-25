@@ -21,20 +21,29 @@ jobs:
       (github.event.action == 'labeled' && github.event.label.name == 'project-submission')
     runs-on: ubuntu-latest
     steps:
-      - name: Check for existing open submission PR
+      - name: Check for existing open submission PR & spam queue cap
         id: existing
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
-          EXISTING_URL=$(gh pr list --repo "${{ github.repository }}" --state open --limit 50 --json headRefName,url \
-            --jq ".[] | select(.headRefName | endswith(\"-issue-${ISSUE_NUMBER}\")) | .url" | head -n 1)
+          OPEN_PRS=$(gh pr list --repo "${{ github.repository }}" --state open --limit 50 --json headRefName,url)
+          EXISTING_URL=$(printf '%s' "$OPEN_PRS" | jq -r ".[] | select(.headRefName | endswith(\"-issue-${ISSUE_NUMBER}\")) | .url" | head -n 1)
           if [ -n "$EXISTING_URL" ]; then
             echo "Open submission PR already exists for issue #${ISSUE_NUMBER}: ${EXISTING_URL}"
             echo "skip=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+
+          BOT_PR_COUNT=$(printf '%s' "$OPEN_PRS" | jq '[.[] | select(.headRefName | startswith("submit/"))] | length')
+          if [ "$BOT_PR_COUNT" -ge 10 ]; then
+            echo "Submission PR queue cap reached (${BOT_PR_COUNT} open submit/* PRs). Skipping auto-PR."
+            gh issue comment "$ISSUE_NUMBER" --body "Thanks for submitting a project to **AlsoBuilt**! The automated submission queue currently has ${BOT_PR_COUNT} open PRs awaiting review, so auto-PR creation is paused temporarily — a maintainer will review your issue shortly."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "skip=false" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v4
         if: steps.existing.outputs.skip != 'true'

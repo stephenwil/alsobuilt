@@ -43,7 +43,8 @@
     },
     "repo": {
       "type": "string",
-      "format": "uri"
+      "format": "uri",
+      "pattern": "^https://"
     },
     "tagline": {
       "type": "string",
