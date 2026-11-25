@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
@@ -12,6 +13,33 @@ const OUT_INDEX = path.join(ROOT, 'public', 'index.json');
 const CHECK_ONLY = process.argv.includes('--check');
 
 const CATEGORIES = loadCategories();
+
+function loadGitAddedDates() {
+  const map = new Map();
+  try {
+    const out = execFileSync(
+      'git',
+      ['log', '--diff-filter=A', '--name-only', '--format=COMMIT:%cI', '--', 'variants/'],
+      { cwd: ROOT, encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }
+    );
+    let currentDate = null;
+    for (const rawLine of out.split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (!line) continue;
+      if (line.startsWith('COMMIT:')) {
+        currentDate = line.slice('COMMIT:'.length).trim();
+      } else if (currentDate && (line.endsWith('.yaml') || line.endsWith('.yml'))) {
+        // git log outputs newest commits first; overwriting preserves the earliest add date
+        map.set(line.replace(/\\/g, '/'), currentDate);
+      }
+    }
+  } catch {
+    // Non-git build environment fallback handled per-file via mtime
+  }
+  return map;
+}
+
+const gitAddedDates = loadGitAddedDates();
 
 function walkYaml(dir) {
   const results = [];
@@ -77,13 +105,17 @@ for (const file of files) {
   }
   seenSlugs.add(data.slug);
 
+  const relNorm = rel.replace(/\\/g, '/');
+  const addedAt = gitAddedDates.get(relNorm) || fs.statSync(file).mtime.toISOString();
+
   variants.push({
     ...data,
     stars: data.stars ?? 0,
     spark: data.spark ?? [4, 7, 10, 12, 15, 19, 22, 26],
     region: data.region ?? 'Global',
     x: data.x ?? deterministicCoord(data.traits, 'x'),
-    y: data.y ?? deterministicCoord(data.traits, 'y')
+    y: data.y ?? deterministicCoord(data.traits, 'y'),
+    addedAt
   });
 }
 

@@ -22,6 +22,7 @@ export interface Variant {
   traits: string[];
   x: number;
   y: number;
+  addedAt?: string;
 }
 
 export interface CatalogIndex {

@@ -79,10 +79,141 @@ export interface RankedVariant {
   overlap: number;
 }
 
-export function rankVariants(variants: Variant[], pitchText: string, activeTraits: Set<string>): RankedVariant[] {
-  return variants
-    .map((variant) => ({ variant, overlap: computeOverlap(variant, pitchText, activeTraits) }))
-    .sort((a, b) => b.overlap - a.overlap || b.variant.stars - a.variant.stars);
+export type SortMode = 'discovery' | 'recent' | 'indie' | 'stars';
+
+const INITIAL_SEED_CUTOFF_MS = Date.parse('2026-11-25T00:00:00Z');
+const NEW_WINDOW_MS = 14 * 24 * 60 * 60 * 1000;
+
+function addedMs(v: Variant): number {
+  const ts = Date.parse(v.addedAt || '');
+  return Number.isFinite(ts) ? ts : 0;
+}
+
+export function isNewSubmission(v: Variant, referenceIso?: string): boolean {
+  const ts = addedMs(v);
+  if (ts <= INITIAL_SEED_CUTOFF_MS) return false;
+  const ref = referenceIso ? Date.parse(referenceIso) : Date.now();
+  if (!Number.isFinite(ref)) return true;
+  return ref - ts <= NEW_WINDOW_MS;
+}
+
+export function getScaleTier(stars: number): { id: 'indie' | 'mid' | 'major'; label: string } {
+  if (stars < 5000) return { id: 'indie', label: 'Indie' };
+  if (stars < 20000) return { id: 'mid', label: 'Growing' };
+  return { id: 'major', label: 'Major' };
+}
+
+function roundRobinByCategory(items: Variant[]): Variant[] {
+  const buckets = new Map<string, Variant[]>();
+  for (const item of items) {
+    const arr = buckets.get(item.category);
+    if (arr) arr.push(item);
+    else buckets.set(item.category, [item]);
+  }
+  const queues = [...buckets.values()];
+  const out: Variant[] = [];
+  let idx = 0;
+  while (queues.length > 0) {
+    const q = queues[idx % queues.length];
+    const next = q.shift();
+    if (next) out.push(next);
+    if (q.length === 0) {
+      queues.splice(idx % queues.length, 1);
+    } else {
+      idx++;
+    }
+  }
+  return out;
+}
+
+function sortDiscovery(variants: Variant[], referenceIso?: string): Variant[] {
+  const fresh: Variant[] = [];
+  const indie: Variant[] = [];
+  const anchors: Variant[] = [];
+
+  for (const v of variants) {
+    if (isNewSubmission(v, referenceIso)) fresh.push(v);
+    else if (v.stars < 5000) indie.push(v);
+    else anchors.push(v);
+  }
+
+  fresh.sort((a, b) => addedMs(b) - addedMs(a) || a.stars - b.stars);
+  indie.sort((a, b) => addedMs(b) - addedMs(a) || b.stars - a.stars || a.name.localeCompare(b.name));
+  anchors.sort((a, b) => addedMs(b) - addedMs(a) || b.stars - a.stars || a.name.localeCompare(b.name));
+
+  const indieBalanced = roundRobinByCategory(indie);
+  const anchorBalanced = roundRobinByCategory(anchors);
+
+  // Interleave 2 indie builds for every 1 established anchor so smaller projects stay visible
+  const mixed: Variant[] = [...fresh];
+  let ii = 0;
+  let ai = 0;
+  while (ii < indieBalanced.length || ai < anchorBalanced.length) {
+    for (let k = 0; k < 2 && ii < indieBalanced.length; k++) {
+      mixed.push(indieBalanced[ii++]);
+    }
+    if (ai < anchorBalanced.length) {
+      mixed.push(anchorBalanced[ai++]);
+    }
+  }
+  return mixed;
+}
+
+export function rankVariants(
+  variants: Variant[],
+  pitchText: string,
+  activeTraits: Set<string>,
+  sortMode: SortMode = 'discovery',
+  referenceIso?: string
+): RankedVariant[] {
+  const hasIdea = pitchText.trim().length > 0 || activeTraits.size > 0;
+
+  if (hasIdea) {
+    return variants
+      .map((variant) => ({ variant, overlap: computeOverlap(variant, pitchText, activeTraits) }))
+      .sort((a, b) => {
+        if (b.overlap !== a.overlap) return b.overlap - a.overlap;
+        if (sortMode === 'stars') return b.variant.stars - a.variant.stars;
+        if (sortMode === 'recent') return addedMs(b.variant) - addedMs(a.variant) || a.variant.stars - b.variant.stars;
+        if (sortMode === 'indie') {
+          return (
+            (a.variant.stars < 5000 ? 0 : 1) - (b.variant.stars < 5000 ? 0 : 1) ||
+            addedMs(b.variant) - addedMs(a.variant) ||
+            b.variant.stars - a.variant.stars
+          );
+        }
+        return (
+          addedMs(b.variant) - addedMs(a.variant) ||
+          (a.variant.stars < 5000 ? 0 : 1) - (b.variant.stars < 5000 ? 0 : 1) ||
+          b.variant.stars - a.variant.stars
+        );
+      });
+  }
+
+  let ordered: Variant[];
+  if (sortMode === 'stars') {
+    ordered = [...variants].sort((a, b) => b.stars - a.stars || a.name.localeCompare(b.name));
+  } else if (sortMode === 'recent') {
+    ordered = [...variants].sort(
+      (a, b) =>
+        addedMs(b) - addedMs(a) ||
+        (a.stars < 5000 ? 0 : 1) - (b.stars < 5000 ? 0 : 1) ||
+        b.stars - a.stars ||
+        a.name.localeCompare(b.name)
+    );
+  } else if (sortMode === 'indie') {
+    ordered = [...variants].sort(
+      (a, b) =>
+        (a.stars < 5000 ? 0 : 1) - (b.stars < 5000 ? 0 : 1) ||
+        addedMs(b) - addedMs(a) ||
+        b.stars - a.stars ||
+        a.name.localeCompare(b.name)
+    );
+  } else {
+    ordered = sortDiscovery(variants, referenceIso);
+  }
+
+  return ordered.map((variant) => ({ variant, overlap: 0 }));
 }
 
 export function computeUserCoords(ranked: RankedVariant[], activeTraits: Set<string>): { x: number; y: number } {

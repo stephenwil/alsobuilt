@@ -7,7 +7,10 @@
     buildVariantYaml,
     computeUserCoords,
     detectTraits,
-    rankVariants
+    getScaleTier,
+    isNewSubmission,
+    rankVariants,
+    type SortMode
   } from '../lib/similarity';
 
   interface Props {
@@ -38,6 +41,7 @@
   let showTagPicker = $state<boolean>(false);
   let query = $state<string>('');
   let viewMode = $state<'table' | 'map' | 'cards'>('table');
+  let sortMode = $state<SortMode>('discovery');
   let facetArch = $state<string | null>(null);
   let facetLicense = $state<string | null>(null);
   let facetStage = $state<string | null>(null);
@@ -76,7 +80,7 @@
       : catalog.variants.filter((v) => v.category === activeCategory)
   );
 
-  let rankedAll = $derived(rankVariants(categoryVariants, ideaText, activeTraits));
+  let rankedAll = $derived(rankVariants(categoryVariants, ideaText, activeTraits, sortMode, catalog.generatedAt));
 
   let filteredRanked = $derived.by(() => {
     const q = query.trim().toLowerCase();
@@ -306,6 +310,7 @@
     const urlIdea = params.get('idea');
     const urlCat = params.get('cat');
     const urlView = params.get('view');
+    const urlSort = params.get('sort');
 
     if (urlIdea) ideaText = urlIdea.slice(0, 300);
     if (urlCat && (urlCat === 'all' || catalog.categories.some((c) => c.slug === urlCat))) {
@@ -313,6 +318,9 @@
     }
     if (urlView === 'table' || urlView === 'map' || urlView === 'cards') {
       viewMode = urlView;
+    }
+    if (urlSort === 'discovery' || urlSort === 'recent' || urlSort === 'indie' || urlSort === 'stars') {
+      sortMode = urlSort;
     }
     urlHydrated = true;
     fetchPulse();
@@ -324,6 +332,7 @@
     if (ideaText.trim()) params.set('idea', ideaText.trim());
     if (activeCategory !== 'all') params.set('cat', activeCategory);
     if (viewMode !== 'table') params.set('view', viewMode);
+    if (sortMode !== 'discovery') params.set('sort', sortMode);
     const qs = params.toString();
     const nextUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
     if (nextUrl !== `${window.location.pathname}${window.location.search}`) {
@@ -336,8 +345,14 @@
   const STAGE_OPTIONS = ['Prod', 'Beta', 'Proto', 'Lesson'];
   const SIZE_OPTIONS: Array<{ id: 'indie' | 'mid' | 'major'; label: string }> = [
     { id: 'indie', label: 'Indie (<5k ★)' },
-    { id: 'mid', label: 'Mid (5k–20k ★)' },
+    { id: 'mid', label: 'Growing (5k–20k ★)' },
     { id: 'major', label: 'Major (20k+ ★)' }
+  ];
+  const SORT_OPTIONS: Array<{ id: SortMode; label: string }> = [
+    { id: 'discovery', label: 'Sort: Discovery Mix' },
+    { id: 'recent', label: 'Sort: Recently Added' },
+    { id: 'indie', label: 'Sort: Indie First' },
+    { id: 'stars', label: 'Sort: Most Stars' }
   ];
 </script>
 
@@ -761,6 +776,27 @@
         {/each}
       </select>
 
+      <select
+        aria-label="Sort projects"
+        value={sortMode}
+        onchange={(e) => {
+          const val = (e.target as HTMLSelectElement).value;
+          if (val === 'discovery' || val === 'recent' || val === 'indie' || val === 'stars') {
+            sortMode = val;
+          }
+        }}
+        title={hasIdea
+          ? 'Sorted by closest overlap % first; this breaks ties'
+          : 'Discovery Mix interleaves fresh & indie builds (2:1) with established benchmarks'}
+        class="h-8 px-2.5 rounded-lg border text-xs cursor-pointer {sortMode !== 'discovery'
+          ? 'bg-[var(--primary)]/15 border-[var(--primary)] text-[var(--fg)]'
+          : 'bg-[var(--card)] border-[var(--border)] text-[var(--muted)]'}"
+      >
+        {#each SORT_OPTIONS as opt}
+          <option value={opt.id}>{opt.label}</option>
+        {/each}
+      </select>
+
       <span class="text-xs text-[var(--muted)]">{filteredRanked.length} / {categoryVariants.length} shown</span>
 
       {#if facetArch || facetLicense || facetStage || facetSize || query}
@@ -807,7 +843,7 @@
           <tr class="bg-[var(--secondary)] text-[10px] uppercase tracking-wider text-[var(--muted)] border-b border-[var(--border)]">
             <th class="py-2.5 px-3">Project</th>
             <th class="py-2.5 px-3 w-20">Match</th>
-            <th class="py-2.5 px-3 w-28">Stars / Private</th>
+            <th class="py-2.5 px-3 w-36">Scale / Private</th>
             <th class="py-2.5 px-3 w-20">Stage</th>
             <th class="py-2.5 px-3 w-40 text-right">Actions</th>
           </tr>
@@ -858,6 +894,7 @@
                     facetArch = null;
                     facetLicense = null;
                     facetStage = null;
+                    facetSize = null;
                     query = '';
                   }}
                   class="ml-1 text-[var(--primary)] underline bg-transparent border-0 cursor-pointer"
@@ -870,6 +907,8 @@
             {#each filteredRanked as { variant: v, overlap }}
               {@const isPinned = pinnedSlugs.includes(v.slug)}
               {@const stealthHere = pulse.byVariant[v.slug] ?? 0}
+              {@const scale = getScaleTier(v.stars)}
+              {@const isNew = isNewSubmission(v, catalog.generatedAt)}
               <tr class="border-b border-[var(--border)] last:border-b-0 hover:bg-[var(--secondary)]/50 transition-colors">
                 <td class="py-3 px-3">
                   <div class="flex items-center gap-2 flex-wrap">
@@ -881,6 +920,16 @@
                     >
                       {v.name}
                     </a>
+                    {#if isNew}
+                      <span class="px-1.5 py-0.5 rounded font-mono text-[10px] font-semibold uppercase bg-[var(--emerald)]/20 text-[var(--emerald)] border border-[var(--emerald)]/40">
+                        New
+                      </span>
+                    {/if}
+                    {#if scale.id === 'indie'}
+                      <span class="px-1.5 py-0.5 rounded font-mono text-[10px] font-medium bg-[var(--primary)]/15 text-[var(--primary)] border border-[var(--primary)]/30">
+                        Indie
+                      </span>
+                    {/if}
                     <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] font-mono text-[10px] text-[var(--muted)]">{v.arch}</span>
                     <span class="px-1.5 py-0.5 rounded bg-[var(--secondary)] font-mono text-[10px] text-[var(--muted)]">{v.license}</span>
                     <span class="font-mono text-[10px] text-[var(--muted)] hidden sm:inline">{v.stack}</span>
@@ -915,7 +964,10 @@
                   {/if}
                 </td>
                 <td class="py-3 px-3 font-mono text-[11px]">
-                  <div>★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars}</div>
+                  <div class="flex items-center gap-1.5 whitespace-nowrap">
+                    <span class="{scale.id === 'indie' ? 'text-[var(--primary)] font-semibold' : 'text-[var(--fg)]'}">{scale.label}</span>
+                    <span class="text-[var(--muted)]">· ★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars}</span>
+                  </div>
                   <div class="text-[10px] text-[var(--muted)]">{stealthHere} private</div>
                 </td>
                 <td class="py-3 px-3">
@@ -1049,18 +1101,32 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       {#each filteredRanked as { variant: v, overlap }}
         {@const isPinned = pinnedSlugs.includes(v.slug)}
+        {@const scale = getScaleTier(v.stars)}
+        {@const isNew = isNewSubmission(v, catalog.generatedAt)}
         <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-2.5 hover:border-[var(--primary)]/60 transition">
           <div class="flex items-start justify-between gap-2">
             <div>
-              <a
-                href={v.repo}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="font-mono font-semibold text-sm text-[var(--fg)] no-underline hover:text-[var(--primary)] hover:underline"
-              >
-                {v.name}
-              </a>
-              <div class="text-[11px] text-[var(--muted)] font-mono">{v.arch} · {v.stack} · {v.license} · ★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars}</div>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <a
+                  href={v.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-mono font-semibold text-sm text-[var(--fg)] no-underline hover:text-[var(--primary)] hover:underline"
+                >
+                  {v.name}
+                </a>
+                {#if isNew}
+                  <span class="px-1.5 py-0.5 rounded font-mono text-[10px] font-semibold uppercase bg-[var(--emerald)]/20 text-[var(--emerald)] border border-[var(--emerald)]/40">
+                    New
+                  </span>
+                {/if}
+                {#if scale.id === 'indie'}
+                  <span class="px-1.5 py-0.5 rounded font-mono text-[10px] font-medium bg-[var(--primary)]/15 text-[var(--primary)] border border-[var(--primary)]/30">
+                    Indie
+                  </span>
+                {/if}
+              </div>
+              <div class="text-[11px] text-[var(--muted)] font-mono">{v.arch} · {v.stack} · {v.license} · {scale.label} (★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars})</div>
             </div>
             {#if hasIdea}
               <span class="px-2.5 py-0.5 rounded-full font-mono text-xs font-bold bg-[var(--blue)]/20 text-[var(--blue)]">{overlap}%</span>
