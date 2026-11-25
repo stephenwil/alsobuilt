@@ -175,6 +175,8 @@ jobs:
 
           PR_URL=$(gh pr create \
             --title "$PR_TITLE" \
+            --assignee "${{ github.repository_owner }}" \
+            --label "project-submission" \
             --body "$(cat <<EOF
           Automated catalog submission generated from #${ISSUE_NUMBER}.
 
