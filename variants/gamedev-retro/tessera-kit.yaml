@@ -1,0 +1,20 @@
+slug: tessera-kit
+category: gamedev-retro
+name: Tessera Kit
+repo: https://github.com/stephenwil/tessera-kit
+tagline: Developer kit, CLI, MagicaVoxel pipeline, scaffolder, and MCP server for the Tessera voxel fantasy console
+arch: SDK
+model: Standalone
+license: MIT
+stage: Beta
+stack: Node.js + Lua + WebGL2
+region: Global
+stars: 0
+traits:
+  - gamedev
+  - 3d-webgl
+  - cli
+  - mcp
+  - local-first
+x: 0.56
+'y': 0.31
