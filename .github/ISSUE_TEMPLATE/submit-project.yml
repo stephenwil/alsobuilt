@@ -33,8 +33,16 @@ body:
         - hardware-embedded
         - gamedev-retro
         - devtools-infra
+        - other (suggest a new category below)
     validations:
       required: true
+
+  - type: input
+    id: new_category
+    attributes:
+      label: Suggested New Category (only if Category = other)
+      description: "Optional new category display name (e.g. `Audio & Music Tools` or `Robotics & Drones`). If provided, the auto-PR will also propose adding this category to `categories.yaml`."
+      placeholder: Audio & Music Tools
 
   - type: dropdown
     id: arch

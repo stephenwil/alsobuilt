@@ -3,6 +3,7 @@ import path from 'node:path';
 import yaml from 'js-yaml';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
+import { loadCategories } from './sync-categories.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const VARIANTS_DIR = path.join(ROOT, 'variants');
@@ -10,58 +11,7 @@ const SCHEMA_PATH = path.join(ROOT, 'schema', 'variant.schema.json');
 const OUT_INDEX = path.join(ROOT, 'public', 'index.json');
 const CHECK_ONLY = process.argv.includes('--check');
 
-const CATEGORIES = [
-  {
-    slug: 'ai-memory',
-    name: 'AI Memory & Knowledge',
-    description: 'Personal vaults, semantic note graphs, and persistent agent memory layers'
-  },
-  {
-    slug: 'coding-agents',
-    name: 'AI Coding Agents',
-    description: 'Terminal, IDE, and autonomous multi-file software engineering agents'
-  },
-  {
-    slug: 'local-voice',
-    name: 'Local & Realtime Voice AI',
-    description: 'Ambient dictation, low-latency voice pipelines, and speech-to-action tools'
-  },
-  {
-    slug: 'mcp-tooling',
-    name: 'MCP Servers & Tooling',
-    description: 'Model Context Protocol servers, bridges, registries, and agent toolkits'
-  },
-  {
-    slug: 'local-llm-runners',
-    name: 'Local LLMs & Chat UIs',
-    description: 'On-device model runners, inference engines, and desktop/mobile local chat apps'
-  },
-  {
-    slug: 'browser-computer-use',
-    name: 'Browser & Computer Use',
-    description: 'Autonomous web automation, DOM agents, and desktop GUI control frameworks'
-  },
-  {
-    slug: 'agent-workflows',
-    name: 'Agent Frameworks',
-    description: 'Multi-agent orchestration graphs, workflow builders, and typed agent SDKs'
-  },
-  {
-    slug: 'hardware-embedded',
-    name: 'Hardware & Embedded',
-    description: 'CAN bus, automotive, ESP32, firmware, robotics, and electronics tools'
-  },
-  {
-    slug: 'gamedev-retro',
-    name: 'Game Dev & Retro',
-    description: 'Fantasy consoles, cartridge SDKs, retro game engines, pixel art, and level editors'
-  },
-  {
-    slug: 'devtools-infra',
-    name: 'DevTools & Self-Hosted',
-    description: 'Local-first apps, TUIs, network monitors, audio synths, and developer utilities'
-  }
-];
+const CATEGORIES = loadCategories();
 
 function walkYaml(dir) {
   const results = [];

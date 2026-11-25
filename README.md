@@ -47,6 +47,16 @@ npm run preview
 npm run validate:variants
 ```
 
-Merging to `main` automatically validates, runs D1 migrations, and deploys to [alsobuilt.pages.dev](https://alsobuilt.pages.dev/).
+Merging to `main` automatically validates, runs D1 migrations, syncs `categories.yaml` to Cloudflare D1, and deploys to [alsobuilt.pages.dev](https://alsobuilt.pages.dev/).
+
+### Adding a New Category
+
+All categories live in a single source of truth: [`categories.yaml`](./categories.yaml).
+
+1. Add a `slug`, `name`, and `description` entry to `categories.yaml`.
+2. Run `npm run sync:categories` (auto-updates `schema/variant.schema.json` and the GitHub Issue Form dropdown).
+3. Commit & push — GitHub Actions automatically upserts the new category into Cloudflare D1 on deploy.
+
+Contributors can also select **`other (suggest a new category below)`** directly in the Issue Form to propose a new category alongside their project PR.
 
 See [docs/cloudflare-d1-manual.md](./docs/cloudflare-d1-manual.md) for the Cloudflare D1 architecture reference.

@@ -52,19 +52,44 @@
     },
     "arch": {
       "type": "string",
-      "enum": ["Desktop", "CLI", "Web", "Browser", "SDK", "Mobile"]
+      "enum": [
+        "Desktop",
+        "CLI",
+        "Web",
+        "Browser",
+        "SDK",
+        "Mobile"
+      ]
     },
     "model": {
       "type": "string",
-      "enum": ["Standalone", "Local LLM", "Hybrid", "Cloud API"]
+      "enum": [
+        "Standalone",
+        "Local LLM",
+        "Hybrid",
+        "Cloud API"
+      ]
     },
     "license": {
       "type": "string",
-      "enum": ["MIT", "Apache-2", "AGPL", "GPL-3", "BSD-3", "ISC", "Source"]
+      "enum": [
+        "MIT",
+        "Apache-2",
+        "AGPL",
+        "GPL-3",
+        "BSD-3",
+        "ISC",
+        "Source"
+      ]
     },
     "stage": {
       "type": "string",
-      "enum": ["Prod", "Beta", "Proto", "Lesson"]
+      "enum": [
+        "Prod",
+        "Beta",
+        "Proto",
+        "Lesson"
+      ]
     },
     "lesson": {
       "type": "string",
@@ -85,7 +110,10 @@
     },
     "spark": {
       "type": "array",
-      "items": { "type": "number", "minimum": 0 },
+      "items": {
+        "type": "number",
+        "minimum": 0
+      },
       "minItems": 4,
       "maxItems": 16
     },
@@ -119,7 +147,15 @@
         ]
       }
     },
-    "x": { "type": "number", "minimum": 0.05, "maximum": 0.95 },
-    "y": { "type": "number", "minimum": 0.05, "maximum": 0.95 }
+    "x": {
+      "type": "number",
+      "minimum": 0.05,
+      "maximum": 0.95
+    },
+    "y": {
+      "type": "number",
+      "minimum": 0.05,
+      "maximum": 0.95
+    }
   }
 }

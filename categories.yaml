@@ -1,0 +1,45 @@
+# Single source of truth for AlsoBuilt categories.
+# To add or edit a category:
+#   1. Add/update an entry below (kebab-case slug, display name, short description).
+#   2. Run `npm run sync:categories` to update schema/variant.schema.json and the GitHub Issue Form.
+#   3. Commit & push — GitHub Actions automatically upserts categories into Cloudflare D1 on deploy.
+
+- slug: ai-memory
+  name: AI Memory & Knowledge
+  description: Personal vaults, semantic note graphs, and persistent agent memory layers
+
+- slug: coding-agents
+  name: AI Coding Agents
+  description: Terminal, IDE, and autonomous multi-file software engineering agents
+
+- slug: local-voice
+  name: Local & Realtime Voice AI
+  description: Ambient dictation, low-latency voice pipelines, and speech-to-action tools
+
+- slug: mcp-tooling
+  name: MCP Servers & Tooling
+  description: Model Context Protocol servers, bridges, registries, and agent toolkits
+
+- slug: local-llm-runners
+  name: Local LLMs & Chat UIs
+  description: On-device model runners, inference engines, and desktop/mobile local chat apps
+
+- slug: browser-computer-use
+  name: Browser & Computer Use
+  description: Autonomous web automation, DOM agents, and desktop GUI control frameworks
+
+- slug: agent-workflows
+  name: Agent Frameworks
+  description: Multi-agent orchestration graphs, workflow builders, and typed agent SDKs
+
+- slug: hardware-embedded
+  name: Hardware & Embedded
+  description: CAN bus, automotive, ESP32, firmware, robotics, and electronics tools
+
+- slug: gamedev-retro
+  name: Game Dev & Retro
+  description: Fantasy consoles, cartridge SDKs, retro game engines, pixel art, and level editors
+
+- slug: devtools-infra
+  name: DevTools & Self-Hosted
+  description: Local-first apps, TUIs, network monitors, audio synths, and developer utilities

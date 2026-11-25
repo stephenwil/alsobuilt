@@ -62,17 +62,28 @@ jobs:
           CATEGORY: ${{ steps.gen.outputs.category }}
           STARS: ${{ steps.gen.outputs.stars }}
           REPO_URL: ${{ steps.gen.outputs.repo_url }}
+          NEW_CATEGORY_CREATED: ${{ steps.gen.outputs.new_category_created }}
+          NEW_CATEGORY_NAME: ${{ steps.gen.outputs.new_category_name }}
         run: |
           BRANCH="submit/${SLUG}-issue-${ISSUE_NUMBER}"
           git config user.name "alsobuilt-bot"
           git config user.email "bot@alsobuilt.dev"
           git checkout -b "$BRANCH"
           git add "$FILE_PATH"
-          git commit -m "feat(catalog): add ${PROJECT_NAME} (${CATEGORY})"
+
+          PR_TITLE="feat(catalog): add ${PROJECT_NAME} (${CATEGORY})"
+          NEW_CAT_NOTE=""
+          if [ "$NEW_CATEGORY_CREATED" = "true" ]; then
+            git add categories.yaml schema/variant.schema.json .github/ISSUE_TEMPLATE/submit-project.yml
+            PR_TITLE="feat(catalog): add ${PROJECT_NAME} (new category: ${CATEGORY})"
+            NEW_CAT_NOTE="> **New category proposed:** \`${CATEGORY}\` (**${NEW_CATEGORY_NAME}**) was added to \`categories.yaml\` and synced to the schema & issue form. Review/edit the slug & description (or move the project into an existing category) before merging — Cloudflare D1 will auto-upsert \`categories.yaml\` on deploy."
+          fi
+
+          git commit -m "$PR_TITLE"
           git push -u origin "$BRANCH"
 
           PR_URL=$(gh pr create \
-            --title "feat(catalog): add ${PROJECT_NAME} (${CATEGORY})" \
+            --title "$PR_TITLE" \
             --body "$(cat <<EOF
           Automated catalog submission generated from #${ISSUE_NUMBER}.
 
@@ -81,7 +92,9 @@ jobs:
           - **Live GitHub Stars:** ★ ${STARS}
           - **File:** \`${FILE_PATH}\`
 
-          Validated against \`schema/variant.schema.json\`. Merging this PR automatically rebuilds \`public/index.json\` and deploys to **https://alsobuilt.pages.dev/**.
+          ${NEW_CAT_NOTE}
+
+          Validated against \`schema/variant.schema.json\`. Merging this PR automatically rebuilds \`public/index.json\`, syncs categories to D1, and deploys to **https://alsobuilt.pages.dev/**.
 
           Closes #${ISSUE_NUMBER}
           EOF

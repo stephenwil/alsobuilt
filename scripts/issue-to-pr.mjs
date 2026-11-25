@@ -1,19 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
+import {
+  CATEGORIES_PATH,
+  OTHER_CATEGORY_OPTION,
+  loadCategories,
+  syncCategories
+} from './sync-categories.mjs';
 
-const ALLOWED_CATEGORIES = new Set([
-  'ai-memory',
-  'coding-agents',
-  'local-voice',
-  'mcp-tooling',
-  'local-llm-runners',
-  'browser-computer-use',
-  'agent-workflows',
-  'hardware-embedded',
-  'gamedev-retro',
-  'devtools-infra'
-]);
+const CATEGORIES = loadCategories();
+const ALLOWED_CATEGORIES = new Set(CATEGORIES.map((c) => c.slug));
 
 const ALLOWED_ARCH = new Set(['Desktop', 'CLI', 'Web', 'Browser', 'SDK', 'Mobile']);
 const ALLOWED_MODEL = new Set(['Standalone', 'Local LLM', 'Hybrid', 'Cloud API']);
@@ -130,12 +126,46 @@ async function main() {
   const owner = match[1];
   const repoName = match[2].replace(/\.git$/i, '');
 
-  const category = (fields['category'] || '').trim();
+  let category = (fields['category'] || '').trim();
   const arch = (fields['architecture / form factor'] || '').trim();
   const model = (fields['model runtime'] || '').trim();
   const stage = (fields['project stage'] || '').trim();
 
-  if (!ALLOWED_CATEGORIES.has(category)) throw new Error(`Invalid category "${category}".`);
+  let newCategoryEntry = null;
+  if (category === OTHER_CATEGORY_OPTION || category.toLowerCase().startsWith('other')) {
+    const rawSuggested = (fields['suggested new category (only if category = other)'] || '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!rawSuggested) {
+      throw new Error(
+        'You selected "other" for Category — please enter a name in "Suggested New Category" (or pick an existing category).'
+      );
+    }
+    const derivedSlug = slugify(rawSuggested);
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(derivedSlug) || derivedSlug.length < 2) {
+      throw new Error(`Suggested category "${rawSuggested}" could not be turned into a valid kebab-case slug.`);
+    }
+    if (ALLOWED_CATEGORIES.has(derivedSlug)) {
+      category = derivedSlug;
+    } else {
+      const displayName = rawSuggested.includes('-') && !rawSuggested.includes(' ')
+        ? rawSuggested
+            .split('-')
+            .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : ''))
+            .join(' ')
+            .slice(0, 64)
+        : rawSuggested.slice(0, 64);
+      category = derivedSlug;
+      newCategoryEntry = {
+        slug: derivedSlug,
+        name: displayName,
+        description: `Open-source ${displayName.toLowerCase()} projects, tools, and libraries`
+      };
+    }
+  } else if (!ALLOWED_CATEGORIES.has(category)) {
+    throw new Error(`Invalid category "${category}".`);
+  }
+
   if (!ALLOWED_ARCH.has(arch)) throw new Error(`Invalid architecture "${arch}".`);
   if (!ALLOWED_MODEL.has(model)) throw new Error(`Invalid model runtime "${model}".`);
   if (!ALLOWED_STAGE.has(stage)) throw new Error(`Invalid stage "${stage}".`);
@@ -237,6 +267,14 @@ async function main() {
     y
   };
 
+  if (newCategoryEntry) {
+    const existingYaml = fs.readFileSync(CATEGORIES_PATH, 'utf8').trimEnd();
+    const appendedBlock = yaml.dump([newCategoryEntry], { lineWidth: 120, noRefs: true }).trimEnd();
+    fs.writeFileSync(CATEGORIES_PATH, `${existingYaml}\n\n${appendedBlock}\n`, 'utf8');
+    syncCategories();
+    console.log(`Proposed new category "${newCategoryEntry.slug}" (${newCategoryEntry.name}) in categories.yaml`);
+  }
+
   const outDir = path.join(variantsRoot, category);
   fs.mkdirSync(outDir, { recursive: true });
   const relPath = `variants/${category}/${slug}.yaml`;
@@ -247,7 +285,16 @@ async function main() {
   if (process.env.GITHUB_OUTPUT) {
     fs.appendFileSync(
       process.env.GITHUB_OUTPUT,
-      `slug=${slug}\nfile_path=${relPath}\nproject_name=${entry.name}\nstars=${entry.stars}\ncategory=${category}\nrepo_url=${entry.repo}\n`
+      [
+        `slug=${slug}`,
+        `file_path=${relPath}`,
+        `project_name=${entry.name}`,
+        `stars=${entry.stars}`,
+        `category=${category}`,
+        `repo_url=${entry.repo}`,
+        `new_category_created=${newCategoryEntry ? 'true' : 'false'}`,
+        `new_category_name=${newCategoryEntry ? newCategoryEntry.name : ''}`
+      ].join('\n') + '\n'
     );
   }
 }

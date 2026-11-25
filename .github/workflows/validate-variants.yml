@@ -3,8 +3,10 @@ name: Validate Variants
 on:
   pull_request:
     paths:
+      - 'categories.yaml'
       - 'variants/**'
       - 'schema/**'
+      - '.github/ISSUE_TEMPLATE/submit-project.yml'
   push:
     branches: [main]
 
