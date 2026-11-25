@@ -1,6 +1,6 @@
 slug: ford-ranger-can-explorer
 category: hardware-embedded
-name: ford-ranger-can-explorer
+name: Ranger CAN Explorer
 repo: https://github.com/stephenwil/ford-ranger-can-explorer
 tagline: >-
   Interactive 3D explorer of a Ford Ranger's CAN networks: ISO 11898 frames, arbitration, error confinement, gateway,
@@ -17,7 +17,6 @@ traits:
   - 3d-webgl
   - browser
   - realtime
-  - typescript
-  - self-hosted
+  - local-first
 x: 0.49
 'y': 0.34
