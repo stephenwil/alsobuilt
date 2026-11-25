@@ -8,40 +8,71 @@ permissions:
   contents: write
   pull-requests: write
   issues: write
+  statuses: write
+
+concurrency:
+  group: issue-to-pr-${{ github.event.issue.number }}
+  cancel-in-progress: false
 
 jobs:
   create-pr:
-    if: contains(github.event.issue.labels.*.name, 'project-submission')
+    if: >-
+      (github.event.action == 'opened' && contains(github.event.issue.labels.*.name, 'project-submission')) ||
+      (github.event.action == 'labeled' && github.event.label.name == 'project-submission')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - run: npm ci
-
-      - name: Generate variant YAML from issue
-        id: gen
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
-        run: |
-          node scripts/issue-to-pr.mjs 2> /tmp/issue_err.txt
-          npm run validate:variants 2>> /tmp/issue_err.txt
-
-      - name: Report validation error back to issue
-        if: steps.gen.outcome == 'failure'
+      - name: Check for existing open submission PR
+        id: existing
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
-          ERR=$(cat /tmp/issue_err.txt | tail -n 20)
+          EXISTING_URL=$(gh pr list --repo "${{ github.repository }}" --state open --limit 50 --json headRefName,url \
+            --jq ".[] | select(.headRefName | endswith(\"-issue-${ISSUE_NUMBER}\")) | .url" | head -n 1)
+          if [ -n "$EXISTING_URL" ]; then
+            echo "Open submission PR already exists for issue #${ISSUE_NUMBER}: ${EXISTING_URL}"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.existing.outputs.skip != 'true'
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        if: steps.existing.outputs.skip != 'true'
+        with:
+          node-version: 22
+          cache: npm
+
+      - if: steps.existing.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Generate and validate variant YAML + site build
+        id: gen
+        if: steps.existing.outputs.skip != 'true'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          set -o pipefail
+          node scripts/issue-to-pr.mjs 2> /tmp/issue_err.txt
+          npm run validate:variants 2>> /tmp/issue_err.txt
+          npm run build 2>> /tmp/issue_err.txt
+
+      - name: Report validation error back to issue
+        if: steps.existing.outputs.skip != 'true' && steps.gen.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          ERR=$(cat /tmp/issue_err.txt | tail -n 25)
           gh issue comment "$ISSUE_NUMBER" --body "$(cat <<EOF
-          Thanks for submitting a project to **AlsoBuilt**! I ran into a quick issue while generating the catalog entry:
+          Thanks for submitting a project to **AlsoBuilt**! I ran into a quick issue while generating or validating the catalog entry:
 
           \`\`\`
           $ERR
@@ -52,7 +83,8 @@ jobs:
           )"
           exit 1
 
-      - name: Create branch and open Pull Request
+      - name: Create branch, open Pull Request, and publish CI status
+        if: steps.existing.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
@@ -62,13 +94,22 @@ jobs:
           CATEGORY: ${{ steps.gen.outputs.category }}
           STARS: ${{ steps.gen.outputs.stars }}
           REPO_URL: ${{ steps.gen.outputs.repo_url }}
+          LICENSE: ${{ steps.gen.outputs.license }}
+          LICENSE_DETECTED: ${{ steps.gen.outputs.license_detected }}
           NEW_CATEGORY_CREATED: ${{ steps.gen.outputs.new_category_created }}
           NEW_CATEGORY_NAME: ${{ steps.gen.outputs.new_category_name }}
         run: |
           BRANCH="submit/${SLUG}-issue-${ISSUE_NUMBER}"
+
+          EXISTING_BRANCH_PR=$(gh pr list --state open --head "$BRANCH" --json url --jq '.[0].url // empty')
+          if [ -n "$EXISTING_BRANCH_PR" ]; then
+            echo "Open PR already exists for branch ${BRANCH}: ${EXISTING_BRANCH_PR}"
+            exit 0
+          fi
+
           git config user.name "alsobuilt-bot"
           git config user.email "bot@alsobuilt.dev"
-          git checkout -b "$BRANCH"
+          git checkout -B "$BRANCH"
           git add "$FILE_PATH"
 
           PR_TITLE="feat(catalog): add ${PROJECT_NAME} (${CATEGORY})"
@@ -79,8 +120,25 @@ jobs:
             NEW_CAT_NOTE="> **New category proposed:** \`${CATEGORY}\` (**${NEW_CATEGORY_NAME}**) was added to \`categories.yaml\` and synced to the schema & issue form. Review/edit the slug & description (or move the project into an existing category) before merging — Cloudflare D1 will auto-upsert \`categories.yaml\` on deploy."
           fi
 
+          LICENSE_NOTE=""
+          ISSUE_LICENSE_NOTE=""
+          if [ "$LICENSE_DETECTED" != "true" ]; then
+            LICENSE_NOTE="> **License note:** No GitHub license was detected on [${PROJECT_NAME}](${REPO_URL}), so \`license\` was set to \`Source\`. If you add a \`LICENSE\` file (e.g. MIT / Apache-2.0) to the repo, feel free to update \`license\` in \`${FILE_PATH}\` before merging."
+            ISSUE_LICENSE_NOTE=" (Note: no \`LICENSE\` file was detected on GitHub, so license was set to \`Source\` — you can add one anytime and update the PR.)"
+          fi
+
           git commit -m "$PR_TITLE"
-          git push -u origin "$BRANCH"
+          HEAD_SHA=$(git rev-parse HEAD)
+
+          # Force-push only if a stale orphan branch from an earlier failed attempt exists without an open PR
+          git push --force-with-lease -u origin "$BRANCH"
+
+          # Post commit status so the auto-PR shows a green check despite GITHUB_TOKEN PR event suppression
+          gh api "repos/${{ github.repository }}/statuses/${HEAD_SHA}" \
+            -f state="success" \
+            -f context="Validate Variants (auto-PR)" \
+            -f description="validate:variants + astro build passed" \
+            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
           PR_URL=$(gh pr create \
             --title "$PR_TITLE" \
@@ -89,15 +147,18 @@ jobs:
 
           - **Project:** [${PROJECT_NAME}](${REPO_URL})
           - **Category:** \`${CATEGORY}\`
+          - **License:** \`${LICENSE}\`
           - **Live GitHub Stars:** ★ ${STARS}
           - **File:** \`${FILE_PATH}\`
 
           ${NEW_CAT_NOTE}
 
-          Validated against \`schema/variant.schema.json\`. Merging this PR automatically rebuilds \`public/index.json\`, syncs categories to D1, and deploys to **https://alsobuilt.pages.dev/**.
+          ${LICENSE_NOTE}
+
+          Verified by \`npm run validate:variants\` and \`npm run build\`. Merging this PR automatically rebuilds \`public/index.json\`, syncs categories to D1, and deploys to **https://alsobuilt.pages.dev/**.
 
           Closes #${ISSUE_NUMBER}
           EOF
           )")
 
-          gh issue comment "$ISSUE_NUMBER" --body "Opened Pull Request ${PR_URL} for **${PROJECT_NAME}** (\`${FILE_PATH}\`, ★ ${STARS}). Once merged, it will appear live on **https://alsobuilt.pages.dev/** within ~40 seconds!"
+          gh issue comment "$ISSUE_NUMBER" --body "Opened Pull Request ${PR_URL} for **${PROJECT_NAME}** (\`${FILE_PATH}\`, ★ ${STARS}).${ISSUE_LICENSE_NOTE} Once merged, it will appear live on **https://alsobuilt.pages.dev/** within ~40 seconds!"

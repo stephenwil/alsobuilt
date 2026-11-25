@@ -18,6 +18,13 @@ body:
     validations:
       required: true
 
+  - type: input
+    id: display_name
+    attributes:
+      label: Project Display Name (optional)
+      description: Human-readable project name (2–64 chars). Leave blank to use the issue title or a formatted repo name.
+      placeholder: Ranger CAN Explorer
+
   - type: dropdown
     id: category
     attributes:
@@ -99,9 +106,9 @@ body:
   - type: input
     id: traits
     attributes:
-      label: Extra Traits (optional, comma-separated)
-      description: "Allowed: local-first, mcp, voice, markdown, multi-agent, browser, cli, rust, python, typescript, open-weights, self-hosted, mobile, rag, realtime, hardware, gamedev, 3d-webgl, audio-synth"
-      placeholder: hardware, 3d-webgl, typescript, local-first
+      label: Traits (optional, comma-separated)
+      description: "When provided, your list is used directly (plus exact language/form-factor matches). Leave blank to infer automatically. Allowed: local-first, mcp, voice, markdown, multi-agent, browser, cli, rust, python, typescript, open-weights, self-hosted, mobile, rag, realtime, hardware, gamedev, 3d-webgl, audio-synth"
+      placeholder: hardware, 3d-webgl, browser, realtime
 
   - type: textarea
     id: lesson

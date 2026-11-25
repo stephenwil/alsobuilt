@@ -46,9 +46,9 @@ const TRAIT_KEYWORDS = {
   cli: /\b(cli|terminal|tui|shell|command-line|tmux)\b/i,
   rust: /\b(rust|cargo|candle|ratatui)\b/i,
   python: /\b(python|fastapi|pytorch|pydantic)\b/i,
-  typescript: /\b(typescript|javascript|node|react|svelte|next\.js)\b/i,
+  typescript: /\b(typescript|tsx)\b/i,
   'open-weights': /\b(open-weights|gguf|ollama|llama|qwen|mistral|vllm|mlx)\b/i,
-  'self-hosted': /\b(self-hosted|selfhost|docker|gateway|server)\b/i,
+  'self-hosted': /\b(self-hosted|selfhost|docker-compose|dockerfile)\b/i,
   mobile: /\b(mobile|ios|android|iphone|swiftui|react native)\b/i,
   rag: /\b(rag|vector|embedding|retriev|knowledge graph|graphrag|semantic search)\b/i,
   realtime: /\b(realtime|real-time|webrtc|streaming|live|low-latency)\b/i,
@@ -57,6 +57,38 @@ const TRAIT_KEYWORDS = {
   '3d-webgl': /\b(3d|webgl|webgpu|three\.?js|shader|blender|cad|stl|3mf)\b/i,
   'audio-synth': /\b(synth|synthesizer|midi|dsp|webaudio|audioworklet|wavetable|daw)\b/i
 };
+
+const KNOWN_ACRONYMS = new Set([
+  'ai', 'api', 'can', 'cli', 'dbc', 'dsp', 'esp32', 'gb', 'gui', 'http', 'ide',
+  'iot', 'js', 'llm', 'llms', 'mcp', 'midi', 'mlx', 'obd', 'os', 'pcb', 'rag',
+  'sdk', 'sql', 'stt', 'ts', 'tts', 'tui', 'ui', 'usb', 'wasm', 'webgl', '3d'
+]);
+
+function titleCaseSlug(slug) {
+  return String(slug || '')
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((word) => {
+      const lower = word.toLowerCase();
+      if (KNOWN_ACRONYMS.has(lower)) return lower.toUpperCase();
+      return word[0].toUpperCase() + word.slice(1);
+    })
+    .join(' ');
+}
+
+function resolveDisplayName(explicitName, issueTitle, repoName) {
+  const cleanExplicit = String(explicitName || '').replace(/\s+/g, ' ').trim();
+  if (cleanExplicit.length >= 2) return cleanExplicit.slice(0, 64);
+
+  const fromTitle = String(issueTitle || '')
+    .replace(/^\[submit\]:?\s*/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (fromTitle.length >= 2) return fromTitle.slice(0, 64);
+
+  const formatted = /[-_]/.test(repoName) ? titleCaseSlug(repoName) : repoName;
+  return formatted.slice(0, 64);
+}
 
 function parseIssueForm(body) {
   const sections = {};
@@ -209,35 +241,59 @@ async function main() {
     }
   }
 
+  const displayName = resolveDisplayName(
+    fields['project display name (optional)'],
+    process.env.ISSUE_TITLE || '',
+    repo.name
+  );
+
   let tagline = (fields['one-line tagline (optional)'] || repo.description || '').replace(/\s+/g, ' ').trim();
   if (tagline.length < 12) {
-    tagline = `${repo.name} — open-source ${category.replace(/-/g, ' ')} project (${repo.language || 'AI'})`;
+    tagline = `${displayName} — open-source ${category.replace(/-/g, ' ')} project (${repo.language || 'Open Source'})`;
   }
   if (tagline.length > 180) {
     tagline = `${tagline.slice(0, 177).trimEnd()}...`;
   }
 
   const stack = (fields['primary stack (optional)'] || repo.language || 'Open Source').trim().slice(0, 80);
-  const license = mapLicense(repo.license?.spdx_id);
+  const rawSpdx = repo.license?.spdx_id || '';
+  const licenseDetected = Boolean(rawSpdx && rawSpdx.toUpperCase() !== 'NOASSERTION');
+  const license = mapLicense(rawSpdx);
 
-  // Infer traits from manual input + repo description/topics/arch/language
+  // Respect submitter-provided traits; only run prose keyword fallback when left blank
   const traitSet = new Set();
-  const manualRaw = fields['extra traits (optional, comma-separated)'] || '';
+  const manualRaw =
+    fields['traits (optional, comma-separated)'] ||
+    fields['extra traits (optional, comma-separated)'] ||
+    '';
   for (const part of manualRaw.split(/[,\s]+/)) {
     const t = part.trim().toLowerCase();
     if (ALLOWED_TRAITS.has(t)) traitSet.add(t);
   }
-  const hay = `${repo.name} ${tagline} ${stack} ${(repo.topics || []).join(' ')} ${repo.language || ''}`;
-  for (const [trait, rx] of Object.entries(TRAIT_KEYWORDS)) {
-    if (rx.test(hay)) traitSet.add(trait);
-  }
+  const hasManualTraits = traitSet.size > 0;
+
+  // High-confidence structural signals (exact GitHub primary language / form factor / runtime)
+  const primaryLang = String(repo.language || '').toLowerCase();
+  if (primaryLang === 'typescript') traitSet.add('typescript');
+  if (primaryLang === 'rust') traitSet.add('rust');
+  if (primaryLang === 'python') traitSet.add('python');
   if (arch === 'CLI') traitSet.add('cli');
   if (arch === 'Browser') traitSet.add('browser');
   if (arch === 'Mobile') traitSet.add('mobile');
   if (model === 'Local LLM') traitSet.add('local-first');
   if (category === 'mcp-tooling') traitSet.add('mcp');
   if (category === 'local-voice') traitSet.add('voice');
-  if (traitSet.size === 0) traitSet.add('self-hosted');
+
+  if (!hasManualTraits) {
+    const hay = `${repo.name} ${tagline} ${stack} ${(repo.topics || []).join(' ')} ${repo.language || ''}`;
+    for (const [trait, rx] of Object.entries(TRAIT_KEYWORDS)) {
+      if (rx.test(hay)) traitSet.add(trait);
+    }
+  }
+
+  if (traitSet.size === 0) {
+    traitSet.add(arch === 'Web' ? 'browser' : 'local-first');
+  }
   const traits = [...traitSet].slice(0, 8);
 
   // Deterministic radar coordinates based on model/traits + hash jitter
@@ -249,7 +305,7 @@ async function main() {
   const entry = {
     slug,
     category,
-    name: repo.name.slice(0, 64),
+    name: displayName,
     repo: repo.html_url,
     tagline,
     arch,
@@ -280,7 +336,7 @@ async function main() {
   const relPath = `variants/${category}/${slug}.yaml`;
   fs.writeFileSync(path.join(process.cwd(), relPath), yaml.dump(entry, { lineWidth: 120, noRefs: true }));
 
-  console.log(`Generated ${relPath} (${entry.name}, ★ ${entry.stars})`);
+  console.log(`Generated ${relPath} (${entry.name}, ★ ${entry.stars}, license: ${entry.license})`);
 
   if (process.env.GITHUB_OUTPUT) {
     fs.appendFileSync(
@@ -292,6 +348,8 @@ async function main() {
         `stars=${entry.stars}`,
         `category=${category}`,
         `repo_url=${entry.repo}`,
+        `license=${entry.license}`,
+        `license_detected=${licenseDetected ? 'true' : 'false'}`,
         `new_category_created=${newCategoryEntry ? 'true' : 'false'}`,
         `new_category_name=${newCategoryEntry ? newCategoryEntry.name : ''}`
       ].join('\n') + '\n'
