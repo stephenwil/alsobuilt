@@ -56,3 +56,23 @@ claude mcp add alsobuilt -- node /path/to/alsobuilt/mcp/server.mjs
 ## Environment Variables
 
 - `ALSOBUILT_URL` — Optional override for the catalog host (defaults to `https://alsobuilt.pages.dev`). Falls back to a local `../public/index.json` when running from a checkout offline.
+
+## Package Naming & Publishing
+
+This package is intentionally published under the unscoped npm name **`alsobuilt-mcp`** (rather than `@stephenwil/alsobuilt-mcp`):
+
+- **Prevents name squatting:** Claiming the canonical top-level `alsobuilt-mcp` name under the maintainer's npm account ensures third parties cannot register a lookalike package under the obvious name.
+- **Cleaner 1-line setup:** `npx -y alsobuilt-mcp` is shorter to type, remember, and paste into Claude Code, Cursor, and Codex configs, and signals a community open-source tool rather than a personal namespace.
+- **Single standalone package:** Unlike multi-package ecosystems that share a common org/user scope (e.g. `@owner/cli`, `@owner/create-*`, `@owner/mcp`), AlsoBuilt ships a single zero-dependency MCP server and the unscoped name was available.
+- **Clear attribution & future-proofing:** npm metadata still lists `stephenwil` as maintainer and links directly to `https://github.com/stephenwil/alsobuilt`. If an `@alsobuilt` npm organization is ever created later (e.g. `@alsobuilt/mcp`), `alsobuilt-mcp` should remain published under the same ownership (or as a thin wrapper) to protect the top-level name.
+
+### Maintainer Release Checklist
+
+```bash
+cd mcp
+npm pkg fix
+npm pack --dry-run
+npm version patch   # or minor / major
+npm publish --access public
+```
+

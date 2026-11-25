@@ -3,5 +3,6 @@ dist/
 .astro/
 .wrangler/
 .dev.vars
+.npmrc
 .DS_Store
 *.log

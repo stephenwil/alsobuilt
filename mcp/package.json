@@ -4,7 +4,7 @@
   "description": "Zero-dependency MCP server to check open-source idea overlap across AI, hardware, gamedev & devtools via the live AlsoBuilt catalog",
   "type": "module",
   "bin": {
-    "alsobuilt-mcp": "./server.mjs"
+    "alsobuilt-mcp": "server.mjs"
   },
   "files": [
     "server.mjs",
@@ -36,7 +36,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/stephenwil/alsobuilt.git",
+    "url": "git+https://github.com/stephenwil/alsobuilt.git",
     "directory": "mcp"
   }
 }
