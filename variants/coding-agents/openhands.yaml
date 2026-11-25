@@ -10,15 +10,6 @@ stage: Prod
 stack: Python + Docker + React
 region: Global
 stars: 94238
-spark:
-  - 24
-  - 29
-  - 35
-  - 42
-  - 48
-  - 53
-  - 60
-  - 68
 traits:
   - multi-agent
   - self-hosted

@@ -71,6 +71,20 @@ function deterministicCoord(traits, axis) {
   return Number(Math.max(0.14, Math.min(0.88, score)).toFixed(2));
 }
 
+const STAR_HISTORY_PATH = path.join(ROOT, 'data', 'star-history.json');
+
+function loadStarHistory() {
+  if (!fs.existsSync(STAR_HISTORY_PATH)) return {};
+  try {
+    const parsed = JSON.parse(fs.readFileSync(STAR_HISTORY_PATH, 'utf8'));
+    return parsed && typeof parsed.snapshots === 'object' ? parsed.snapshots : {};
+  } catch {
+    return {};
+  }
+}
+
+const starHistory = loadStarHistory();
+
 const schema = JSON.parse(fs.readFileSync(SCHEMA_PATH, 'utf8'));
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
@@ -108,15 +122,29 @@ for (const file of files) {
   const relNorm = rel.replace(/\\/g, '/');
   const addedAt = gitAddedDates.get(relNorm) || fs.statSync(file).mtime.toISOString();
 
-  variants.push({
+  const historyPoints = Array.isArray(starHistory[data.slug]) ? starHistory[data.slug] : [];
+  const realSpark =
+    historyPoints.length >= 2
+      ? historyPoints
+          .map((pt) => Number(pt?.stars))
+          .filter((n) => Number.isFinite(n) && n >= 0)
+      : undefined;
+
+  const entry = {
     ...data,
     stars: data.stars ?? 0,
-    spark: data.spark ?? [4, 7, 10, 12, 15, 19, 22, 26],
     region: data.region ?? 'Global',
     x: data.x ?? deterministicCoord(data.traits, 'x'),
     y: data.y ?? deterministicCoord(data.traits, 'y'),
     addedAt
-  });
+  };
+  if (realSpark && realSpark.length >= 2) {
+    entry.spark = realSpark;
+  } else if (!Array.isArray(data.spark)) {
+    delete entry.spark;
+  }
+
+  variants.push(entry);
 }
 
 if (errors > 0) {

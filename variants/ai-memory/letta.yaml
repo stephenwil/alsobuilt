@@ -10,15 +10,6 @@ stage: Prod
 stack: Python + Postgres + pgvector
 region: US
 stars: 25532
-spark:
-  - 14
-  - 16
-  - 19
-  - 21
-  - 24
-  - 27
-  - 30
-  - 33
 traits:
   - multi-agent
   - python

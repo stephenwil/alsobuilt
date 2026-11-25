@@ -10,15 +10,6 @@ stage: Prod
 stack: Python + TypeScript + Qdrant
 region: US
 stars: 69425
-spark:
-  - 18
-  - 22
-  - 26
-  - 30
-  - 34
-  - 39
-  - 44
-  - 51
 traits:
   - multi-agent
   - python

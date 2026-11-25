@@ -10,15 +10,6 @@ stage: Beta
 stack: Python + FastAPI + WebRTC
 region: Global
 stars: 4641
-spark:
-  - 2
-  - 6
-  - 12
-  - 19
-  - 27
-  - 34
-  - 41
-  - 49
 traits:
   - voice
   - realtime

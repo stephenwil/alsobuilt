@@ -10,15 +10,6 @@ stage: Prod
 stack: TypeScript + VS Code + MCP
 region: US
 stars: 71870
-spark:
-  - 15
-  - 22
-  - 31
-  - 39
-  - 46
-  - 54
-  - 62
-  - 70
 traits:
   - mcp
   - browser

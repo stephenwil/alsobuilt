@@ -10,15 +10,6 @@ stage: Prod
 stack: C++ + Metal + CoreML
 region: BG
 stars: 55493
-spark:
-  - 25
-  - 27
-  - 29
-  - 31
-  - 34
-  - 36
-  - 39
-  - 41
 traits:
   - local-first
   - voice

@@ -10,15 +10,6 @@ stage: Prod
 stack: Python + Pydantic + MCP
 region: US
 stars: 28736
-spark:
-  - 5
-  - 11
-  - 18
-  - 26
-  - 35
-  - 44
-  - 52
-  - 63
 traits:
   - mcp
   - python

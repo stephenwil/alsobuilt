@@ -867,7 +867,7 @@
                 <span class="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold bg-[var(--primary)] text-white">YOU</span>
               </td>
               <td class="py-2.5 px-3 font-mono text-[11px] text-[var(--muted)]">
-                {userCountedStealth ? 'Private ✓' : 'Local only'}
+                {userCountedStealth ? 'Counted privately ✓' : 'Not signaled'}
               </td>
               <td class="py-2.5 px-3">
                 <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase bg-[var(--blue)]/20 text-[var(--blue)]">Draft</span>
@@ -1108,6 +1108,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       {#each filteredRanked as { variant: v, overlap }}
         {@const isPinned = pinnedSlugs.includes(v.slug)}
+        {@const stealthHere = pulse.byVariant[v.slug] ?? 0}
         {@const scale = getScaleTier(v.stars)}
         {@const isNew = isNewSubmission(v, catalog.generatedAt)}
         <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-2.5 hover:border-[var(--primary)]/60 transition">
@@ -1133,7 +1134,17 @@
                   </span>
                 {/if}
               </div>
-              <div class="text-[11px] text-[var(--muted)] font-mono">{v.arch} · {v.stack} · {v.license} · {scale.label} (★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars})</div>
+              <div class="text-[11px] text-[var(--muted)] font-mono flex items-center gap-1.5 flex-wrap">
+                <span>{v.arch} · {v.stack} · {v.license} · {scale.label} (★ {v.stars >= 1000 ? `${(v.stars / 1000).toFixed(1)}k` : v.stars})</span>
+                {#if stealthHere > 0}
+                  <span
+                    class="text-[var(--emerald)]"
+                    title="Anonymous builders who signaled they are building something similar privately"
+                  >
+                    · +{stealthHere} building privately
+                  </span>
+                {/if}
+              </div>
             </div>
             {#if hasIdea}
               <span class="px-2.5 py-0.5 rounded-full font-mono text-xs font-bold bg-[var(--blue)]/20 text-[var(--blue)]">{overlap}%</span>

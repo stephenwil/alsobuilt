@@ -1,0 +1,575 @@
+{
+  "updatedAt": "2026-11-25",
+  "snapshots": {
+    "abtop": [
+      {
+        "date": "2026-11-25",
+        "stars": 3880
+      }
+    ],
+    "actual-budget": [
+      {
+        "date": "2026-11-25",
+        "stars": 30442
+      }
+    ],
+    "affectui": [
+      {
+        "date": "2026-11-25",
+        "stars": 956
+      }
+    ],
+    "agent-cli": [
+      {
+        "date": "2026-11-25",
+        "stars": 239
+      }
+    ],
+    "agent-deck": [
+      {
+        "date": "2026-11-25",
+        "stars": 1300
+      }
+    ],
+    "agent-manager": [
+      {
+        "date": "2026-11-25",
+        "stars": 707
+      }
+    ],
+    "aider": [
+      {
+        "date": "2026-11-25",
+        "stars": 50241
+      }
+    ],
+    "anomaly-browse": [
+      {
+        "date": "2026-11-25",
+        "stars": 1076
+      }
+    ],
+    "anything-llm": [
+      {
+        "date": "2026-11-25",
+        "stars": 68605
+      }
+    ],
+    "autogen": [
+      {
+        "date": "2026-11-25",
+        "stars": 61970
+      }
+    ],
+    "babyagi": [
+      {
+        "date": "2026-11-25",
+        "stars": 22362
+      }
+    ],
+    "bandwhich": [
+      {
+        "date": "2026-11-25",
+        "stars": 12111
+      }
+    ],
+    "beeai-framework": [
+      {
+        "date": "2026-11-25",
+        "stars": 3459
+      }
+    ],
+    "bevy": [
+      {
+        "date": "2026-11-25",
+        "stars": 49981
+      }
+    ],
+    "browser-use": [
+      {
+        "date": "2026-11-25",
+        "stars": 121933
+      }
+    ],
+    "cabana": [
+      {
+        "date": "2026-11-25",
+        "stars": 206
+      }
+    ],
+    "cantools": [
+      {
+        "date": "2026-11-25",
+        "stars": 2325
+      }
+    ],
+    "cline": [
+      {
+        "date": "2026-11-25",
+        "stars": 71870
+      }
+    ],
+    "coding-sh": [
+      {
+        "date": "2026-11-25",
+        "stars": 154
+      }
+    ],
+    "cognee": [
+      {
+        "date": "2026-11-25",
+        "stars": 33558
+      }
+    ],
+    "context7": [
+      {
+        "date": "2026-11-25",
+        "stars": 65405
+      }
+    ],
+    "continue": [
+      {
+        "date": "2026-11-25",
+        "stars": 36551
+      }
+    ],
+    "crewai": [
+      {
+        "date": "2026-11-25",
+        "stars": 61232
+      }
+    ],
+    "dbhub": [
+      {
+        "date": "2026-11-25",
+        "stars": 3974
+      }
+    ],
+    "dify": [
+      {
+        "date": "2026-11-25",
+        "stars": 161847
+      }
+    ],
+    "embassy": [
+      {
+        "date": "2026-11-25",
+        "stars": 10145
+      }
+    ],
+    "embed-anything": [
+      {
+        "date": "2026-11-25",
+        "stars": 1341
+      }
+    ],
+    "esphome": [
+      {
+        "date": "2026-11-25",
+        "stars": 12167
+      }
+    ],
+    "etos-llm-studio": [
+      {
+        "date": "2026-11-25",
+        "stars": 225
+      }
+    ],
+    "fast-agent": [
+      {
+        "date": "2026-11-25",
+        "stars": 3977
+      }
+    ],
+    "faster-whisper": [
+      {
+        "date": "2026-11-25",
+        "stars": 26987
+      }
+    ],
+    "fastmcp": [
+      {
+        "date": "2026-11-25",
+        "stars": 28736
+      }
+    ],
+    "fastrtc": [
+      {
+        "date": "2026-11-25",
+        "stars": 4641
+      }
+    ],
+    "ford-ranger-can-explorer": [
+      {
+        "date": "2026-11-25",
+        "stars": 0
+      }
+    ],
+    "frontmcp": [
+      {
+        "date": "2026-11-25",
+        "stars": 153
+      }
+    ],
+    "gb-studio": [
+      {
+        "date": "2026-11-25",
+        "stars": 9472
+      }
+    ],
+    "github-mcp-server": [
+      {
+        "date": "2026-11-25",
+        "stars": 34724
+      }
+    ],
+    "goose": [
+      {
+        "date": "2026-11-25",
+        "stars": 56945
+      }
+    ],
+    "gpt-engineer": [
+      {
+        "date": "2026-11-25",
+        "stars": 54943
+      }
+    ],
+    "gram": [
+      {
+        "date": "2026-11-25",
+        "stars": 278
+      }
+    ],
+    "graphiti": [
+      {
+        "date": "2026-11-25",
+        "stars": 33066
+      }
+    ],
+    "graphrag-rs": [
+      {
+        "date": "2026-11-25",
+        "stars": 540
+      }
+    ],
+    "herdr-reviewr": [
+      {
+        "date": "2026-11-25",
+        "stars": 1019
+      }
+    ],
+    "jan": [
+      {
+        "date": "2026-11-25",
+        "stars": 46079
+      }
+    ],
+    "khoj": [
+      {
+        "date": "2026-11-25",
+        "stars": 38232
+      }
+    ],
+    "kokoro-fastapi": [
+      {
+        "date": "2026-11-25",
+        "stars": 5731
+      }
+    ],
+    "langgraph": [
+      {
+        "date": "2026-11-25",
+        "stars": 45371
+      }
+    ],
+    "ldtk": [
+      {
+        "date": "2026-11-25",
+        "stars": 5012
+      }
+    ],
+    "lean-ctx": [
+      {
+        "date": "2026-11-25",
+        "stars": 3961
+      }
+    ],
+    "letta": [
+      {
+        "date": "2026-11-25",
+        "stars": 25532
+      }
+    ],
+    "livekit-agents": [
+      {
+        "date": "2026-11-25",
+        "stars": 15329
+      }
+    ],
+    "llama-cpp": [
+      {
+        "date": "2026-11-25",
+        "stars": 136134
+      }
+    ],
+    "mastra": [
+      {
+        "date": "2026-11-25",
+        "stars": 29794
+      }
+    ],
+    "mcp-inspector": [
+      {
+        "date": "2026-11-25",
+        "stars": 11355
+      }
+    ],
+    "mcp-servers": [
+      {
+        "date": "2026-11-25",
+        "stars": 92223
+      }
+    ],
+    "mem0": [
+      {
+        "date": "2026-11-25",
+        "stars": 69425
+      }
+    ],
+    "mlxtop": [
+      {
+        "date": "2026-11-25",
+        "stars": 154
+      }
+    ],
+    "obsidian-llm-wiki": [
+      {
+        "date": "2026-11-25",
+        "stars": 812
+      }
+    ],
+    "ollama": [
+      {
+        "date": "2026-11-25",
+        "stars": 187998
+      }
+    ],
+    "open-interpreter": [
+      {
+        "date": "2026-11-25",
+        "stars": 68961
+      }
+    ],
+    "open-webui": [
+      {
+        "date": "2026-11-25",
+        "stars": 159442
+      }
+    ],
+    "openbrowser-ai": [
+      {
+        "date": "2026-11-25",
+        "stars": 279
+      }
+    ],
+    "opencode": [
+      {
+        "date": "2026-11-25",
+        "stars": 228963
+      }
+    ],
+    "openhands": [
+      {
+        "date": "2026-11-25",
+        "stars": 94238
+      }
+    ],
+    "phonedriver": [
+      {
+        "date": "2026-11-25",
+        "stars": 366
+      }
+    ],
+    "pipecat": [
+      {
+        "date": "2026-11-25",
+        "stars": 17415
+      }
+    ],
+    "pixelorama": [
+      {
+        "date": "2026-11-25",
+        "stars": 11193
+      }
+    ],
+    "playwright-mcp": [
+      {
+        "date": "2026-11-25",
+        "stars": 40102
+      }
+    ],
+    "pocketpal-ai": [
+      {
+        "date": "2026-11-25",
+        "stars": 9769
+      }
+    ],
+    "poki": [
+      {
+        "date": "2026-11-25",
+        "stars": 1915
+      }
+    ],
+    "probe-rs": [
+      {
+        "date": "2026-11-25",
+        "stars": 3024
+      }
+    ],
+    "pydantic-ai": [
+      {
+        "date": "2026-11-25",
+        "stars": 21368
+      }
+    ],
+    "quivr": [
+      {
+        "date": "2026-11-25",
+        "stars": 39661
+      }
+    ],
+    "qwentts-cpp": [
+      {
+        "date": "2026-11-25",
+        "stars": 217
+      }
+    ],
+    "ratatui": [
+      {
+        "date": "2026-11-25",
+        "stars": 23420
+      }
+    ],
+    "roo-code": [
+      {
+        "date": "2026-11-25",
+        "stars": 24236
+      }
+    ],
+    "savvycan": [
+      {
+        "date": "2026-11-25",
+        "stars": 1941
+      }
+    ],
+    "sidekick": [
+      {
+        "date": "2026-11-25",
+        "stars": 3324
+      }
+    ],
+    "skyvern": [
+      {
+        "date": "2026-11-25",
+        "stars": 23507
+      }
+    ],
+    "smarter-router": [
+      {
+        "date": "2026-11-25",
+        "stars": 165
+      }
+    ],
+    "sniffnet": [
+      {
+        "date": "2026-11-25",
+        "stars": 43293
+      }
+    ],
+    "stagehand": [
+      {
+        "date": "2026-11-25",
+        "stars": 26131
+      }
+    ],
+    "surfsense": [
+      {
+        "date": "2026-11-25",
+        "stars": 16941
+      }
+    ],
+    "swarmvault": [
+      {
+        "date": "2026-11-25",
+        "stars": 739
+      }
+    ],
+    "swe-agent": [
+      {
+        "date": "2026-11-25",
+        "stars": 20867
+      }
+    ],
+    "tic-80": [
+      {
+        "date": "2026-11-25",
+        "stars": 6199
+      }
+    ],
+    "tio": [
+      {
+        "date": "2026-11-25",
+        "stars": 3229
+      }
+    ],
+    "typewhisper-mac": [
+      {
+        "date": "2026-11-25",
+        "stars": 1942
+      }
+    ],
+    "ui-tars-desktop": [
+      {
+        "date": "2026-11-25",
+        "stars": 39593
+      }
+    ],
+    "vibe": [
+      {
+        "date": "2026-11-25",
+        "stars": 8221
+      }
+    ],
+    "vital": [
+      {
+        "date": "2026-11-25",
+        "stars": 2222
+      }
+    ],
+    "vllm": [
+      {
+        "date": "2026-11-25",
+        "stars": 97494
+      }
+    ],
+    "wasm4": [
+      {
+        "date": "2026-11-25",
+        "stars": 1548
+      }
+    ],
+    "whisper-cpp": [
+      {
+        "date": "2026-11-25",
+        "stars": 55493
+      }
+    ],
+    "willow": [
+      {
+        "date": "2026-11-25",
+        "stars": 3145
+      }
+    ]
+  }
+}

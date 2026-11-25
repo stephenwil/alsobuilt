@@ -18,7 +18,7 @@ export interface Variant {
   stack: string;
   region: string;
   stars: number;
-  spark: number[];
+  spark?: number[];
   traits: string[];
   x: number;
   y: number;

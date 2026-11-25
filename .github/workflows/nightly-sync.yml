@@ -16,6 +16,8 @@ jobs:
       sha: ${{ steps.commit.outputs.sha }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -31,7 +33,7 @@ jobs:
         run: |
           git config user.name "alsobuilt-bot"
           git config user.email "bot@alsobuilt.dev"
-          git add variants public/index.json
+          git add variants data/star-history.json public/index.json
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else

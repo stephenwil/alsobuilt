@@ -10,15 +10,6 @@ stage: Prod
 stack: Python + Django + Postgres
 region: Global
 stars: 38232
-spark:
-  - 12
-  - 15
-  - 19
-  - 24
-  - 28
-  - 33
-  - 37
-  - 42
 traits:
   - local-first
   - markdown

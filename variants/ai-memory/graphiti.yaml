@@ -10,15 +10,6 @@ stage: Beta
 stack: Python + Neo4j
 region: US
 stars: 33066
-spark:
-  - 4
-  - 7
-  - 11
-  - 15
-  - 21
-  - 26
-  - 32
-  - 41
 traits:
   - multi-agent
   - python
