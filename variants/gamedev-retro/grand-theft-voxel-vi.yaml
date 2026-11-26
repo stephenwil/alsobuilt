@@ -1,0 +1,20 @@
+slug: grand-theft-voxel-vi
+category: gamedev-retro
+name: Grand Theft Voxel VI
+repo: https://github.com/stephenwil/tessera-showcase
+tagline: Open-world 3D voxel crime caper in Vice Blocks running in WebGL2 and Lua Wasm, compressed into a 61 KiB picture cart
+arch: Browser
+model: Standalone
+license: MIT
+stage: Prod
+stack: Lua 5.4 + WebGL2 + WebAssembly
+region: Global
+stars: 0
+traits:
+  - gamedev
+  - 3d-webgl
+  - browser
+  - local-first
+  - audio-synth
+x: 0.52
+'y': 0.38
