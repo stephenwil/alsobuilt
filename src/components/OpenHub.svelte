@@ -1031,6 +1031,18 @@
                     >
                       {isPinned ? '✓ Comparing' : 'Compare'}
                     </button>
+                    {#if v.demo}
+                      <a
+                        href={v.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onclick={() => trackEvent('repo_click', v.category)}
+                        class="px-2 py-1 rounded-md bg-[var(--emerald)]/15 border border-[var(--emerald)]/40 text-[11px] font-medium text-[var(--emerald)] hover:bg-[var(--emerald)]/25 no-underline"
+                        title={v.traits.includes('gamedev') ? 'Play directly in browser' : 'Open live demo'}
+                      >
+                        {v.traits.includes('gamedev') ? 'Play ↗' : 'Demo ↗'}
+                      </a>
+                    {/if}
                     <a
                       href={v.repo}
                       target="_blank"
@@ -1127,6 +1139,17 @@
             >
               {pinnedSlugs.includes(selectedVariant.slug) ? '✓ Comparing' : 'Compare'}
             </button>
+            {#if selectedVariant.demo}
+              <a
+                href={selectedVariant.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick={() => trackEvent('repo_click', selectedVariant.category)}
+                class="px-2.5 py-1.5 rounded-lg bg-[var(--emerald)]/15 border border-[var(--emerald)]/40 text-xs font-medium text-[var(--emerald)] no-underline hover:bg-[var(--emerald)]/25"
+              >
+                {selectedVariant.traits.includes('gamedev') ? 'Play ↗' : 'Demo ↗'}
+              </a>
+            {/if}
             <a
               href={selectedVariant.repo}
               target="_blank"
@@ -1214,6 +1237,17 @@
               >
                 {isPinned ? '✓ Comparing' : 'Compare'}
               </button>
+              {#if v.demo}
+                <a
+                  href={v.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onclick={() => trackEvent('repo_click', v.category)}
+                  class="px-2 py-1 rounded-md bg-[var(--emerald)]/15 border border-[var(--emerald)]/40 text-[11px] font-medium text-[var(--emerald)] hover:bg-[var(--emerald)]/25 no-underline"
+                >
+                  {v.traits.includes('gamedev') ? 'Play ↗' : 'Demo ↗'}
+                </a>
+              {/if}
               <a
                 href={v.repo}
                 target="_blank"
@@ -1267,15 +1301,28 @@
               {/if}
               {#each pinnedVariants as pv}
                 <th class="p-2 text-left bg-[var(--secondary)] font-mono">
-                  <a
-                    href={pv.repo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onclick={() => trackEvent('repo_click', pv.category)}
-                    class="no-underline hover:underline"
-                  >
-                    {pv.name} ↗
-                  </a>
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <a
+                      href={pv.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onclick={() => trackEvent('repo_click', pv.category)}
+                      class="no-underline hover:underline"
+                    >
+                      {pv.name} ↗
+                    </a>
+                    {#if pv.demo}
+                      <a
+                        href={pv.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onclick={() => trackEvent('repo_click', pv.category)}
+                        class="px-1.5 py-0.5 rounded bg-[var(--emerald)]/15 border border-[var(--emerald)]/40 text-[10px] font-medium text-[var(--emerald)] no-underline hover:bg-[var(--emerald)]/25"
+                      >
+                        {pv.traits.includes('gamedev') ? 'Play ↗' : 'Demo ↗'}
+                      </a>
+                    {/if}
+                  </div>
                 </th>
               {/each}
             </tr>

@@ -9,6 +9,7 @@ export interface Variant {
   category: string;
   name: string;
   repo: string;
+  demo?: string;
   tagline: string;
   arch: 'Desktop' | 'CLI' | 'Web' | 'Browser' | 'SDK' | 'Mobile';
   model: 'Standalone' | 'Local LLM' | 'Hybrid' | 'Cloud API';

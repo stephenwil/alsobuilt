@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T10:43:50.780Z",
+  "generatedAt": "2026-11-26T11:38:11.250Z",
   "categories": [
     {
       "slug": "ai-memory",
@@ -2231,6 +2231,7 @@
       "category": "gamedev-retro",
       "name": "Grand Theft Voxel VI",
       "repo": "https://github.com/stephenwil/tessera-showcase",
+      "demo": "https://stephenwil.github.io/tessera-showcase/tessera.html?cart=carts/gtavoxel6.tess",
       "tagline": "Open-world 3D voxel crime caper in Vice Blocks running in WebGL2 and Lua Wasm, compressed into a 61 KiB picture cart",
       "arch": "Browser",
       "model": "Standalone",
@@ -2248,7 +2249,7 @@
       ],
       "x": 0.52,
       "y": 0.38,
-      "addedAt": "2026-11-26T10:43:10.617Z"
+      "addedAt": "2026-11-26T10:44:26+00:00"
     },
     {
       "slug": "ford-ranger-can-explorer",

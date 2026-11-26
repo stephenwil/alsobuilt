@@ -46,6 +46,11 @@
       "format": "uri",
       "pattern": "^https://"
     },
+    "demo": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
     "tagline": {
       "type": "string",
       "minLength": 12,

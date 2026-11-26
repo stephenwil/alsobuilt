@@ -2,6 +2,7 @@ slug: grand-theft-voxel-vi
 category: gamedev-retro
 name: Grand Theft Voxel VI
 repo: https://github.com/stephenwil/tessera-showcase
+demo: https://stephenwil.github.io/tessera-showcase/tessera.html?cart=carts/gtavoxel6.tess
 tagline: Open-world 3D voxel crime caper in Vice Blocks running in WebGL2 and Lua Wasm, compressed into a 61 KiB picture cart
 arch: Browser
 model: Standalone

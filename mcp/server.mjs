@@ -280,6 +280,7 @@ async function handleToolCall(name, args = {}) {
         license: v.license,
         stack: v.stack,
         repo: v.repo,
+        ...(v.demo ? { demo: v.demo } : {}),
         tagline: v.tagline,
         traits: v.traits,
         ...(v.lesson ? { lesson: v.lesson } : {})
@@ -366,6 +367,7 @@ async function handleToolCall(name, args = {}) {
         license: v.license,
         stack: v.stack,
         repo: v.repo,
+        ...(v.demo ? { demo: v.demo } : {}),
         tagline: v.tagline,
         traits: v.traits,
         ...(v.lesson ? { lesson: v.lesson } : {})
