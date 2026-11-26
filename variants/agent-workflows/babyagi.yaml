@@ -12,7 +12,7 @@ lesson: >-
   drift.
 stack: Python
 region: US
-stars: 22362
+stars: 22363
 traits:
   - python
   - rag

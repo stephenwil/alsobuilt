@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Python
 region: US
-stars: 61251
+stars: 61293
 traits:
   - multi-agent
   - python

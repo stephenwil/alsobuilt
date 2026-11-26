@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Go + C++ + llama.cpp
 region: US
-stars: 188087
+stars: 188197
 traits:
   - local-first
   - cli

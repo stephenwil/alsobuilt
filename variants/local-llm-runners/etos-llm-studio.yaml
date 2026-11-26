@@ -9,7 +9,7 @@ license: GPL-3
 stage: Proto
 stack: Swift + SwiftUI + llama.cpp
 region: Global
-stars: 225
+stars: 226
 traits:
   - mobile
   - local-first

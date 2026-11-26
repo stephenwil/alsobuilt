@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: Python + Neo4j
 region: US
-stars: 33084
+stars: 33109
 traits:
   - multi-agent
   - python

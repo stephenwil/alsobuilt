@@ -9,7 +9,7 @@ license: GPL-3
 stage: Prod
 stack: C++ + JUCE + OpenGL
 region: Global
-stars: 2222
+stars: 2226
 traits:
   - audio-synth
   - local-first

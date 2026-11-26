@@ -9,7 +9,7 @@ license: GPL-3
 stage: Prod
 stack: C + Lua + POSIX
 region: Global
-stars: 3229
+stars: 3232
 traits:
   - cli
   - hardware

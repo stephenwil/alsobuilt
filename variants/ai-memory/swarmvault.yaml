@@ -9,7 +9,7 @@ license: MIT
 stage: Proto
 stack: TypeScript + SQLite
 region: Global
-stars: 740
+stars: 739
 traits:
   - local-first
   - markdown

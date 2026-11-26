@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Python + Docker
 region: US
-stars: 20869
+stars: 20873
 traits:
   - cli
   - python

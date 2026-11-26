@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: Rust + Async Embedded
 region: Global
-stars: 10146
+stars: 10152
 traits:
   - hardware
   - rust

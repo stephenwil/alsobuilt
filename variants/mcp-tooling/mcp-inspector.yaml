@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: TypeScript + React + Node.js
 region: Global
-stars: 11355
+stars: 11364
 traits:
   - mcp
   - typescript

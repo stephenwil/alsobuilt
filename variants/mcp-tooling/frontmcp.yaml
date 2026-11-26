@@ -9,7 +9,7 @@ license: Apache-2
 stage: Proto
 stack: TypeScript + MCP SDK
 region: Global
-stars: 153
+stars: 154
 traits:
   - mcp
   - typescript

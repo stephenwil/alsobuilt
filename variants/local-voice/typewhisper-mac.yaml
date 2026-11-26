@@ -9,7 +9,7 @@ license: GPL-3
 stage: Beta
 stack: Swift + macOS + Whisper
 region: Global
-stars: 1941
+stars: 1940
 traits:
   - voice
   - local-first

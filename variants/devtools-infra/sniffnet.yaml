@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: Rust + Iced + libpcap
 region: Global
-stars: 43303
+stars: 43322
 traits:
   - rust
   - local-first

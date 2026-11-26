@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: TypeScript + VS Code + JetBrains
 region: US
-stars: 36559
+stars: 36572
 traits:
   - typescript
   - local-first

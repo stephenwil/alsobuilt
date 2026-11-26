@@ -9,7 +9,7 @@ license: AGPL
 stage: Prod
 stack: Python + Django + Postgres
 region: Global
-stars: 38239
+stars: 38262
 traits:
   - local-first
   - markdown

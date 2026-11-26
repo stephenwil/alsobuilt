@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: GDScript + Godot
 region: Global
-stars: 11200
+stars: 11212
 traits:
   - gamedev
   - local-first

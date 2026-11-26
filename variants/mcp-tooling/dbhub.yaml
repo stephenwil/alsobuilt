@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: TypeScript + Node.js
 region: Global
-stars: 3989
+stars: 3996
 traits:
   - mcp
   - cli

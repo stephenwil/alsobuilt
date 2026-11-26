@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: Rust + Embedded + SWD/JTAG
 region: Global
-stars: 3025
+stars: 3027
 traits:
   - hardware
   - rust

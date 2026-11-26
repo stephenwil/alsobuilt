@@ -9,7 +9,7 @@ license: MIT
 stage: Beta
 stack: Go + Bubble Tea
 region: Global
-stars: 1305
+stars: 1310
 traits:
   - cli
   - multi-agent
