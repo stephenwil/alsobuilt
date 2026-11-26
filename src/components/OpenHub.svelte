@@ -13,6 +13,7 @@
     type SortMode
   } from '../lib/similarity';
   import { SITE_URL } from '../lib/site';
+  import { bucketReferrer, trackEvent } from '../lib/analytics';
 
   interface Props {
     catalog: CatalogIndex;
@@ -174,12 +175,19 @@
     if (pinnedSlugs.includes(slug)) {
       pinnedSlugs = pinnedSlugs.filter((s) => s !== slug);
     } else {
+      const opening = pinnedSlugs.length === 0;
       pinnedSlugs = [...pinnedSlugs.slice(-1), slug];
+      if (opening) {
+        const variant = catalog.variants.find((v) => v.slug === slug);
+        trackEvent('compare_open', variant?.category ?? (activeCategory === 'all' ? '' : activeCategory));
+      }
     }
   }
 
   function diffTop2() {
-    pinnedSlugs = rankedAll.slice(0, 2).map((r) => r.variant.slug);
+    const top2 = rankedAll.slice(0, 2);
+    pinnedSlugs = top2.map((r) => r.variant.slug);
+    trackEvent('compare_open', activeCategory === 'all' ? (top2[0]?.variant.category ?? '') : activeCategory);
     showToast('Comparing top 2 similar projects below');
     setTimeout(() => {
       document.getElementById('compare-tray')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -306,6 +314,8 @@
     return categoryVariants.filter((v) => matchesSize(v.stars, tier)).length;
   }
 
+  let lastTrackedPitch = '';
+
   onMount(() => {
     const params = new URLSearchParams(window.location.search);
     const urlIdea = params.get('idea');
@@ -313,7 +323,10 @@
     const urlView = params.get('view');
     const urlSort = params.get('sort');
 
-    if (urlIdea) ideaText = urlIdea.slice(0, 300);
+    if (urlIdea) {
+      ideaText = urlIdea.slice(0, 300);
+      lastTrackedPitch = ideaText.trim();
+    }
     if (urlCat && (urlCat === 'all' || catalog.categories.some((c) => c.slug === urlCat))) {
       activeCategory = urlCat;
     }
@@ -325,6 +338,20 @@
     }
     urlHydrated = true;
     fetchPulse();
+    trackEvent('pageview', bucketReferrer(document.referrer, window.location.hostname));
+  });
+
+  $effect(() => {
+    if (!urlHydrated || typeof window === 'undefined') return;
+    const trimmed = ideaText.trim();
+    if (!trimmed || trimmed === lastTrackedPitch) return;
+    const cat = activeCategory === 'all' ? '' : activeCategory;
+    const timer = setTimeout(() => {
+      if (ideaText.trim() !== trimmed || trimmed === lastTrackedPitch) return;
+      lastTrackedPitch = trimmed;
+      trackEvent('pitch_search', cat);
+    }, 1200);
+    return () => clearTimeout(timer);
   });
 
   $effect(() => {
@@ -663,6 +690,7 @@
               href="https://github.com/stephenwil/alsobuilt/issues/new?template=submit-project.yml"
               target="_blank"
               rel="noopener noreferrer"
+              onclick={() => trackEvent('submit_click', prCategory)}
               class="px-3 py-1.5 rounded-lg bg-[var(--emerald)] text-white text-xs font-medium no-underline hover:opacity-90"
               title="Paste just a GitHub URL — a GitHub Action fetches live stars and opens the PR for you"
             >
@@ -672,13 +700,17 @@
               href={prGenerated.prUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onclick={() => trackEvent('submit_click', prCategory)}
               class="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium no-underline hover:opacity-90"
             >
               Open PR on GitHub ↗
             </a>
             <button
               type="button"
-              onclick={() => copyText(prGenerated.yaml, 'Project YAML copied')}
+              onclick={() => {
+                trackEvent('submit_click', prCategory);
+                copyText(prGenerated.yaml, 'Project YAML copied');
+              }}
               class="px-3 py-1.5 rounded-lg bg-[var(--secondary)] border border-[var(--border)] text-xs cursor-pointer hover:border-[var(--primary)]"
             >
               Copy YAML
@@ -917,6 +949,7 @@
                       href={v.repo}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onclick={() => trackEvent('repo_click', v.category)}
                       class="font-mono font-semibold text-xs text-[var(--fg)] no-underline hover:text-[var(--primary)] hover:underline"
                     >
                       {v.name}
@@ -1002,6 +1035,7 @@
                       href={v.repo}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onclick={() => trackEvent('repo_click', v.category)}
                       class="px-2 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-[11px] text-[var(--muted)] hover:text-[var(--fg)] hover:border-[var(--primary)] no-underline"
                       title="Open GitHub repository"
                     >
@@ -1097,6 +1131,7 @@
               href={selectedVariant.repo}
               target="_blank"
               rel="noopener noreferrer"
+              onclick={() => trackEvent('repo_click', selectedVariant.category)}
               class="px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs no-underline hover:border-[var(--primary)]"
             >
               GitHub ↗
@@ -1121,6 +1156,7 @@
                   href={v.repo}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onclick={() => trackEvent('repo_click', v.category)}
                   class="font-mono font-semibold text-sm text-[var(--fg)] no-underline hover:text-[var(--primary)] hover:underline"
                 >
                   {v.name}
@@ -1182,6 +1218,7 @@
                 href={v.repo}
                 target="_blank"
                 rel="noopener noreferrer"
+                onclick={() => trackEvent('repo_click', v.category)}
                 class="px-2 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-[11px] text-[var(--muted)] hover:text-[var(--fg)] no-underline"
               >
                 GitHub ↗
@@ -1230,7 +1267,13 @@
               {/if}
               {#each pinnedVariants as pv}
                 <th class="p-2 text-left bg-[var(--secondary)] font-mono">
-                  <a href={pv.repo} target="_blank" rel="noopener noreferrer" class="no-underline hover:underline">
+                  <a
+                    href={pv.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onclick={() => trackEvent('repo_click', pv.category)}
+                    class="no-underline hover:underline"
+                  >
                     {pv.name} ↗
                   </a>
                 </th>

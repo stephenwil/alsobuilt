@@ -1,6 +1,7 @@
 import type { Env } from '../_lib/env';
 import { json } from '../_lib/env';
 import { attachBookmark, openSession } from '../_lib/d1';
+import { isAllowedWriteOrigin } from '../_lib/origin';
 
 async function sha256Hex(input: string): Promise<string> {
   const bytes = new TextEncoder().encode(input);
@@ -59,20 +60,6 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     handle
   );
 };
-
-function isAllowedWriteOrigin(request: Request): boolean {
-  const fetchSite = request.headers.get('Sec-Fetch-Site');
-  if (fetchSite && fetchSite.toLowerCase() === 'cross-site') {
-    return false;
-  }
-  const origin = request.headers.get('Origin');
-  if (!origin) return true;
-  try {
-    return new URL(origin).origin === new URL(request.url).origin;
-  } catch {
-    return false;
-  }
-}
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (!isAllowedWriteOrigin(request)) {
