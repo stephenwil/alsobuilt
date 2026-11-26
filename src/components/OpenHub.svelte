@@ -208,6 +208,15 @@
     showToast(msg);
   }
 
+  function openVariantRepo(event: MouseEvent, v: Variant) {
+    if (event.defaultPrevented || event.button !== 0) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('a, button, input, select, textarea')) return;
+    if (typeof window !== 'undefined' && window.getSelection()?.toString().trim()) return;
+    trackEvent('repo_click', v.category);
+    window.open(v.repo, '_blank', 'noopener,noreferrer');
+  }
+
   async function fetchPulse() {
     try {
       const headers: Record<string, string> = {};
@@ -942,7 +951,11 @@
               {@const stealthHere = pulse.byVariant[v.slug] ?? 0}
               {@const scale = getScaleTier(v.stars)}
               {@const isNew = isNewSubmission(v, catalog.generatedAt)}
-              <tr class="border-b border-[var(--border)] last:border-b-0 hover:bg-[var(--secondary)]/50 transition-colors">
+              <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions -->
+              <tr
+                onclick={(e) => openVariantRepo(e, v)}
+                class="group cursor-pointer border-b border-[var(--border)] last:border-b-0 hover:bg-[var(--secondary)]/60 transition-colors"
+              >
                 <td class="py-3 px-3">
                   <div class="flex items-center gap-2 flex-wrap">
                     <a
@@ -950,9 +963,10 @@
                       target="_blank"
                       rel="noopener noreferrer"
                       onclick={() => trackEvent('repo_click', v.category)}
-                      class="font-mono font-semibold text-xs text-[var(--fg)] no-underline hover:text-[var(--primary)] hover:underline"
+                      class="inline-flex items-center gap-1 font-mono font-semibold text-xs text-[var(--fg)] no-underline group-hover:text-[var(--primary)] group-hover:underline"
+                      title="Open GitHub repository"
                     >
-                      {v.name}
+                      {v.name}<span class="text-[var(--muted)] group-hover:text-[var(--primary)] transition-colors" aria-hidden="true">↗</span>
                     </a>
                     {#if isNew}
                       <span class="px-1.5 py-0.5 rounded font-mono text-[10px] font-semibold uppercase bg-[var(--emerald)]/20 text-[var(--emerald)] border border-[var(--emerald)]/40">
@@ -1048,7 +1062,7 @@
                       target="_blank"
                       rel="noopener noreferrer"
                       onclick={() => trackEvent('repo_click', v.category)}
-                      class="px-2 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-[11px] text-[var(--muted)] hover:text-[var(--fg)] hover:border-[var(--primary)] no-underline"
+                      class="px-2 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-[11px] font-medium text-[var(--fg)] group-hover:border-[var(--primary)] group-hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 no-underline transition-colors"
                       title="Open GitHub repository"
                     >
                       GitHub ↗
@@ -1124,7 +1138,16 @@
         <div class="rounded-lg bg-[var(--secondary)] border border-[var(--border)] p-3 flex items-center justify-between gap-3 flex-wrap">
           <div class="min-w-0">
             <div class="flex items-center gap-2 flex-wrap">
-              <span class="font-mono font-bold text-xs">{selectedVariant.name}</span>
+              <a
+                href={selectedVariant.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick={() => trackEvent('repo_click', selectedVariant.category)}
+                class="inline-flex items-center gap-1 font-mono font-bold text-xs text-[var(--fg)] no-underline hover:text-[var(--primary)] hover:underline"
+                title="Open GitHub repository"
+              >
+                {selectedVariant.name}<span class="text-[var(--muted)]" aria-hidden="true">↗</span>
+              </a>
               <span class="font-mono text-[10px] text-[var(--muted)]">{selectedVariant.arch} · {selectedVariant.stack} · {selectedVariant.license}</span>
             </div>
             <p class="m-0 mt-0.5 text-xs text-[var(--muted)]">{selectedVariant.tagline}</p>
@@ -1155,7 +1178,8 @@
               target="_blank"
               rel="noopener noreferrer"
               onclick={() => trackEvent('repo_click', selectedVariant.category)}
-              class="px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs no-underline hover:border-[var(--primary)]"
+              class="px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs font-medium text-[var(--fg)] no-underline hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+              title="Open GitHub repository"
             >
               GitHub ↗
             </a>
@@ -1171,7 +1195,11 @@
         {@const stealthHere = pulse.byVariant[v.slug] ?? 0}
         {@const scale = getScaleTier(v.stars)}
         {@const isNew = isNewSubmission(v, catalog.generatedAt)}
-        <div class="rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-2.5 hover:border-[var(--primary)]/60 transition">
+        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+        <div
+          onclick={(e) => openVariantRepo(e, v)}
+          class="group cursor-pointer rounded-xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-2.5 hover:border-[var(--primary)]/70 hover:bg-[var(--secondary)]/20 transition"
+        >
           <div class="flex items-start justify-between gap-2">
             <div>
               <div class="flex items-center gap-1.5 flex-wrap">
@@ -1180,9 +1208,10 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   onclick={() => trackEvent('repo_click', v.category)}
-                  class="font-mono font-semibold text-sm text-[var(--fg)] no-underline hover:text-[var(--primary)] hover:underline"
+                  class="inline-flex items-center gap-1 font-mono font-semibold text-sm text-[var(--fg)] no-underline group-hover:text-[var(--primary)] group-hover:underline"
+                  title="Open GitHub repository"
                 >
-                  {v.name}
+                  {v.name}<span class="text-[var(--muted)] group-hover:text-[var(--primary)] transition-colors" aria-hidden="true">↗</span>
                 </a>
                 {#if isNew}
                   <span class="px-1.5 py-0.5 rounded font-mono text-[10px] font-semibold uppercase bg-[var(--emerald)]/20 text-[var(--emerald)] border border-[var(--emerald)]/40">
@@ -1253,7 +1282,8 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 onclick={() => trackEvent('repo_click', v.category)}
-                class="px-2 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-[11px] text-[var(--muted)] hover:text-[var(--fg)] no-underline"
+                class="px-2 py-1 rounded-md bg-[var(--secondary)] border border-[var(--border)] text-[11px] font-medium text-[var(--fg)] group-hover:border-[var(--primary)] group-hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 no-underline transition-colors"
+                title="Open GitHub repository"
               >
                 GitHub ↗
               </a>
