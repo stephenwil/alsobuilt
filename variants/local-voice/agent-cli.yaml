@@ -9,7 +9,7 @@ license: MIT
 stage: Proto
 stack: Python + Whisper + Piper
 region: Global
-stars: 240
+stars: 241
 traits:
   - voice
   - cli

@@ -9,7 +9,7 @@ license: AGPL
 stage: Proto
 stack: Go + MCP
 region: Global
-stars: 280
+stars: 281
 traits:
   - mcp
   - self-hosted

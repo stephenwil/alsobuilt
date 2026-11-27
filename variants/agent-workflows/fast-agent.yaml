@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: Python + MCP + A2A
 region: Global
-stars: 3980
+stars: 3981
 traits:
   - multi-agent
   - mcp

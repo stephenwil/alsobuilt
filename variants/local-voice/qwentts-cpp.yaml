@@ -9,7 +9,7 @@ license: MIT
 stage: Proto
 stack: C++17 + GGML
 region: Global
-stars: 217
+stars: 219
 traits:
   - voice
   - local-first

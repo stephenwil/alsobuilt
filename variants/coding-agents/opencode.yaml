@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: TypeScript + Bun + TUI
 region: Global
-stars: 229322
+stars: 229551
 traits:
   - cli
   - typescript

@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: Python + CUDA + C++
 region: US
-stars: 97619
+stars: 97693
 traits:
   - self-hosted
   - open-weights

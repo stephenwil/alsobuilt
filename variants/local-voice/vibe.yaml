@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Rust + Tauri + whisper.cpp
 region: Global
-stars: 8241
+stars: 8253
 traits:
   - voice
   - local-first

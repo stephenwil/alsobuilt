@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: C++ + Qt + CAN
 region: Global
-stars: 1942
+stars: 1951
 traits:
   - hardware
   - local-first

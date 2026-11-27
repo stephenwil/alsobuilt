@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Python + Docker + React
 region: Global
-stars: 94391
+stars: 94447
 traits:
   - multi-agent
   - self-hosted

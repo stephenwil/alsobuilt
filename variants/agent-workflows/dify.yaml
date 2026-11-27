@@ -9,7 +9,7 @@ license: Source
 stage: Prod
 stack: Python + Next.js + Docker
 region: Global
-stars: 161943
+stars: 162008
 traits:
   - self-hosted
   - multi-agent

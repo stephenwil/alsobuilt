@@ -10,7 +10,7 @@ stage: Lesson
 lesson: One-shot repo generation hit context/debugging ceilings; iterative file-diff agents and live previews won.
 stack: Python
 region: EU
-stars: 54938
+stars: 54937
 traits:
   - cli
   - python

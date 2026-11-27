@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: Python + Postgres + pgvector
 region: US
-stars: 25559
+stars: 25566
 traits:
   - multi-agent
   - python

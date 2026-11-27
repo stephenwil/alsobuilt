@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Swift + llama.cpp + macOS
 region: Global
-stars: 3327
+stars: 3328
 traits:
   - local-first
   - open-weights

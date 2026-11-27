@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Node.js + React + Electron + LanceDB
 region: Global
-stars: 68663
+stars: 68697
 traits:
   - local-first
   - self-hosted

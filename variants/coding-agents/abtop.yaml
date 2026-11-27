@@ -9,7 +9,7 @@ license: MIT
 stage: Beta
 stack: Rust + Ratatui
 region: Global
-stars: 3884
+stars: 3887
 traits:
   - cli
   - rust

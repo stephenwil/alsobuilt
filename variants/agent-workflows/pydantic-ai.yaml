@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Python + Pydantic
 region: EU
-stars: 21407
+stars: 21426
 traits:
   - python
   - mcp

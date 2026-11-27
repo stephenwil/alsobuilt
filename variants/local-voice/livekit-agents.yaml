@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: Python + Node.js + WebRTC
 region: US
-stars: 15353
+stars: 15363
 traits:
   - voice
   - realtime

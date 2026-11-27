@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: Rust + Python
 region: US
-stars: 68971
+stars: 68985
 traits:
   - local-first
   - cli

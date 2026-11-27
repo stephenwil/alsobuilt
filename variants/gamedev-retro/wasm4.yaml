@@ -9,7 +9,7 @@ license: ISC
 stage: Prod
 stack: WebAssembly + TypeScript + CLI
 region: Global
-stars: 1548
+stars: 1549
 traits:
   - gamedev
   - local-first

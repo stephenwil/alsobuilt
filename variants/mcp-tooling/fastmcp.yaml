@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: Python + Pydantic + MCP
 region: US
-stars: 28765
+stars: 28785
 traits:
   - mcp
   - python

@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: TypeScript + Python + MCP
 region: US
-stars: 92267
+stars: 92298
 traits:
   - mcp
   - cli

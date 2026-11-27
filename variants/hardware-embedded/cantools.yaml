@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Python + CAN + DBC
 region: Global
-stars: 2325
+stars: 2332
 traits:
   - hardware
   - cli

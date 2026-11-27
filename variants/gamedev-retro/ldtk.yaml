@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: Haxe + Electron + JSON
 region: Global
-stars: 5020
+stars: 5026
 traits:
   - gamedev
   - local-first

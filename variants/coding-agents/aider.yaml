@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: Python + Tree-sitter + Git
 region: US
-stars: 50265
+stars: 50283
 traits:
   - cli
   - local-first
