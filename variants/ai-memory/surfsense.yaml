@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: Python + FastAPI + Next.js + pgvector
 region: Global
-stars: 17128
+stars: 17184
 traits:
   - self-hosted
   - rag

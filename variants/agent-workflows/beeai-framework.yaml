@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: Python + TypeScript
 region: Global
-stars: 3459
+stars: 3460
 traits:
   - multi-agent
   - python

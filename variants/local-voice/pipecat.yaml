@@ -9,7 +9,7 @@ license: BSD-3
 stage: Prod
 stack: Python + WebRTC + Daily
 region: US
-stars: 17476
+stars: 17491
 traits:
   - voice
   - realtime

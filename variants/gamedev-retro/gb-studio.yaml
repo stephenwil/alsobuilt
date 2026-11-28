@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: TypeScript + React + GBDK
 region: Global
-stars: 9472
+stars: 9473
 traits:
   - gamedev
   - local-first

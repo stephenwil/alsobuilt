@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: TypeScript + Obsidian
 region: Global
-stars: 817
+stars: 818
 traits:
   - local-first
   - markdown

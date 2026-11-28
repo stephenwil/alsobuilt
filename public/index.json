@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T13:23:57.049Z",
+  "generatedAt": "2026-11-28T12:38:08.765Z",
   "categories": [
     {
       "slug": "ai-memory",
@@ -65,7 +65,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Bun + TUI",
       "region": "Global",
-      "stars": 229551,
+      "stars": 229709,
       "traits": [
         "cli",
         "typescript",
@@ -79,7 +79,8 @@
       "spark": [
         229101,
         229322,
-        229551
+        229551,
+        229709
       ]
     },
     {
@@ -94,7 +95,7 @@
       "stage": "Prod",
       "stack": "Go + C++ + llama.cpp",
       "region": "US",
-      "stars": 188296,
+      "stars": 188379,
       "traits": [
         "local-first",
         "cli",
@@ -107,7 +108,8 @@
       "spark": [
         188087,
         188197,
-        188296
+        188296,
+        188379
       ]
     },
     {
@@ -122,7 +124,7 @@
       "stage": "Prod",
       "stack": "Python + Next.js + Docker",
       "region": "Global",
-      "stars": 162008,
+      "stars": 162038,
       "traits": [
         "self-hosted",
         "multi-agent",
@@ -136,7 +138,8 @@
       "spark": [
         161887,
         161943,
-        162008
+        162008,
+        162038
       ]
     },
     {
@@ -151,7 +154,7 @@
       "stage": "Prod",
       "stack": "Svelte + Python + FastAPI + Docker",
       "region": "Global",
-      "stars": 159677,
+      "stars": 159719,
       "traits": [
         "self-hosted",
         "local-first",
@@ -166,7 +169,8 @@
       "spark": [
         159527,
         159612,
-        159677
+        159677,
+        159719
       ]
     },
     {
@@ -181,7 +185,7 @@
       "stage": "Prod",
       "stack": "C++ + CUDA + Metal + Vulkan",
       "region": "Global",
-      "stars": 136493,
+      "stars": 136467,
       "traits": [
         "local-first",
         "cli",
@@ -193,7 +197,8 @@
       "spark": [
         136222,
         136341,
-        136493
+        136493,
+        136467
       ]
     },
     {
@@ -208,7 +213,7 @@
       "stage": "Prod",
       "stack": "Python + Playwright",
       "region": "EU",
-      "stars": 122203,
+      "stars": 122260,
       "traits": [
         "browser",
         "python",
@@ -221,7 +226,8 @@
       "spark": [
         122024,
         122118,
-        122203
+        122203,
+        122260
       ]
     },
     {
@@ -236,7 +242,7 @@
       "stage": "Prod",
       "stack": "Python + CUDA + C++",
       "region": "US",
-      "stars": 97693,
+      "stars": 97747,
       "traits": [
         "self-hosted",
         "open-weights",
@@ -249,7 +255,8 @@
       "spark": [
         97552,
         97619,
-        97693
+        97693,
+        97747
       ]
     },
     {
@@ -264,7 +271,7 @@
       "stage": "Prod",
       "stack": "Python + Docker + React",
       "region": "Global",
-      "stars": 94447,
+      "stars": 94487,
       "traits": [
         "multi-agent",
         "self-hosted",
@@ -278,7 +285,8 @@
       "spark": [
         94308,
         94391,
-        94447
+        94447,
+        94487
       ]
     },
     {
@@ -293,7 +301,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Python + MCP",
       "region": "US",
-      "stars": 92298,
+      "stars": 92311,
       "traits": [
         "mcp",
         "cli",
@@ -307,7 +315,8 @@
       "spark": [
         92240,
         92267,
-        92298
+        92298,
+        92311
       ]
     },
     {
@@ -322,7 +331,7 @@
       "stage": "Prod",
       "stack": "TypeScript + VS Code + MCP",
       "region": "US",
-      "stars": 71945,
+      "stars": 71969,
       "traits": [
         "mcp",
         "browser",
@@ -336,7 +345,8 @@
       "spark": [
         71891,
         71911,
-        71945
+        71945,
+        71969
       ]
     },
     {
@@ -351,7 +361,7 @@
       "stage": "Prod",
       "stack": "Python + TypeScript + Qdrant",
       "region": "US",
-      "stars": 69541,
+      "stars": 69577,
       "traits": [
         "multi-agent",
         "python",
@@ -365,7 +375,8 @@
       "spark": [
         69457,
         69500,
-        69541
+        69541,
+        69577
       ]
     },
     {
@@ -380,7 +391,7 @@
       "stage": "Beta",
       "stack": "Rust + Python",
       "region": "US",
-      "stars": 68985,
+      "stars": 68990,
       "traits": [
         "local-first",
         "cli",
@@ -394,7 +405,8 @@
       "spark": [
         68962,
         68971,
-        68985
+        68985,
+        68990
       ]
     },
     {
@@ -409,7 +421,7 @@
       "stage": "Prod",
       "stack": "Node.js + React + Electron + LanceDB",
       "region": "Global",
-      "stars": 68697,
+      "stars": 68719,
       "traits": [
         "local-first",
         "self-hosted",
@@ -424,7 +436,8 @@
       "spark": [
         68631,
         68663,
-        68697
+        68697,
+        68719
       ]
     },
     {
@@ -439,7 +452,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Node.js",
       "region": "US",
-      "stars": 65535,
+      "stars": 65571,
       "traits": [
         "mcp",
         "typescript",
@@ -452,7 +465,8 @@
       "spark": [
         65439,
         65502,
-        65535
+        65535,
+        65571
       ]
     },
     {
@@ -468,7 +482,7 @@
       "lesson": "Unbounded agent-to-agent chat loops burn tokens quickly; modern successors favor explicit state graphs and typed tools.",
       "stack": "Python + .NET",
       "region": "US",
-      "stars": 61972,
+      "stars": 61968,
       "traits": [
         "multi-agent",
         "python"
@@ -479,7 +493,8 @@
       "spark": [
         61968,
         61969,
-        61972
+        61972,
+        61968
       ]
     },
     {
@@ -494,7 +509,7 @@
       "stage": "Prod",
       "stack": "Python",
       "region": "US",
-      "stars": 61323,
+      "stars": 61335,
       "traits": [
         "multi-agent",
         "python",
@@ -507,7 +522,8 @@
       "spark": [
         61251,
         61293,
-        61323
+        61323,
+        61335
       ]
     },
     {
@@ -522,7 +538,7 @@
       "stage": "Prod",
       "stack": "Rust + Electron + MCP",
       "region": "US",
-      "stars": 57058,
+      "stars": 57090,
       "traits": [
         "rust",
         "cli",
@@ -537,7 +553,8 @@
       "spark": [
         56979,
         57027,
-        57058
+        57058,
+        57090
       ]
     },
     {
@@ -552,7 +569,7 @@
       "stage": "Prod",
       "stack": "C++ + Metal + CoreML",
       "region": "BG",
-      "stars": 55584,
+      "stars": 55596,
       "traits": [
         "local-first",
         "voice",
@@ -566,7 +583,8 @@
       "spark": [
         55514,
         55543,
-        55584
+        55584,
+        55596
       ]
     },
     {
@@ -593,6 +611,7 @@
       "spark": [
         54938,
         54938,
+        54937,
         54937
       ]
     },
@@ -608,7 +627,7 @@
       "stage": "Prod",
       "stack": "Python + Tree-sitter + Git",
       "region": "US",
-      "stars": 50283,
+      "stars": 50290,
       "traits": [
         "cli",
         "local-first",
@@ -621,7 +640,8 @@
       "spark": [
         50254,
         50265,
-        50283
+        50283,
+        50290
       ]
     },
     {
@@ -636,7 +656,7 @@
       "stage": "Beta",
       "stack": "Rust + ECS + wgpu",
       "region": "Global",
-      "stars": 50044,
+      "stars": 50067,
       "traits": [
         "gamedev",
         "rust",
@@ -649,7 +669,8 @@
       "spark": [
         49994,
         50020,
-        50044
+        50044,
+        50067
       ]
     },
     {
@@ -664,7 +685,7 @@
       "stage": "Prod",
       "stack": "Rust + Tauri + TypeScript",
       "region": "Global",
-      "stars": 46231,
+      "stars": 46253,
       "traits": [
         "local-first",
         "rust",
@@ -678,7 +699,8 @@
       "spark": [
         46113,
         46184,
-        46231
+        46231,
+        46253
       ]
     },
     {
@@ -693,7 +715,7 @@
       "stage": "Prod",
       "stack": "Python + TypeScript",
       "region": "US",
-      "stars": 45506,
+      "stars": 45529,
       "traits": [
         "multi-agent",
         "python",
@@ -707,7 +729,8 @@
       "spark": [
         45405,
         45455,
-        45506
+        45506,
+        45529
       ]
     },
     {
@@ -722,7 +745,7 @@
       "stage": "Prod",
       "stack": "Rust + Iced + libpcap",
       "region": "Global",
-      "stars": 43348,
+      "stars": 43367,
       "traits": [
         "rust",
         "local-first",
@@ -734,7 +757,8 @@
       "spark": [
         43303,
         43322,
-        43348
+        43348,
+        43367
       ]
     },
     {
@@ -749,7 +773,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Playwright",
       "region": "US",
-      "stars": 40205,
+      "stars": 40236,
       "traits": [
         "mcp",
         "browser",
@@ -763,7 +787,8 @@
       "spark": [
         40126,
         40164,
-        40205
+        40205,
+        40236
       ]
     },
     {
@@ -778,7 +803,7 @@
       "stage": "Prod",
       "stack": "Go + Python + Postgres",
       "region": "EU",
-      "stars": 39668,
+      "stars": 39666,
       "traits": [
         "self-hosted",
         "rag",
@@ -791,7 +816,8 @@
       "spark": [
         39664,
         39666,
-        39668
+        39668,
+        39666
       ]
     },
     {
@@ -821,6 +847,7 @@
       "spark": [
         39589,
         39595,
+        39596,
         39596
       ]
     },
@@ -836,7 +863,7 @@
       "stage": "Prod",
       "stack": "Python + Django + Postgres",
       "region": "Global",
-      "stars": 38266,
+      "stars": 38272,
       "traits": [
         "local-first",
         "markdown",
@@ -851,7 +878,8 @@
       "spark": [
         38239,
         38262,
-        38266
+        38266,
+        38272
       ]
     },
     {
@@ -866,7 +894,7 @@
       "stage": "Prod",
       "stack": "TypeScript + VS Code + JetBrains",
       "region": "US",
-      "stars": 36580,
+      "stars": 36587,
       "traits": [
         "typescript",
         "local-first",
@@ -879,7 +907,8 @@
       "spark": [
         36559,
         36572,
-        36580
+        36580,
+        36587
       ]
     },
     {
@@ -894,7 +923,7 @@
       "stage": "Prod",
       "stack": "Go + Docker",
       "region": "US",
-      "stars": 34799,
+      "stars": 34810,
       "traits": [
         "mcp",
         "cli",
@@ -906,7 +935,8 @@
       "spark": [
         34742,
         34777,
-        34799
+        34799,
+        34810
       ]
     },
     {
@@ -921,7 +951,7 @@
       "stage": "Beta",
       "stack": "Python + NetworkX + Kuzu + Vector DB",
       "region": "Global",
-      "stars": 33669,
+      "stars": 33680,
       "traits": [
         "python",
         "rag",
@@ -935,7 +965,8 @@
       "spark": [
         33594,
         33637,
-        33669
+        33669,
+        33680
       ]
     },
     {
@@ -950,7 +981,7 @@
       "stage": "Beta",
       "stack": "Python + Neo4j",
       "region": "US",
-      "stars": 33139,
+      "stars": 33161,
       "traits": [
         "multi-agent",
         "python",
@@ -964,7 +995,8 @@
       "spark": [
         33084,
         33109,
-        33139
+        33139,
+        33161
       ]
     },
     {
@@ -979,7 +1011,7 @@
       "stage": "Prod",
       "stack": "TypeScript + React + SQLite",
       "region": "Global",
-      "stars": 30485,
+      "stars": 30511,
       "traits": [
         "local-first",
         "self-hosted",
@@ -991,7 +1023,8 @@
       "spark": [
         30453,
         30466,
-        30485
+        30485,
+        30511
       ]
     },
     {
@@ -1006,7 +1039,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Node.js",
       "region": "US",
-      "stars": 29855,
+      "stars": 29867,
       "traits": [
         "typescript",
         "multi-agent",
@@ -1020,7 +1053,8 @@
       "spark": [
         29811,
         29833,
-        29855
+        29855,
+        29867
       ]
     },
     {
@@ -1035,7 +1069,7 @@
       "stage": "Prod",
       "stack": "Python + Pydantic + MCP",
       "region": "US",
-      "stars": 28785,
+      "stars": 28796,
       "traits": [
         "mcp",
         "python",
@@ -1048,7 +1082,8 @@
       "spark": [
         28749,
         28765,
-        28785
+        28785,
+        28796
       ]
     },
     {
@@ -1063,7 +1098,7 @@
       "stage": "Prod",
       "stack": "Python + CTranslate2",
       "region": "EU",
-      "stars": 27061,
+      "stars": 27083,
       "traits": [
         "voice",
         "local-first",
@@ -1076,7 +1111,8 @@
       "spark": [
         27006,
         27032,
-        27061
+        27061,
+        27083
       ]
     },
     {
@@ -1091,7 +1127,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Playwright",
       "region": "US",
-      "stars": 26167,
+      "stars": 26171,
       "traits": [
         "browser",
         "typescript",
@@ -1103,7 +1139,8 @@
       "spark": [
         26140,
         26155,
-        26167
+        26167,
+        26171
       ]
     },
     {
@@ -1118,7 +1155,7 @@
       "stage": "Prod",
       "stack": "Python + Postgres + pgvector",
       "region": "US",
-      "stars": 25566,
+      "stars": 25572,
       "traits": [
         "multi-agent",
         "python",
@@ -1132,7 +1169,8 @@
       "spark": [
         25543,
         25559,
-        25566
+        25566,
+        25572
       ]
     },
     {
@@ -1148,7 +1186,7 @@
       "lesson": "Demonstrated rapid community demand for custom agent personas/modes inside IDE forks before archiving.",
       "stack": "TypeScript + VS Code",
       "region": "Global",
-      "stars": 24235,
+      "stars": 24237,
       "traits": [
         "typescript",
         "mcp",
@@ -1161,7 +1199,8 @@
       "spark": [
         24234,
         24237,
-        24235
+        24235,
+        24237
       ]
     },
     {
@@ -1176,7 +1215,7 @@
       "stage": "Prod",
       "stack": "Python + Playwright + Vision LLMs",
       "region": "US",
-      "stars": 23555,
+      "stars": 23558,
       "traits": [
         "browser",
         "python",
@@ -1189,7 +1228,8 @@
       "spark": [
         23533,
         23551,
-        23555
+        23555,
+        23558
       ]
     },
     {
@@ -1204,7 +1244,7 @@
       "stage": "Prod",
       "stack": "Rust + TUI",
       "region": "Global",
-      "stars": 23456,
+      "stars": 23463,
       "traits": [
         "rust",
         "cli",
@@ -1216,7 +1256,8 @@
       "spark": [
         23433,
         23447,
-        23456
+        23456,
+        23463
       ]
     },
     {
@@ -1245,6 +1286,7 @@
       "spark": [
         22362,
         22363,
+        22363,
         22363
       ]
     },
@@ -1260,7 +1302,7 @@
       "stage": "Prod",
       "stack": "Python + Pydantic",
       "region": "EU",
-      "stars": 21426,
+      "stars": 21436,
       "traits": [
         "python",
         "mcp",
@@ -1273,7 +1315,8 @@
       "spark": [
         21380,
         21407,
-        21426
+        21426,
+        21436
       ]
     },
     {
@@ -1288,7 +1331,7 @@
       "stage": "Prod",
       "stack": "Python + Docker",
       "region": "US",
-      "stars": 20882,
+      "stars": 20886,
       "traits": [
         "cli",
         "python",
@@ -1301,7 +1344,8 @@
       "spark": [
         20869,
         20873,
-        20882
+        20882,
+        20886
       ]
     },
     {
@@ -1316,7 +1360,7 @@
       "stage": "Prod",
       "stack": "Python + WebRTC + Daily",
       "region": "US",
-      "stars": 17476,
+      "stars": 17491,
       "traits": [
         "voice",
         "realtime",
@@ -1330,7 +1374,8 @@
       "spark": [
         17432,
         17452,
-        17476
+        17476,
+        17491
       ]
     },
     {
@@ -1345,7 +1390,7 @@
       "stage": "Beta",
       "stack": "Python + FastAPI + Next.js + pgvector",
       "region": "Global",
-      "stars": 17128,
+      "stars": 17184,
       "traits": [
         "self-hosted",
         "rag",
@@ -1360,7 +1405,8 @@
       "spark": [
         16948,
         16961,
-        17128
+        17128,
+        17184
       ]
     },
     {
@@ -1375,7 +1421,7 @@
       "stage": "Prod",
       "stack": "Python + Node.js + WebRTC",
       "region": "US",
-      "stars": 15363,
+      "stars": 15389,
       "traits": [
         "voice",
         "realtime",
@@ -1389,7 +1435,8 @@
       "spark": [
         15339,
         15353,
-        15363
+        15363,
+        15389
       ]
     },
     {
@@ -1404,7 +1451,7 @@
       "stage": "Prod",
       "stack": "C++ + Python + ESP32",
       "region": "Global",
-      "stars": 12188,
+      "stars": 12195,
       "traits": [
         "hardware",
         "self-hosted",
@@ -1418,7 +1465,8 @@
       "spark": [
         12169,
         12177,
-        12188
+        12188,
+        12195
       ]
     },
     {
@@ -1433,7 +1481,7 @@
       "stage": "Prod",
       "stack": "Rust + TUI",
       "region": "Global",
-      "stars": 12136,
+      "stars": 12139,
       "traits": [
         "cli",
         "rust",
@@ -1446,7 +1494,8 @@
       "spark": [
         12115,
         12127,
-        12136
+        12136,
+        12139
       ]
     },
     {
@@ -1461,7 +1510,7 @@
       "stage": "Prod",
       "stack": "TypeScript + React + Node.js",
       "region": "Global",
-      "stars": 11374,
+      "stars": 11377,
       "traits": [
         "mcp",
         "typescript",
@@ -1474,7 +1523,8 @@
       "spark": [
         11355,
         11364,
-        11374
+        11374,
+        11377
       ]
     },
     {
@@ -1489,7 +1539,7 @@
       "stage": "Prod",
       "stack": "GDScript + Godot",
       "region": "Global",
-      "stars": 11218,
+      "stars": 11233,
       "traits": [
         "gamedev",
         "local-first"
@@ -1500,7 +1550,8 @@
       "spark": [
         11200,
         11212,
-        11218
+        11218,
+        11233
       ]
     },
     {
@@ -1528,6 +1579,7 @@
       "spark": [
         10146,
         10152,
+        10158,
         10158
       ]
     },
@@ -1543,7 +1595,7 @@
       "stage": "Prod",
       "stack": "React Native + TypeScript + llama.rn",
       "region": "Global",
-      "stars": 9842,
+      "stars": 9865,
       "traits": [
         "mobile",
         "local-first",
@@ -1556,7 +1608,8 @@
       "spark": [
         9789,
         9818,
-        9842
+        9842,
+        9865
       ]
     },
     {
@@ -1571,7 +1624,7 @@
       "stage": "Prod",
       "stack": "TypeScript + React + GBDK",
       "region": "Global",
-      "stars": 9472,
+      "stars": 9473,
       "traits": [
         "gamedev",
         "local-first",
@@ -1584,7 +1637,8 @@
       "spark": [
         9472,
         9472,
-        9472
+        9472,
+        9473
       ]
     },
     {
@@ -1599,7 +1653,7 @@
       "stage": "Prod",
       "stack": "Rust + Tauri + whisper.cpp",
       "region": "Global",
-      "stars": 8253,
+      "stars": 8261,
       "traits": [
         "voice",
         "local-first",
@@ -1612,7 +1666,8 @@
       "spark": [
         8226,
         8241,
-        8253
+        8253,
+        8261
       ]
     },
     {
@@ -1627,7 +1682,7 @@
       "stage": "Prod",
       "stack": "C + Lua/JS/Wasm",
       "region": "Global",
-      "stars": 6199,
+      "stars": 6206,
       "traits": [
         "gamedev",
         "local-first",
@@ -1639,7 +1694,8 @@
       "spark": [
         6199,
         6199,
-        6199
+        6199,
+        6206
       ]
     },
     {
@@ -1669,6 +1725,7 @@
       "spark": [
         5732,
         5740,
+        5742,
         5742
       ]
     },
@@ -1684,7 +1741,7 @@
       "stage": "Prod",
       "stack": "Haxe + Electron + JSON",
       "region": "Global",
-      "stars": 5026,
+      "stars": 5030,
       "traits": [
         "gamedev",
         "local-first"
@@ -1695,7 +1752,8 @@
       "spark": [
         5016,
         5020,
-        5026
+        5026,
+        5030
       ]
     },
     {
@@ -1724,6 +1782,7 @@
       "spark": [
         4641,
         4641,
+        4641,
         4641
       ]
     },
@@ -1739,7 +1798,7 @@
       "stage": "Prod",
       "stack": "TypeScript + Node.js",
       "region": "Global",
-      "stars": 4004,
+      "stars": 4011,
       "traits": [
         "mcp",
         "cli",
@@ -1752,7 +1811,8 @@
       "spark": [
         3989,
         3996,
-        4004
+        4004,
+        4011
       ]
     },
     {
@@ -1767,7 +1827,7 @@
       "stage": "Beta",
       "stack": "Python + MCP + A2A",
       "region": "Global",
-      "stars": 3981,
+      "stars": 3982,
       "traits": [
         "multi-agent",
         "mcp",
@@ -1780,7 +1840,8 @@
       "spark": [
         3978,
         3980,
-        3981
+        3981,
+        3982
       ]
     },
     {
@@ -1807,6 +1868,7 @@
       "addedAt": "2026-11-24T22:46:10Z",
       "spark": [
         3962,
+        3964,
         3964,
         3964
       ]
@@ -1836,6 +1898,7 @@
       "spark": [
         3880,
         3884,
+        3887,
         3887
       ]
     },
@@ -1851,7 +1914,7 @@
       "stage": "Beta",
       "stack": "Python + TypeScript",
       "region": "Global",
-      "stars": 3459,
+      "stars": 3460,
       "traits": [
         "multi-agent",
         "python",
@@ -1864,7 +1927,8 @@
       "spark": [
         3459,
         3459,
-        3459
+        3459,
+        3460
       ]
     },
     {
@@ -1891,6 +1955,7 @@
       "spark": [
         3326,
         3327,
+        3328,
         3328
       ]
     },
@@ -1918,6 +1983,7 @@
       "spark": [
         3229,
         3232,
+        3233,
         3233
       ]
     },
@@ -1933,7 +1999,7 @@
       "stage": "Prod",
       "stack": "C + ESP-IDF + Local ASR",
       "region": "Global",
-      "stars": 3146,
+      "stars": 3147,
       "traits": [
         "voice",
         "local-first",
@@ -1946,7 +2012,8 @@
       "spark": [
         3145,
         3145,
-        3146
+        3146,
+        3147
       ]
     },
     {
@@ -1974,6 +2041,7 @@
       "spark": [
         3025,
         3027,
+        3028,
         3028
       ]
     },
@@ -2002,6 +2070,7 @@
       "spark": [
         2325,
         2325,
+        2332,
         2332
       ]
     },
@@ -2030,6 +2099,7 @@
       "spark": [
         2222,
         2226,
+        2227,
         2227
       ]
     },
@@ -2045,7 +2115,7 @@
       "stage": "Beta",
       "stack": "Swift + iOS",
       "region": "Global",
-      "stars": 2191,
+      "stars": 2209,
       "traits": [
         "mobile",
         "realtime"
@@ -2056,7 +2126,8 @@
       "spark": [
         2012,
         2125,
-        2191
+        2191,
+        2209
       ]
     },
     {
@@ -2071,7 +2142,7 @@
       "stage": "Prod",
       "stack": "C++ + Qt + CAN",
       "region": "Global",
-      "stars": 1951,
+      "stars": 1952,
       "traits": [
         "hardware",
         "local-first",
@@ -2083,7 +2154,8 @@
       "spark": [
         1941,
         1942,
-        1951
+        1951,
+        1952
       ]
     },
     {
@@ -2098,7 +2170,7 @@
       "stage": "Beta",
       "stack": "Swift + macOS + Whisper",
       "region": "Global",
-      "stars": 1944,
+      "stars": 1947,
       "traits": [
         "voice",
         "local-first",
@@ -2111,7 +2183,8 @@
       "spark": [
         1941,
         1940,
-        1944
+        1944,
+        1947
       ]
     },
     {
@@ -2126,7 +2199,7 @@
       "stage": "Prod",
       "stack": "WebAssembly + TypeScript + CLI",
       "region": "Global",
-      "stars": 1549,
+      "stars": 1550,
       "traits": [
         "gamedev",
         "local-first",
@@ -2140,7 +2213,8 @@
       "spark": [
         1548,
         1548,
-        1549
+        1549,
+        1550
       ]
     },
     {
@@ -2168,6 +2242,7 @@
       "spark": [
         1342,
         1343,
+        1343,
         1343
       ]
     },
@@ -2183,7 +2258,7 @@
       "stage": "Beta",
       "stack": "Go + Bubble Tea",
       "region": "Global",
-      "stars": 1314,
+      "stars": 1324,
       "traits": [
         "cli",
         "multi-agent",
@@ -2195,7 +2270,8 @@
       "spark": [
         1305,
         1310,
-        1314
+        1314,
+        1324
       ]
     },
     {
@@ -2210,7 +2286,7 @@
       "stage": "Beta",
       "stack": "TypeScript + Chromium Extension + MCP",
       "region": "Global",
-      "stars": 1135,
+      "stars": 1158,
       "traits": [
         "browser",
         "mcp",
@@ -2223,7 +2299,8 @@
       "spark": [
         1087,
         1100,
-        1135
+        1135,
+        1158
       ]
     },
     {
@@ -2238,7 +2315,7 @@
       "stage": "Beta",
       "stack": "Rust + TUI",
       "region": "Global",
-      "stars": 1025,
+      "stars": 1026,
       "traits": [
         "cli",
         "rust",
@@ -2250,7 +2327,8 @@
       "spark": [
         1020,
         1022,
-        1025
+        1025,
+        1026
       ]
     },
     {
@@ -2265,7 +2343,7 @@
       "stage": "Beta",
       "stack": "TypeScript + React",
       "region": "Global",
-      "stars": 986,
+      "stars": 990,
       "traits": [
         "typescript",
         "multi-agent",
@@ -2277,7 +2355,8 @@
       "spark": [
         964,
         975,
-        986
+        986,
+        990
       ]
     },
     {
@@ -2292,7 +2371,7 @@
       "stage": "Beta",
       "stack": "TypeScript + Obsidian",
       "region": "Global",
-      "stars": 817,
+      "stars": 818,
       "traits": [
         "local-first",
         "markdown",
@@ -2305,7 +2384,8 @@
       "spark": [
         813,
         815,
-        817
+        817,
+        818
       ]
     },
     {
@@ -2334,6 +2414,7 @@
       "spark": [
         740,
         739,
+        740,
         740
       ]
     },
@@ -2361,6 +2442,7 @@
       "spark": [
         710,
         711,
+        713,
         713
       ]
     },
@@ -2389,6 +2471,7 @@
       "spark": [
         540,
         540,
+        540,
         540
       ]
     },
@@ -2404,7 +2487,7 @@
       "stage": "Proto",
       "stack": "Rust + ADB + MCP",
       "region": "Global",
-      "stars": 410,
+      "stars": 415,
       "traits": [
         "mobile",
         "mcp",
@@ -2418,7 +2501,8 @@
       "spark": [
         372,
         390,
-        410
+        410,
+        415
       ]
     },
     {
@@ -2445,6 +2529,7 @@
       "spark": [
         279,
         280,
+        281,
         281
       ]
     },
@@ -2470,6 +2555,7 @@
       "y": 0.36,
       "addedAt": "2026-11-24T22:46:10Z",
       "spark": [
+        279,
         279,
         279,
         279
@@ -2501,6 +2587,7 @@
       "spark": [
         239,
         240,
+        241,
         241
       ]
     },
@@ -2528,6 +2615,7 @@
       "spark": [
         225,
         226,
+        226,
         226
       ]
     },
@@ -2543,7 +2631,7 @@
       "stage": "Proto",
       "stack": "C++17 + GGML",
       "region": "Global",
-      "stars": 219,
+      "stars": 220,
       "traits": [
         "voice",
         "local-first",
@@ -2556,7 +2644,8 @@
       "spark": [
         217,
         217,
-        219
+        219,
+        220
       ]
     },
     {
@@ -2584,6 +2673,7 @@
       "spark": [
         206,
         206,
+        206,
         206
       ]
     },
@@ -2599,7 +2689,7 @@
       "stage": "Proto",
       "stack": "TypeScript + SQLite",
       "region": "Global",
-      "stars": 191,
+      "stars": 183,
       "traits": [
         "local-first",
         "typescript",
@@ -2611,7 +2701,8 @@
       "spark": [
         149,
         177,
-        191
+        191,
+        183
       ]
     },
     {
@@ -2637,6 +2728,7 @@
       "y": 0.58,
       "addedAt": "2026-11-24T22:46:10Z",
       "spark": [
+        166,
         166,
         166,
         166
@@ -2667,6 +2759,7 @@
       "spark": [
         154,
         156,
+        156,
         156
       ]
     },
@@ -2692,6 +2785,7 @@
       "addedAt": "2026-11-24T22:46:10Z",
       "spark": [
         153,
+        154,
         154,
         154
       ]
@@ -2720,6 +2814,7 @@
       "y": 0.34,
       "addedAt": "2026-11-25T10:27:59Z",
       "spark": [
+        0,
         0,
         0,
         0
@@ -2752,6 +2847,7 @@
       "spark": [
         0,
         0,
+        0,
         0
       ]
     },
@@ -2778,7 +2874,11 @@
       ],
       "x": 0.52,
       "y": 0.38,
-      "addedAt": "2026-11-27T13:23:18.948Z"
+      "addedAt": "2026-11-28T12:37:35.505Z",
+      "spark": [
+        0,
+        0
+      ]
     }
   ]
 }

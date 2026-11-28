@@ -9,7 +9,7 @@ license: Apache-2
 stage: Prod
 stack: C + ESP-IDF + Local ASR
 region: Global
-stars: 3146
+stars: 3147
 traits:
   - voice
   - local-first

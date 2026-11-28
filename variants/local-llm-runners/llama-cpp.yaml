@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: C++ + CUDA + Metal + Vulkan
 region: Global
-stars: 136493
+stars: 136467
 traits:
   - local-first
   - cli

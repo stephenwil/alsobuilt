@@ -9,7 +9,7 @@ license: MIT
 stage: Beta
 stack: TypeScript + React
 region: Global
-stars: 986
+stars: 990
 traits:
   - typescript
   - multi-agent

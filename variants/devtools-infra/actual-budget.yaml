@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: TypeScript + React + SQLite
 region: Global
-stars: 30485
+stars: 30511
 traits:
   - local-first
   - self-hosted

@@ -12,7 +12,7 @@ lesson: >-
   tools.
 stack: Python + .NET
 region: US
-stars: 61972
+stars: 61968
 traits:
   - multi-agent
   - python

@@ -9,7 +9,7 @@ license: Apache-2
 stage: Beta
 stack: Rust + ECS + wgpu
 region: Global
-stars: 50044
+stars: 50067
 traits:
   - gamedev
   - rust

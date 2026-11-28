@@ -9,7 +9,7 @@ license: MIT
 stage: Prod
 stack: React Native + TypeScript + llama.rn
 region: Global
-stars: 9842
+stars: 9865
 traits:
   - mobile
   - local-first

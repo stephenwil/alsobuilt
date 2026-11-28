@@ -9,7 +9,7 @@ license: Source
 stage: Prod
 stack: Svelte + Python + FastAPI + Docker
 region: Global
-stars: 159677
+stars: 159719
 traits:
   - self-hosted
   - local-first

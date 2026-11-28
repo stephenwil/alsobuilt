@@ -9,7 +9,7 @@ license: AGPL
 stage: Prod
 stack: Rust + Tauri + TypeScript
 region: Global
-stars: 46231
+stars: 46253
 traits:
   - local-first
   - rust
